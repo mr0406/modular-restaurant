@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModularRestaurant.Menu.Infrastructure
+namespace ModularRestaurant.Menus.Infrastructure
 {
     public static class Extensions
     {

@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModularRestaurant.Menu.Api.Controllers
+namespace ModularRestaurant.Menus.Api.Controllers
 {
-    [Route(MenuModule.BasePath + "/[controller]")]
-    public abstract class MenuControllerBase : ModuleControllerBase
+    [Route(MenusModule.BasePath + "/[controller]")]
+    public abstract class MenusControllerBase : ModuleControllerBase
     {
     }
 }

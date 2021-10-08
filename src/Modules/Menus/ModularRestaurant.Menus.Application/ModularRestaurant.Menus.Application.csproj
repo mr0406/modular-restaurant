@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\ModularRestaurant.Shared.Application\ModularRestaurant.Shared.Application.csproj" />
-    <ProjectReference Include="..\ModularRestaurant.Menu.Domain\ModularRestaurant.Menu.Domain.csproj" />
+    <ProjectReference Include="..\ModularRestaurant.Menus.Domain\ModularRestaurant.Menus.Domain.csproj" />
   </ItemGroup>
 
 </Project>

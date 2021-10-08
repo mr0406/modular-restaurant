@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using ModularRestaurant.Menu.Application;
-using ModularRestaurant.Menu.Domain;
-using ModularRestaurant.Menu.Infrastructure;
+using ModularRestaurant.Menus.Application;
+using ModularRestaurant.Menus.Domain;
+using ModularRestaurant.Menus.Infrastructure;
 using ModularRestaurant.Shared.Api;
 using System;
 using System.Collections.Generic;
@@ -10,11 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModularRestaurant.Menu.Api
+namespace ModularRestaurant.Menus.Api
 {
-    public class MenuModule : IModule
+    public class MenusModule : IModule
     {
-        public const string BasePath = "menu-module";
+        public const string BasePath = "menus-module";
         public string Name => "Menu";
         public string Path => BasePath;
 

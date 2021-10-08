@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using ModularRestaurant.Menu.Api;
+using ModularRestaurant.Menus.Api;
 using ModularRestaurant.Shared.Api;
 using System;
 using System.Collections.Generic;
@@ -75,7 +75,7 @@ namespace ModularRestaurant.Bootstrapper
         {
             return new List<IModule>()
             {
-                new MenuModule()
+                new MenusModule()
             };
         }
     }
