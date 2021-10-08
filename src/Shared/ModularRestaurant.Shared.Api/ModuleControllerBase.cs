@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace ModularRestaurant.Shared.Api
 {
     [ApiController]
+    [ProducesDefaultContentType]
     public abstract class ModuleControllerBase : ControllerBase
     {
         protected ActionResult<T> OkOrNotFound<T>(T model)

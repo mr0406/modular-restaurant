@@ -8,7 +8,7 @@ namespace ModularRestaurant.Menus.Domain.Entities
 {
     public class Menu
     {
-        public IReadOnlyList<Group> groups;
+        public IReadOnlyList<Group> groups => _groups;
         private List<Group> _groups = new List<Group>();
 
         private Menu()

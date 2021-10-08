@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ModularRestaurant.Menus.Application.DTOs;
 using ModularRestaurant.Menus.Domain.Entities;
+using ModularRestaurant.Menus.Domain.Repositories;
+using ModularRestaurant.Menus.Infrastructure.EF.Mappings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +13,18 @@ namespace ModularRestaurant.Menus.Api.Controllers
 {
     public class MenuController : MenusControllerBase
     {
-        [HttpGet]
-        public ActionResult<string> Get()
+        private readonly IMenuRepository _menuRepository;
+        public MenuController(IMenuRepository menuRepository)
         {
-            var menu = Menu.CreateNew();
-            menu.AddGroup("First Group");
-            menu.AddItemToGroup("First Group", "First Item");
-            menu.AddItemToGroup("First Group", "Another Item");
-            menu.AddGroup("Second Group");
+            _menuRepository = menuRepository;
+        }
 
-            return "menu";
+        [HttpGet]
+        public async Task<ActionResult<MenuDTO>> Get()
+        {
+            var menu = (await _menuRepository.GetAsync()).ToDTO();
+
+            return Ok(menu);
         }
     }
 }

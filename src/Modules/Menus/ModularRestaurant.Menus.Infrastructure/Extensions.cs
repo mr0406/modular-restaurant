@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using ModularRestaurant.Menus.Domain.Repositories;
+using ModularRestaurant.Menus.Infrastructure.EF.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,8 @@ namespace ModularRestaurant.Menus.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
+            services.AddScoped<IMenuRepository, MenuRepository>();
+
             return services;
         }
     }

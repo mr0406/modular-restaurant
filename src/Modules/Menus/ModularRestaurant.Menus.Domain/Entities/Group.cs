@@ -10,7 +10,7 @@ namespace ModularRestaurant.Menus.Domain.Entities
     {
         public string Name { get; private set; }
 
-        public IReadOnlyList<Item> items;
+        public IReadOnlyList<Item> items => _items;
         private List<Item> _items = new List<Item>();
 
         public Group(string name)
