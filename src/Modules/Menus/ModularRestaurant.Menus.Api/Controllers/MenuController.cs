@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ModularRestaurant.Menus.Api.Mappings;
+using ModularRestaurant.Menus.Api.Requests;
+using ModularRestaurant.Menus.Application.Commands;
 using ModularRestaurant.Menus.Application.DTOs;
+using ModularRestaurant.Menus.Application.Queries;
 using ModularRestaurant.Menus.Domain.Entities;
 using ModularRestaurant.Menus.Domain.Repositories;
 using ModularRestaurant.Menus.Infrastructure.EF.Mappings;
@@ -26,5 +30,13 @@ namespace ModularRestaurant.Menus.Api.Controllers
 
             return Ok(menu);
         }
+
+        [HttpGet("QueryTest")]
+        public async Task<ActionResult<MenuDTO>> QueryTest()
+            => OkOrNotFound(await Mediator.Send(new GetMenuQuery(Guid.NewGuid())));
+
+        [HttpPost("CommandTest")]
+        public async Task<ActionResult<Guid>> CommandTest(CreateMenuRequest request)
+            => OkOrNotFound(await Mediator.Send(request.ToCommand()));
     }
 }

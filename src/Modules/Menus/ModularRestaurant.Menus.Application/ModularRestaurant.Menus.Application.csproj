@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -11,11 +11,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\ModularRestaurant.Shared.Application\ModularRestaurant.Shared.Application.csproj" />
     <ProjectReference Include="..\ModularRestaurant.Menus.Domain\ModularRestaurant.Menus.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Queries\" />
   </ItemGroup>
 
 </Project>
