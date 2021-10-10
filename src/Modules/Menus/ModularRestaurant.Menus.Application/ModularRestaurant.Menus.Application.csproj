@@ -5,8 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\ModularRestaurant.Shared.Application\ModularRestaurant.Shared.Application.csproj" />
     <ProjectReference Include="..\ModularRestaurant.Menus.Domain\ModularRestaurant.Menus.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Queries\" />
   </ItemGroup>
 
 </Project>

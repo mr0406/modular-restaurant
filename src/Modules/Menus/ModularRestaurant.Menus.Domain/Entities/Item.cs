@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModularRestaurant.Shared.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ModularRestaurant.Menus.Domain.Entities
 {
-    public class Item
+    public class Item : ValueObject
     {
         public string Name { get; private set; }
 
@@ -15,7 +16,7 @@ namespace ModularRestaurant.Menus.Domain.Entities
             Name = name;
         }
 
-        internal static Item CreateNew(string name)
+        public static Item CreateNew(string name)
         {
             return new Item(name);
         }

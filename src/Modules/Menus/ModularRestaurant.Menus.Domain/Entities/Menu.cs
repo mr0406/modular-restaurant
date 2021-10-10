@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ModularRestaurant.Menus.Domain.Rules;
+using ModularRestaurant.Shared.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,37 +8,28 @@ using System.Threading.Tasks;
 
 namespace ModularRestaurant.Menus.Domain.Entities
 {
-    public class Menu
+    public class Menu : Entity
     {
         public IReadOnlyList<Group> groups => _groups;
         private List<Group> _groups = new List<Group>();
 
-        private Menu()
+        private Menu(List<Group> groups)
         {
-
+            _groups = groups;
         }
 
-        public static Menu CreateNew()
+        public static Menu CreateNew(List<Group> groups)
         {
-            return new Menu();
+            CheckRule(new MenuCannotBeEmptyRule(groups));
+
+            return new Menu(groups);
         }
 
-        public void AddGroup(string groupName)
+        public void EditGroups(List<Group> groups)
         {
-            var group = Group.CreateNew(groupName);
-            _groups.Add(group);
-        }
+            CheckRule(new MenuCannotBeEmptyRule(groups));
 
-        public void AddItemToGroup(string groupName, string itemName)
-        {
-            var group = _groups.SingleOrDefault(x => x.Name == groupName);
-
-            if(group is null)
-            {
-                throw new Exception();
-            }
-
-            group.AddItem(itemName);
+            _groups = groups;
         }
     }
 }
