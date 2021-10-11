@@ -9,6 +9,6 @@ namespace ModularRestaurant.Shared.Application
 {
     public interface IUnitOfWork
     {
-        Task CommitAsync(CancellationToken cancellationToken);
+        Task CommitAsync(CancellationToken token);
     }
 }

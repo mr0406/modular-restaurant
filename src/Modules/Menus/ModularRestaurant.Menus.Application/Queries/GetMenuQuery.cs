@@ -10,12 +10,4 @@ using System.Threading.Tasks;
 namespace ModularRestaurant.Menus.Application.Queries
 {
     public record GetMenuQuery(Guid Id) : IQuery<MenuDTO>;
-
-    public class GetMenuQueryHandler : IQueryHandler<GetMenuQuery, MenuDTO>
-    {
-        public async Task<MenuDTO> Handle(GetMenuQuery query, CancellationToken cancellationToken)
-        {
-            return await Task.FromResult(new MenuDTO());
-        }
-    }
 }

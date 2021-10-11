@@ -23,19 +23,11 @@ namespace ModularRestaurant.Menus.Api.Controllers
             _menuRepository = menuRepository;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<MenuDTO>> Get()
-        {
-            var menu = (await _menuRepository.GetAsync()).ToDTO();
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<MenuDTO>> QueryTest(Guid id)
+            => OkOrNotFound(await Mediator.Send(new GetMenuQuery(id)));
 
-            return Ok(menu);
-        }
-
-        [HttpGet("QueryTest")]
-        public async Task<ActionResult<MenuDTO>> QueryTest()
-            => OkOrNotFound(await Mediator.Send(new GetMenuQuery(Guid.NewGuid())));
-
-        [HttpPost("CommandTest")]
+        [HttpPost]
         public async Task<ActionResult<Guid>> CommandTest(CreateMenuRequest request)
             => OkOrNotFound(await Mediator.Send(request.ToCommand()));
     }

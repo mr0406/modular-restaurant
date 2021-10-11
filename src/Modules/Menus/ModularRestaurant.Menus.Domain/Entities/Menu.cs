@@ -36,5 +36,7 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
             _groups = groups;
         }
+
+        private Menu() { }
     }
 }

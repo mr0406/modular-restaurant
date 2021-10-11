@@ -21,6 +21,8 @@ namespace ModularRestaurant.Menus.Domain.Entities
             _items = items;
         }
 
+        private Group() { }
+
         public static Group CreateNew(string name, List<Item> items)
         {
             CheckRule(new GroupCannotBeEmptyRule(items));

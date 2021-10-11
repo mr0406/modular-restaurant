@@ -44,7 +44,7 @@ namespace ModularRestaurant.Menus.Application.Commands
 
             var menu = Menu.CreateNew(restaurantId, groups);
 
-            await _menuRepository.AddAsync(menu);
+            await _menuRepository.AddAsync(menu, cancellationToken);
 
             return menu.Id.Value;
         }

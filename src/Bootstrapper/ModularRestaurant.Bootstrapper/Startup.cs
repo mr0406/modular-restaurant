@@ -31,6 +31,8 @@ namespace ModularRestaurant.Bootstrapper
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddRouting(x => x.LowercaseUrls = true);
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

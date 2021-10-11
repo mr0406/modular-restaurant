@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using MediatR;
 using ModularRestaurant.Shared.Application.Processing.Queries;
 using ModularRestaurant.Shared.Application.Processing.Commands;
+using System.Diagnostics;
 
 namespace ModularRestaurant.Menus.Application
 {
@@ -15,7 +16,8 @@ namespace ModularRestaurant.Menus.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(Assembly.GetExecutingAssembly(), AppDomain.CurrentDomain.GetAssemblies()
+                .SingleOrDefault(assembly => assembly.GetName().Name == "ModularRestaurant.Menus.Infrastructure"));
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(QueryLoggingBehavior<,>));
 

@@ -16,6 +16,8 @@ namespace ModularRestaurant.Menus.Domain.Entities
             Name = name;
         }
 
+        private Item() { }
+
         public static Item CreateNew(string name)
         {
             return new Item(name);
