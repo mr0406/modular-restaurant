@@ -14,7 +14,7 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Mappings
         {
             return new MenuDTO()
             {
-                Groups = Menu.groups?.ToDTOs()
+                Groups = Menu.Groups?.ToDTOs()
             };
         }
 

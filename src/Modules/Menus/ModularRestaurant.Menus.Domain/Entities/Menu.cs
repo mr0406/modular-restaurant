@@ -1,5 +1,6 @@
 ﻿using ModularRestaurant.Menus.Domain.Rules;
 using ModularRestaurant.Shared.Domain;
+using ModularRestaurant.Shared.Domain.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,21 +9,25 @@ using System.Threading.Tasks;
 
 namespace ModularRestaurant.Menus.Domain.Entities
 {
-    public class Menu : Entity
+    public class Menu : AggregateRoot<MenuId>
     {
-        public IReadOnlyList<Group> groups => _groups;
-        private List<Group> _groups = new List<Group>();
+        public RestaurantId RestaurantId { get; private set; }
 
-        private Menu(List<Group> groups)
-        {
-            _groups = groups;
-        }
+        public IReadOnlyList<Group> Groups => _groups;
+        private List<Group> _groups = new();
 
-        public static Menu CreateNew(List<Group> groups)
+        private Menu(RestaurantId restaurantId, List<Group> groups)
         {
             CheckRule(new MenuCannotBeEmptyRule(groups));
 
-            return new Menu(groups);
+            Id = new MenuId(Guid.NewGuid());
+            RestaurantId = restaurantId;
+            _groups = groups;
+        }
+
+        public static Menu CreateNew(RestaurantId restaurantId, List<Group> groups)
+        {
+            return new Menu(restaurantId, groups);
         }
 
         public void EditGroups(List<Group> groups)

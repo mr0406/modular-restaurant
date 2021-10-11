@@ -10,5 +10,7 @@ namespace ModularRestaurant.Menus.Domain.Repositories
     public interface IMenuRepository
     {
         Task<Menu> GetAsync();
+
+        Task AddAsync(Menu menu);
     }
 }

@@ -10,8 +10,8 @@ namespace ModularRestaurant.Menus.Api.Mappings
 {
     public static class CreateMenuRequestMapping
     {
-        public static CreateMenuCommand ToCommand(this CreateMenuRequest request)
-            => new CreateMenuCommand(MapGroups(request.Groups));
+        public static CreateMenuCommand ToCommand(this CreateMenuRequest request) //change new Guid
+            => new CreateMenuCommand(Guid.NewGuid(), MapGroups(request.Groups));
 
         private static IEnumerable<CreateMenuCommand.Group> MapGroups(IEnumerable<CreateMenuRequest.Group> groups)
             => groups.Select(x => new CreateMenuCommand.Group(x.Name, MapItems(x.Items)));

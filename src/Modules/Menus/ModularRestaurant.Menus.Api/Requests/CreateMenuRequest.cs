@@ -10,10 +10,12 @@ namespace ModularRestaurant.Menus.Api.Requests
 {
     public record CreateMenuRequest
     {
+        public Guid RestaurantId { get; init; }
         public IEnumerable<Group> Groups { get; init; }
 
-        public CreateMenuRequest(IEnumerable<Group> groups)
+        public CreateMenuRequest(Guid restaurantId, IEnumerable<Group> groups)
         {
+            RestaurantId = restaurantId;
             Groups = groups;
         }
 
