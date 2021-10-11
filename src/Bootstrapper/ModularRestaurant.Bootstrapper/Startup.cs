@@ -47,6 +47,11 @@ namespace ModularRestaurant.Bootstrapper
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(builder => builder
+               .AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader());
+
             foreach (var module in _modules)
             {
                 module.Use(app);
