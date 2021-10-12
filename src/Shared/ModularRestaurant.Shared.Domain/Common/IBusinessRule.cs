@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModularRestaurant.Shared.Domain
+namespace ModularRestaurant.Shared.Domain.Common
 {
     public interface IBusinessRule
     {

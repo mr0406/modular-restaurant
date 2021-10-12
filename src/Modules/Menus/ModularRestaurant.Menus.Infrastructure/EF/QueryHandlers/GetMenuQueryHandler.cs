@@ -4,6 +4,7 @@ using ModularRestaurant.Menus.Application.Queries;
 using ModularRestaurant.Menus.Domain.Entities;
 using ModularRestaurant.Menus.Infrastructure.EF.Mappings;
 using ModularRestaurant.Shared.Application;
+using ModularRestaurant.Shared.Application.CQRS;
 using ModularRestaurant.Shared.Domain.Types;
 using System.Threading;
 using System.Threading.Tasks;

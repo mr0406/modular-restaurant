@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ModularRestaurant.Menus.Domain
 {
-    public static class Extensions
+    public static class DependencyInjection
     {
         public static IServiceCollection AddDomain(this IServiceCollection services)
         {

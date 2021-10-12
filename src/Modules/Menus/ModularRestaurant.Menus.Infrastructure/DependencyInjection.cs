@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ModularRestaurant.Menus.Application;
+using ModularRestaurant.Menus.Application.Processing;
 using ModularRestaurant.Menus.Domain.Repositories;
 using ModularRestaurant.Menus.Infrastructure.EF;
 using ModularRestaurant.Menus.Infrastructure.EF.Repositories;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace ModularRestaurant.Menus.Infrastructure
 {
-    public static class Extensions
+    public static class DependencyInjection
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
@@ -27,6 +28,8 @@ namespace ModularRestaurant.Menus.Infrastructure
 
             return services;
         }
+
+        //TODO: Change that
 
         private static T GetOptions<T>(this IServiceCollection services, string sectionName) where T : new()
         {

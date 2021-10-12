@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModularRestaurant.Shared.Domain
+namespace ModularRestaurant.Shared.Domain.Common
 {
-    public abstract class Entity
+    public class AggregateRoot<T>
     {
+        public T Id { get; protected set; }
+
         protected static void CheckRule(IBusinessRule rule)
         {
             if (rule.IsBroken())

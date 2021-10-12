@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModularRestaurant.Menus.Application
+namespace ModularRestaurant.Menus.Application.Processing
 {
     public interface IMenusUnitOfWork : IUnitOfWork
     {

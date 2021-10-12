@@ -1,5 +1,6 @@
 ﻿using ModularRestaurant.Menus.Application.DTOs;
 using ModularRestaurant.Shared.Application;
+using ModularRestaurant.Shared.Application.CQRS;
 using System;
 using System.Collections.Generic;
 using System.Linq;

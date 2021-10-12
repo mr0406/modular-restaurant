@@ -9,15 +9,15 @@ using MediatR;
 using ModularRestaurant.Shared.Application.Processing.Queries;
 using ModularRestaurant.Shared.Application.Processing.Commands;
 using System.Diagnostics;
+using ModularRestaurant.Menus.Application.Processing;
 
 namespace ModularRestaurant.Menus.Application
 {
-    public static class Extensions
+    public static class DependencyInjection
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddMediatR(Assembly.GetExecutingAssembly(), AppDomain.CurrentDomain.GetAssemblies()
-                .SingleOrDefault(assembly => assembly.GetName().Name == "ModularRestaurant.Menus.Infrastructure"));
+            services.AddMediatR(Assembly.GetExecutingAssembly(), GetInfrastructureAssembly());
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(QueryLoggingBehavior<,>));
 
@@ -26,6 +26,15 @@ namespace ModularRestaurant.Menus.Application
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(MenuUnitOfWorkBehavior<,>));
 
             return services;
+        }
+
+        private static Assembly GetInfrastructureAssembly()
+        {
+            var applicationName = Assembly.GetExecutingAssembly().GetName().Name;
+
+            var infrastructureName = applicationName.Replace("Application", "Infrastructure");
+
+            return AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(assembly => assembly.GetName().Name == infrastructureName);
         }
     }
 }

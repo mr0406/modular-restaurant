@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModularRestaurant.Shared.Application
+namespace ModularRestaurant.Shared.Application.CQRS
 {
     public interface ICommand<TResult> : IRequest<TResult>
     {

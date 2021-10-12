@@ -1,5 +1,5 @@
 ﻿using ModularRestaurant.Menus.Domain.Rules;
-using ModularRestaurant.Shared.Domain;
+using ModularRestaurant.Shared.Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

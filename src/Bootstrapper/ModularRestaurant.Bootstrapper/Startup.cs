@@ -61,7 +61,7 @@ namespace ModularRestaurant.Bootstrapper
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ModularRestaurant.Bootstrapper v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ModularRestaurant v1"));
             }
 
             app.UseHttpsRedirection();
@@ -78,6 +78,7 @@ namespace ModularRestaurant.Bootstrapper
             _modules.Clear();
         }
 
+        //TODO: Problem with controllers
         private List<IModule> GetModules()
         {
             return new List<IModule>()

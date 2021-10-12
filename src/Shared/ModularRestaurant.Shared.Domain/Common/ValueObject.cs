@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModularRestaurant.Shared.Domain
+namespace ModularRestaurant.Shared.Domain.Common
 {
     public abstract class ValueObject : IEquatable<ValueObject>
     {

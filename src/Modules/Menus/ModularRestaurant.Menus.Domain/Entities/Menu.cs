@@ -1,5 +1,6 @@
 ﻿using ModularRestaurant.Menus.Domain.Rules;
 using ModularRestaurant.Shared.Domain;
+using ModularRestaurant.Shared.Domain.Common;
 using ModularRestaurant.Shared.Domain.Types;
 using System;
 using System.Collections.Generic;
