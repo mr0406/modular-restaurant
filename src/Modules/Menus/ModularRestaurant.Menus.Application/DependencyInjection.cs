@@ -6,10 +6,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
-using ModularRestaurant.Shared.Application.Processing.Queries;
 using ModularRestaurant.Shared.Application.Processing.Commands;
 using System.Diagnostics;
 using ModularRestaurant.Menus.Application.Processing;
+using ModularRestaurant.Shared.Application.Processing.Requests;
 
 namespace ModularRestaurant.Menus.Application
 {
@@ -19,9 +19,8 @@ namespace ModularRestaurant.Menus.Application
         {
             services.AddMediatR(Assembly.GetExecutingAssembly(), GetInfrastructureAssembly());
 
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(QueryLoggingBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestLoggingBehavior<,>));
 
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CommandLoggingBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatingBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(MenuUnitOfWorkBehavior<,>));
 
