@@ -31,6 +31,13 @@ namespace ModularRestaurant.Menus.Domain.Entities
             return new Menu(restaurantId, groups);
         }
 
+        public void AddGroup(string groupName)
+        {
+            CheckRule(new GroupNameMustBeUniqueRule(_groups, groupName));
+
+            _groups.Add(Group.CreateNew(groupName));
+        }
+
         public void EditGroups(List<Group> groups)
         {
             CheckRule(new MenuCannotBeEmptyRule(groups));

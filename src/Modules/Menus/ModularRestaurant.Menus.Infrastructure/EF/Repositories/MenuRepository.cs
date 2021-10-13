@@ -26,5 +26,10 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Repositories
         {
             await _menus.AddAsync(menu, token);
         }
+
+        public async Task<Menu> GetAsync(MenuId menuId, CancellationToken token)
+        {
+            return await _menus.SingleAsync(x => x.Id == menuId, token);
+        }
     }
 }

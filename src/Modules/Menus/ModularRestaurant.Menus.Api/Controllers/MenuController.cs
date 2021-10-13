@@ -2,6 +2,7 @@
 using ModularRestaurant.Menus.Api.Mappings;
 using ModularRestaurant.Menus.Api.Requests;
 using ModularRestaurant.Menus.Application.Commands;
+using ModularRestaurant.Menus.Application.Commands.CreateGroup;
 using ModularRestaurant.Menus.Application.DTOs;
 using ModularRestaurant.Menus.Application.Queries;
 using ModularRestaurant.Menus.Domain.Entities;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MediatR;
 
 namespace ModularRestaurant.Menus.Api.Controllers
 {
@@ -30,5 +32,12 @@ namespace ModularRestaurant.Menus.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Guid>> CommandTest(CreateMenuRequest request)
             => OkOrNotFound(await Mediator.Send(request.ToCommand()));
+
+        [HttpPost]
+        public async Task<ActionResult<Unit>> CreateGroupCommand(CreateGroupRequest request)
+            => OkOrNotFound(await Mediator.Send(
+                new CreateGroupCommand(
+                    request.MenuId,
+                    request.GroupName)));
     }
 }
