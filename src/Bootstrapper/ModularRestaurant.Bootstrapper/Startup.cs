@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ModularRestaurant.Bootstrapper.ExceptionHandling;
 using ModularRestaurant.Menus.Api;
 using ModularRestaurant.Shared.Api;
 using System;
@@ -31,6 +32,8 @@ namespace ModularRestaurant.Bootstrapper
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddExceptionHandling();
+
             services.AddRouting(x => x.LowercaseUrls = true);
 
             services.AddControllers();
@@ -52,6 +55,8 @@ namespace ModularRestaurant.Bootstrapper
                .AllowAnyMethod()
                .AllowAnyHeader());
 
+            app.UseExceptionHandling();
+
             foreach (var module in _modules)
             {
                 module.Use(app);
@@ -59,7 +64,6 @@ namespace ModularRestaurant.Bootstrapper
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ModularRestaurant v1"));
             }
