@@ -15,15 +15,5 @@ namespace ModularRestaurant.Shared.Api
     {
         private ISender _mediator;
         protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetService<ISender>();
-
-        protected ActionResult<T> OkOrNotFound<T>(T model)
-        {
-            if(model is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(model);
-        }
     }
 }

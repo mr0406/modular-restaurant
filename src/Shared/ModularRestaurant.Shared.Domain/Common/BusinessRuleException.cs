@@ -18,7 +18,5 @@ namespace ModularRestaurant.Shared.Domain.Common
             BrokenRule = brokenRule;
             Details = brokenRule.Message;
         }
-
-        public override string ToString() => $"{BrokenRule.GetType().FullName}: {BrokenRule.Message}";
     }
 }

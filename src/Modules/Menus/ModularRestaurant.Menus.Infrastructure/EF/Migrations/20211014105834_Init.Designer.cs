@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModularRestaurant.Menus.Infrastructure.EF;
 
-namespace ModularRestaurant.Menus.Infrastructure.Migrations
+namespace ModularRestaurant.Menus.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(MenusDbContext))]
-    [Migration("20211011103950_Change_Table_Names")]
-    partial class Change_Table_Names
+    [Migration("20211014105834_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

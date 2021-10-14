@@ -39,7 +39,7 @@ namespace ModularRestaurant.Bootstrapper
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ModularRestaurant.Bootstrapper", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ModularRestaurant", Version = "v1" });
             });
 
             foreach(var module in _modules)
