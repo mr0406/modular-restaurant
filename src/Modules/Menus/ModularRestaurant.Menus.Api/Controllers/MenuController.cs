@@ -34,7 +34,9 @@ namespace ModularRestaurant.Menus.Api.Controllers
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status409Conflict)]
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Guid>> CreateMenu(CreateMenuRequest request)
-            => Ok(await Mediator.Send(request.ToCommand()));
+            => Ok(await Mediator.Send(
+                new CreateMenuRequest(
+                    request.RestaurantId)));
 
         [HttpPost]
         public async Task<ActionResult<Unit>> CreateGroupCommand(CreateGroupRequest request)

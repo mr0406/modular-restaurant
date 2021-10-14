@@ -17,18 +17,15 @@ namespace ModularRestaurant.Menus.Domain.Entities
         public IReadOnlyList<Group> Groups => _groups;
         private List<Group> _groups = new();
 
-        private Menu(RestaurantId restaurantId, List<Group> groups)
+        private Menu(RestaurantId restaurantId)
         {
-            CheckRule(new MenuCannotBeEmptyRule(groups));
-
             Id = new MenuId(Guid.NewGuid());
             RestaurantId = restaurantId;
-            _groups = groups;
         }
 
-        public static Menu CreateNew(RestaurantId restaurantId, List<Group> groups)
+        public static Menu CreateNew(RestaurantId restaurantId)
         {
-            return new Menu(restaurantId, groups);
+            return new Menu(restaurantId);
         }
 
         public void AddGroup(string groupName)
