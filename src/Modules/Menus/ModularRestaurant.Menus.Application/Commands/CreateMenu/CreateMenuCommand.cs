@@ -15,16 +15,10 @@ namespace ModularRestaurant.Menus.Application.Commands.CreateMenu
     public record CreateMenuCommand : ICommand<Guid>
     {
         public Guid RestaurantId { get; init; }
-        public IEnumerable<Group> Groups { get; init; }
 
-        public CreateMenuCommand(Guid restaurantId, IEnumerable<Group> groups)
+        public CreateMenuCommand(Guid restaurantId)
         {
             RestaurantId = restaurantId;
-            Groups = groups;
         }
-
-        public record Group(string Name, IEnumerable<Item> Items);
-
-        public record Item(string Name);
     }
 }

@@ -25,9 +25,7 @@ namespace ModularRestaurant.Menus.Application.Commands.CreateMenu
         {
             var restaurantId = new RestaurantId(request.RestaurantId);
 
-            var groups = request.Groups.Select(x => Group.CreateNew(x.Name, x.Items.Select(i => Item.CreateNew(i.Name)).ToList())).ToList();
-
-            var menu = Menu.CreateNew(restaurantId, groups);
+            var menu = Menu.CreateNew(restaurantId);
 
             await _menuRepository.AddAsync(menu, cancellationToken);
 

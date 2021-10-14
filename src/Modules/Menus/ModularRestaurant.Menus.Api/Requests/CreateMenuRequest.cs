@@ -11,17 +11,11 @@ namespace ModularRestaurant.Menus.Api.Requests
     public record CreateMenuRequest
     {
         public Guid RestaurantId { get; init; }
-        public IEnumerable<Group> Groups { get; init; }
 
-        public CreateMenuRequest(Guid restaurantId, IEnumerable<Group> groups)
+        public CreateMenuRequest(Guid restaurantId)
         {
             RestaurantId = restaurantId;
-            Groups = groups;
         }
-
-        public record Group(string Name, IEnumerable<Item> Items);
-
-        public record Item(string Name);
     }
 
 }
