@@ -1,17 +1,16 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using ModularRestaurant.Ratings.Application.Processing;
+using ModularRestaurant.Shared.Application.Processing.Commands;
+using ModularRestaurant.Shared.Application.Processing.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using MediatR;
-using ModularRestaurant.Shared.Application.Processing.Commands;
-using System.Diagnostics;
-using ModularRestaurant.Menus.Application.Processing;
-using ModularRestaurant.Shared.Application.Processing.Requests;
 
-namespace ModularRestaurant.Menus.Application
+namespace ModularRestaurant.Ratings.Application
 {
     public static class DependencyInjection
     {
@@ -22,7 +21,7 @@ namespace ModularRestaurant.Menus.Application
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestLoggingBehavior<,>));
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatingBehavior<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(MenusUnitOfWorkBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RatingsUnitOfWorkBehavior<,>));
 
             return services;
         }

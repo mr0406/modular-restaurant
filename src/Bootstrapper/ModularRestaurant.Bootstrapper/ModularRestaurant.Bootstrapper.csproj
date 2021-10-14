@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\Menus\ModularRestaurant.Menus.Api\ModularRestaurant.Menus.Api.csproj" />
+    <ProjectReference Include="..\..\Modules\Ratings\ModularRestaurant.Ratings.Api\ModularRestaurant.Ratings.Api.csproj" />
   </ItemGroup>
 
 </Project>

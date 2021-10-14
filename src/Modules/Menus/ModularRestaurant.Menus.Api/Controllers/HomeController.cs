@@ -11,6 +11,6 @@ namespace ModularRestaurant.Menus.Api.Controllers
     public class HomeController : MenusControllerBase
     {
         [HttpGet]
-        public ActionResult<string> Get() => "Menu API!";
+        public ActionResult<string> Get() => "Menus API!";
     }
 }

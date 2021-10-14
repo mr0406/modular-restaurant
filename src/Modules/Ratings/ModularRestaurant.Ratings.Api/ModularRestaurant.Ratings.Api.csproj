@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\ModularRestaurant.Ratings.Application\ModularRestaurant.Ratings.Application.csproj" />
+    <ProjectReference Include="..\..\..\Shared\ModularRestaurant.Shared.Api\ModularRestaurant.Shared.Api.csproj" />
+    <ProjectReference Include="..\ModularRestaurant.Ratings.Infrastructure\ModularRestaurant.Ratings.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

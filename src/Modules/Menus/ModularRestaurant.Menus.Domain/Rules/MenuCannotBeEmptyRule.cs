@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace ModularRestaurant.Menus.Domain.Rules
 {
-    public class MenuCannotBeEmptyRule : IBusinessRule
+    internal class MenuCannotBeEmptyRule : IBusinessRule
     {
+        public string Message => "Menu cannot contain 0 groups";
+
         private readonly List<Group> _groups;
 
         internal MenuCannotBeEmptyRule(List<Group> groups)
@@ -19,7 +21,5 @@ namespace ModularRestaurant.Menus.Domain.Rules
         }
 
         public bool IsBroken() => _groups is null || !_groups.Any();
-
-        public string Message => "Menu cannot contain 0 groups";
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ModularRestaurant.Bootstrapper.ExceptionHandling;
 using ModularRestaurant.Menus.Api;
+using ModularRestaurant.Ratings.Api;
 using ModularRestaurant.Shared.Api;
 using System;
 using System.Collections.Generic;
@@ -87,7 +88,8 @@ namespace ModularRestaurant.Bootstrapper
         {
             return new List<IModule>()
             {
-                new MenusModule()
+                new MenusModule(),
+                new RatingsModule()
             };
         }
     }

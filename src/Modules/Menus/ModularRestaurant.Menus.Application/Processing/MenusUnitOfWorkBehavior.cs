@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace ModularRestaurant.Menus.Application.Processing
 {
-    public class MenuUnitOfWorkBehavior<TCommand, TResult> : UnitOfWorkBehavior<IMenusUnitOfWork, TCommand, TResult>
+    public class MenusUnitOfWorkBehavior<TCommand, TResult> : UnitOfWorkBehavior<IMenusUnitOfWork, TCommand, TResult>
         where TCommand : ICommand<TResult>
     {
-        public MenuUnitOfWorkBehavior(IMenusUnitOfWork unitOfWork) : base(unitOfWork)
+        public MenusUnitOfWorkBehavior(IMenusUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
     }

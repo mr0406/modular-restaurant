@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using ModularRestaurant.Menus.Application;
-using ModularRestaurant.Menus.Domain;
-using ModularRestaurant.Menus.Infrastructure;
+using ModularRestaurant.Ratings.Application;
+using ModularRestaurant.Ratings.Domain;
+using ModularRestaurant.Ratings.Infrastructure;
 using ModularRestaurant.Shared.Api;
 using System;
 using System.Collections.Generic;
@@ -10,12 +10,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModularRestaurant.Menus.Api
+namespace ModularRestaurant.Ratings.Api
 {
-    public class MenusModule : IModule
+    public class RatingsModule : IModule
     {
-        public const string BasePath = "menus-module";
-        public string Name => "Menus";
+        public const string BasePath = "ratings-module";
+        public string Name => "Ratings";
         public string Path => BasePath;
 
         public void Register(IServiceCollection services)
