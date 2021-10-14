@@ -27,7 +27,7 @@ namespace ModularRestaurant.Menus.Api.Controllers
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<MenuDTO>> GetMenu(Guid id)
-            => throw new EntityNotFoundException(nameof(Menu), id);//OkOrNotFound(await Mediator.Send(new GetMenuQuery(id)));
+            => Ok(await Mediator.Send(new GetMenuQuery(id)));
 
         [HttpPost]
         [ProducesResponseType(typeof(MenuDTO), StatusCodes.Status200OK)]
@@ -35,12 +35,10 @@ namespace ModularRestaurant.Menus.Api.Controllers
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Guid>> CreateMenu(CreateMenuRequest request)
             => Ok(await Mediator.Send(request.ToCommand()));
-        public async Task<ActionResult<Guid>> CommandTest(CreateMenuRequest request)
-            => OkOrNotFound(await Mediator.Send(request.ToCommand()));
 
         [HttpPost]
         public async Task<ActionResult<Unit>> CreateGroupCommand(CreateGroupRequest request)
-            => OkOrNotFound(await Mediator.Send(
+            => Ok(await Mediator.Send(
                 new CreateGroupCommand(
                     request.MenuId,
                     request.GroupName)));
