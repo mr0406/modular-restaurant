@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ModularRestaurant.Menus.Infrastructure.Migrations
+namespace ModularRestaurant.Menus.Infrastructure.EF.Migrations
 {
     public partial class Init : Migration
     {
@@ -24,7 +24,7 @@ namespace ModularRestaurant.Menus.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Group",
+                name: "Groups",
                 schema: "menus",
                 columns: table => new
                 {
@@ -35,9 +35,9 @@ namespace ModularRestaurant.Menus.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Group", x => new { x.MenuId, x.Id });
+                    table.PrimaryKey("PK_Groups", x => new { x.MenuId, x.Id });
                     table.ForeignKey(
-                        name: "FK_Group_Menus_MenuId",
+                        name: "FK_Groups_Menus_MenuId",
                         column: x => x.MenuId,
                         principalSchema: "menus",
                         principalTable: "Menus",
@@ -46,7 +46,7 @@ namespace ModularRestaurant.Menus.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Item",
+                name: "Items",
                 schema: "menus",
                 columns: table => new
                 {
@@ -58,12 +58,12 @@ namespace ModularRestaurant.Menus.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Item", x => new { x.GroupMenuId, x.GroupId, x.Id });
+                    table.PrimaryKey("PK_Items", x => new { x.GroupMenuId, x.GroupId, x.Id });
                     table.ForeignKey(
-                        name: "FK_Item_Group_GroupMenuId_GroupId",
+                        name: "FK_Items_Groups_GroupMenuId_GroupId",
                         columns: x => new { x.GroupMenuId, x.GroupId },
                         principalSchema: "menus",
-                        principalTable: "Group",
+                        principalTable: "Groups",
                         principalColumns: new[] { "MenuId", "Id" },
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -72,11 +72,11 @@ namespace ModularRestaurant.Menus.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Item",
+                name: "Items",
                 schema: "menus");
 
             migrationBuilder.DropTable(
-                name: "Group",
+                name: "Groups",
                 schema: "menus");
 
             migrationBuilder.DropTable(

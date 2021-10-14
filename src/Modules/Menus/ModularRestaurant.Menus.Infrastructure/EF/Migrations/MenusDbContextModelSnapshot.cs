@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModularRestaurant.Menus.Infrastructure.EF;
 
-namespace ModularRestaurant.Menus.Infrastructure.Migrations
+namespace ModularRestaurant.Menus.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(MenusDbContext))]
     partial class MenusDbContextModelSnapshot : ModelSnapshot

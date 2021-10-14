@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using ModularRestaurant.Menus.Api.Mappings;
 using ModularRestaurant.Menus.Api.Requests;
 using ModularRestaurant.Menus.Application.Commands;
@@ -7,6 +8,7 @@ using ModularRestaurant.Menus.Application.Queries;
 using ModularRestaurant.Menus.Domain.Entities;
 using ModularRestaurant.Menus.Domain.Repositories;
 using ModularRestaurant.Menus.Infrastructure.EF.Mappings;
+using ModularRestaurant.Shared.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,18 +19,18 @@ namespace ModularRestaurant.Menus.Api.Controllers
 {
     public class MenuController : MenusControllerBase
     {
-        private readonly IMenuRepository _menuRepository;
-        public MenuController(IMenuRepository menuRepository)
-        {
-            _menuRepository = menuRepository;
-        }
-
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<MenuDTO>> QueryTest(Guid id)
+        [ProducesResponseType(typeof(MenuDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<MenuDTO>> GetMenu(Guid id)
             => OkOrNotFound(await Mediator.Send(new GetMenuQuery(id)));
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> CommandTest(CreateMenuRequest request)
-            => OkOrNotFound(await Mediator.Send(request.ToCommand()));
+        [ProducesResponseType(typeof(MenuDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Guid>> CreateMenu(CreateMenuRequest request)
+            => Ok(await Mediator.Send(request.ToCommand()));
     }
 }
