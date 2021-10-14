@@ -9,6 +9,7 @@ using ModularRestaurant.Menus.Domain.Entities;
 using ModularRestaurant.Menus.Domain.Repositories;
 using ModularRestaurant.Menus.Infrastructure.EF.Mappings;
 using ModularRestaurant.Shared.Api;
+using ModularRestaurant.Shared.Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,10 @@ namespace ModularRestaurant.Menus.Api.Controllers
     {
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(MenuDTO), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<MenuDTO>> GetMenu(Guid id)
-            => OkOrNotFound(await Mediator.Send(new GetMenuQuery(id)));
+            => throw new EntityNotFoundException(nameof(Menu), id);//OkOrNotFound(await Mediator.Send(new GetMenuQuery(id)));
 
         [HttpPost]
         [ProducesResponseType(typeof(MenuDTO), StatusCodes.Status200OK)]

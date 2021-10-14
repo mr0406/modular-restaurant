@@ -15,6 +15,7 @@ namespace ModularRestaurant.Bootstrapper.ExceptionHandling
             return e switch
             {
                 BusinessRuleException businessRuleException => new ErrorResponse(new ErrorMessage(businessRuleException.Message), HttpStatusCode.Conflict),
+                EntityNotFoundException entityNotFoundException => new ErrorResponse(new ErrorMessage(entityNotFoundException.Message), HttpStatusCode.NotFound),
                 _ => new ErrorResponse(new ErrorMessage("Internal server error."), HttpStatusCode.InternalServerError)
             };
         }
