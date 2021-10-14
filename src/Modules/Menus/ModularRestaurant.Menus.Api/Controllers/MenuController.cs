@@ -17,6 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
+using ModularRestaurant.Menus.Application.Commands.CreateMenu;
 
 namespace ModularRestaurant.Menus.Api.Controllers
 {
@@ -29,16 +30,16 @@ namespace ModularRestaurant.Menus.Api.Controllers
         public async Task<ActionResult<MenuDTO>> GetMenu(Guid id)
             => Ok(await Mediator.Send(new GetMenuQuery(id)));
 
-        [HttpPost]
+        [HttpPost("create")]
         [ProducesResponseType(typeof(MenuDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status409Conflict)]
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Guid>> CreateMenu(CreateMenuRequest request)
             => Ok(await Mediator.Send(
-                new CreateMenuRequest(
+                new CreateMenuCommand(
                     request.RestaurantId)));
 
-        [HttpPost]
+        [HttpPost("create/group")]
         public async Task<ActionResult<Unit>> CreateGroupCommand(CreateGroupRequest request)
             => Ok(await Mediator.Send(
                 new CreateGroupCommand(

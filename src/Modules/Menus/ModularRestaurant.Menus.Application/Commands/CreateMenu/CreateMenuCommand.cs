@@ -16,7 +16,7 @@ namespace ModularRestaurant.Menus.Application.Commands.CreateMenu
     {
         public Guid RestaurantId { get; init; }
 
-        public CreateMenuCommand(Guid restaurantId, IEnumerable<Group> groups)
+        public CreateMenuCommand(Guid restaurantId)
         {
             RestaurantId = restaurantId;
         }
