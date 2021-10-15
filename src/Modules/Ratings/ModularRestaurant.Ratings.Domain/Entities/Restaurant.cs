@@ -16,13 +16,17 @@ namespace ModularRestaurant.Ratings.Domain.Entities
 
         public void Create() { } //communicate from restaurant module when restaurant is created
 
-        public void AddUserRating(UserId userId, int ratingValue) 
+        public void AddUserRating(UserId userId, int ratingValue, string text) 
         {
             CheckRule(new UserCanOnlyRateRestaurantOnceRule(userId, _userRatings));
 
-            _userRatings.Add(UserRating.Create(userId, ratingValue));
+            _userRatings.Add(UserRating.Create(userId, ratingValue, text));
         }
 
-        public void AddCommentToUserRating() { } 
+        public void AddCommentToUserRating(UserId userId, string text) 
+        {
+            var userRating = UserRatings.Single(x => x.UserId == userId);
+            userRating.AddRestaurantReply(text);
+        } 
     }
 }

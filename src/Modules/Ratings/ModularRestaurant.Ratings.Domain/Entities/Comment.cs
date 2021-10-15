@@ -15,6 +15,7 @@ namespace ModularRestaurant.Ratings.Domain.Entities
         internal static Comment FromText(string text)
         {
             CheckRule(new CommentCannotBeEmptyRule(text));
+            CheckRule(new CommentCannotExceedCharacterLimit(text));
 
             return new Comment(text);
         }
