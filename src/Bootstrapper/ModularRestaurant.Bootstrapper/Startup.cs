@@ -88,7 +88,7 @@ namespace ModularRestaurant.Bootstrapper
         {
             return new List<IModule>()
             {
-                new MenusModule(),
+                //new MenusModule(),
                 new RatingsModule()
             };
         }

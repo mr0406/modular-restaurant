@@ -22,7 +22,11 @@ namespace ModularRestaurant.Ratings.Domain.Entities
         {
             UserId = userId;
             Rating = rating;
-            Comment = comment;
+
+            if(comment is not null)
+            {
+                Comment = comment;
+            }
         }
 
         internal static UserRating Create(UserId userId, int ratingValue, string text)

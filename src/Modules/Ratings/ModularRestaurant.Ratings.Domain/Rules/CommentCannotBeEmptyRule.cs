@@ -9,7 +9,7 @@ namespace ModularRestaurant.Ratings.Domain.Rules
 {
     public class CommentCannotBeEmptyRule : IBusinessRule
     {
-        public string Message => "Comment cannot ce empty.";
+        public string Message => "Comment cannot be empty.";
 
         private readonly string _text;
 

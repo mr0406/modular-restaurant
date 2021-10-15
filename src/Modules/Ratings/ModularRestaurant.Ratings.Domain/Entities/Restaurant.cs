@@ -11,14 +11,23 @@ namespace ModularRestaurant.Ratings.Domain.Entities
 {
     public class Restaurant : AggregateRoot<RestaurantId>
     {
-        public IReadOnlyList<UserRating> UserRatings;
+        public IReadOnlyList<UserRating> UserRatings => _userRatings;
         private List<UserRating> _userRatings = new();
 
         private Restaurant()
         {
         }
 
-        public void Create() { } //communicate from restaurant module when restaurant is created
+        public Restaurant(RestaurantId id)
+        {
+            Id = id;
+        }
+
+        //TODO: Removed after add integration with restaurantModule
+        public static Restaurant Create(Guid id) 
+        {
+            return new Restaurant(new RestaurantId(id));
+        }
 
         public void AddUserRating(UserId userId, int ratingValue, string text) 
         {

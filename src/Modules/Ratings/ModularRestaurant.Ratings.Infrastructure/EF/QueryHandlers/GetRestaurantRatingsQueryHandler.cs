@@ -28,7 +28,8 @@ namespace ModularRestaurant.Ratings.Infrastructure.EF.QueryHandlers
                                                .Select(x => new RestaurantDTO()
                                                {
                                                     Id = x.Id.Value,
-                                                    AverageRating = x.UserRatings.Sum(y => y.Rating.Value) / x.UserRatings.Count(),
+                                                    NumberOfRatings = x.UserRatings.Count(),
+                                                    SumOfRatings = x.UserRatings.Sum(y => y.Rating.Value),
                                                     UserRatings = x.UserRatings.Select(y => new UserRatingDTO
                                                     {
                                                         UserId = y.UserId.Value,
@@ -44,11 +45,16 @@ namespace ModularRestaurant.Ratings.Infrastructure.EF.QueryHandlers
                 return null; //TODO: Not Found
             }
 
-            var a = GetUserDetailsFromOtherModule(restaurant.UserRatings.Select(x => x.UserId)).ToList();
+            return restaurant;
 
-            for(int i = 0; i < restaurant.UserRatings.Count(); i++)
+            if(restaurant.NumberOfRatings > 0)
             {
-                restaurant.UserRatings[i].Username = a.Single(x => x.Id == restaurant.UserRatings[i].UserId).Username;
+                var a = GetUserDetailsFromOtherModule(restaurant.UserRatings.Select(x => x.UserId)).ToList();
+
+                for (int i = 0; i < restaurant.UserRatings.Count(); i++)
+                {
+                    restaurant.UserRatings[i].Username = a.Single(x => x.Id == restaurant.UserRatings[i].UserId).Username;
+                }
             }
 
             return restaurant;
