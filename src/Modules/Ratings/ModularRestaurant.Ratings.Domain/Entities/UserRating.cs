@@ -14,6 +14,10 @@ namespace ModularRestaurant.Ratings.Domain.Entities
 
         public Comment RestaurantReply { get; private set; }
 
+        private UserRating()
+        {
+        }
+
         private UserRating(UserId userId, Rating rating, Comment comment)
         {
             UserId = userId;

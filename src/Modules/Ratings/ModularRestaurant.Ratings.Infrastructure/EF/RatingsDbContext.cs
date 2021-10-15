@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ModularRestaurant.Ratings.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace ModularRestaurant.Ratings.Infrastructure.EF
 {
     public class RatingsDbContext : DbContext
     {
+        public DbSet<Restaurant> Restaurants { get; set; }
+
         public RatingsDbContext(DbContextOptions<RatingsDbContext> options) : base(options)
         {
         }

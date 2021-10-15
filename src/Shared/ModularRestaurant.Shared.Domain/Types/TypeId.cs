@@ -8,7 +8,7 @@ namespace ModularRestaurant.Shared.Domain.Types
 {
     public abstract class TypeId : IEquatable<TypeId>
     {
-        public Guid Value { get; }
+        public Guid Value { get; private set; }
 
         protected TypeId(Guid value)
         {

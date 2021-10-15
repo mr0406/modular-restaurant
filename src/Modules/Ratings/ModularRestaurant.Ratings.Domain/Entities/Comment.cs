@@ -7,6 +7,10 @@ namespace ModularRestaurant.Ratings.Domain.Entities
     {
         public string Text { get; private set; }
 
+        private Comment()
+        {
+        }
+
         private Comment(string text)
         {
             Text = text;

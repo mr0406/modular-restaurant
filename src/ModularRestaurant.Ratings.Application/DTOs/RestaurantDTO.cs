@@ -13,7 +13,7 @@ namespace ModularRestaurant.Ratings.Application.DTOs
 
         public double AverageRating { get; set; }
 
-        public IEnumerable<UserRatingDTO> UserRatings { get; set; }
+        public List<UserRatingDTO> UserRatings { get; set; }
 
     }
 

@@ -14,6 +14,10 @@ namespace ModularRestaurant.Ratings.Domain.Entities
         public IReadOnlyList<UserRating> UserRatings;
         private List<UserRating> _userRatings = new();
 
+        private Restaurant()
+        {
+        }
+
         public void Create() { } //communicate from restaurant module when restaurant is created
 
         public void AddUserRating(UserId userId, int ratingValue, string text) 
