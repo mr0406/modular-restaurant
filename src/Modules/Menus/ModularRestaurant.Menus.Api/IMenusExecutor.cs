@@ -3,7 +3,7 @@ using ModularRestaurant.Shared.Application.CQRS;
 
 namespace ModularRestaurant.Menus.Api
 {
-    public interface IMenusModule
+    public interface IMenusExecutor
     {
         Task<TResult> ExecuteQuery<TResult>(IQuery<TResult> query);
         

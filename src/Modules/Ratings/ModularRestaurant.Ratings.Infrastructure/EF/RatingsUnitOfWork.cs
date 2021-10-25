@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ModularRestaurant.Ratings.Infrastructure.EF
 {
-    internal class RatingsUnitOfWork : EFUnitOfWork<RatingsDbContext>, IRatingsUnitOfWork
+    public class RatingsUnitOfWork : EFUnitOfWork<RatingsDbContext>, IRatingsUnitOfWork
     {
         public RatingsUnitOfWork(RatingsDbContext dbContext) : base(dbContext)
         {

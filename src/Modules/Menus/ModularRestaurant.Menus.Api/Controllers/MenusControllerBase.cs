@@ -6,11 +6,11 @@ namespace ModularRestaurant.Menus.Api.Controllers
     [Route("menus-module/[controller]")]
     public abstract class MenusControllerBase : ControllerBase
     {
-        protected readonly IMenusModule _menusModule;
+        protected readonly IMenusExecutor Executor;
         
-        public MenusControllerBase(IMenusModule menusModule)
+        public MenusControllerBase(IMenusExecutor executor)
         {
-            _menusModule = menusModule;
+            Executor = executor;
         }
     }
 }

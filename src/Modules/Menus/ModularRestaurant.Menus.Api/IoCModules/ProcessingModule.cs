@@ -15,15 +15,17 @@ namespace ModularRestaurant.Menus.Api.IoCModules
         {
             //fix that: need Application and Infrastructure Assemblies
 
+            builder.RegisterType<MenusUnitOfWork>().As<IMenusUnitOfWork>().InstancePerLifetimeScope();
+            
             builder.RegisterMediatR(typeof(CreateGroupCommand).Assembly, typeof(MenusDbContext).Assembly);
             
             /*builder.RegisterGeneric(typeof(RequestLoggingBehavior<,>))
                 .As(typeof(IPipelineBehavior<,>));
 
             builder.RegisterGeneric(typeof(ValidatingBehavior<,>))
-                .As(typeof(IPipelineBehavior<,>));
-            builder.RegisterGeneric(typeof(MenusUnitOfWorkBehavior<,>))
                 .As(typeof(IPipelineBehavior<,>));*/
+            builder.RegisterGeneric(typeof(MenusUnitOfWorkBehavior<,>))
+                .As(typeof(IPipelineBehavior<,>));
         }
     }
 }

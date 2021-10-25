@@ -10,12 +10,11 @@ namespace ModularRestaurant.Menus.Api.Controllers
     [ApiController]
     public class HomeController : MenusControllerBase
     {
-        public HomeController(IMenusModule menusModule) : base(menusModule)
+        public HomeController(IMenusExecutor executor) : base(executor)
         {
         }
         
-        [HttpGet]
-        [Route("")]
+        [HttpGet("")]
         public ActionResult<string> Get() => "Menus API!";
     }
 }

@@ -23,7 +23,7 @@ namespace ModularRestaurant.Menus.Api.Controllers
 {
     public class MenuController : MenusControllerBase
     {
-        public MenuController(IMenusModule menusModule) : base(menusModule)
+        public MenuController(IMenusExecutor executor) : base(executor)
         {
         }
         
@@ -31,21 +31,21 @@ namespace ModularRestaurant.Menus.Api.Controllers
         [ProducesResponseType(typeof(MenuDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<MenuDTO>> GetMenu(Guid id)
-            => Ok(await _menusModule.ExecuteQuery(new GetMenuQuery(id)));
+        public async Task<ActionResult<MenuDTO>> GetMenu([FromQuery] Guid id)
+            => Ok(await Executor.ExecuteQuery(new GetMenuQuery(id)));
 
         [HttpPost("create")]
         [ProducesResponseType(typeof(MenuDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status409Conflict)]
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Guid>> CreateMenu([FromBody] CreateMenuRequest request)
-            => Ok(await _menusModule.ExecuteCommand(
+            => Ok(await Executor.ExecuteCommand(
                 new CreateMenuCommand(
                     request.RestaurantId)));
 
         [HttpPost("create/group")]
-        public async Task<ActionResult<Unit>> CreateGroupCommand(CreateGroupRequest request)
-            => Ok(await _menusModule.ExecuteCommand(
+        public async Task<ActionResult<Unit>> CreateGroupCommand([FromBody] CreateGroupRequest request)
+            => Ok(await Executor.ExecuteCommand(
                 new CreateGroupCommand(
                     request.MenuId,
                     request.GroupName)));

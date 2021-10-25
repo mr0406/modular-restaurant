@@ -14,20 +14,24 @@ namespace ModularRestaurant.Ratings.Api.Controllers
 {
     public class RatingsController : RatingsControllerBase
     {
+        public RatingsController(IRatingsExecutor executor) : base(executor)
+        {
+        }
+        
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<RestaurantDTO>> Get(Guid id)
-            => Ok(await Mediator.Send(new GetRestaurantRatingsQuery(id)));
+        public async Task<ActionResult<RestaurantDTO>> Get([FromQuery] Guid id)
+            => Ok(await Executor.ExecuteQuery(new GetRestaurantRatingsQuery(id)));
 
         [HttpPost]
-        public async Task<ActionResult> AddRestaurant(AddRestaurantRequest addRestaurantRequest)
-            => Ok(await Mediator.Send(new AddRestaurantCommand(addRestaurantRequest.Id)));
+        public async Task<ActionResult> AddRestaurant([FromBody] AddRestaurantRequest addRestaurantRequest)
+            => Ok(await Executor.ExecuteCommand(new AddRestaurantCommand(addRestaurantRequest.Id)));
 
         [HttpPost("addRating")]
-        public async Task<ActionResult> AddRating(AddRatingRequest addRatingRequest)
-            => Ok(await Mediator.Send(new AddRatingCommand(
-                    addRatingRequest.RestaurantId,
-                    addRatingRequest.UserId,
-                    addRatingRequest.Rating,
-                    addRatingRequest.Text)));
+        public async Task<ActionResult> AddRating([FromBody] AddRatingRequest addRatingRequest)
+            => Ok(await Executor.ExecuteCommand(new AddRatingCommand(
+                addRatingRequest.RestaurantId,
+                addRatingRequest.UserId,
+                addRatingRequest.Rating,
+                addRatingRequest.Text)));
     }
 }

@@ -47,7 +47,8 @@ namespace ModularRestaurant.Bootstrapper
 
         public void ConfigureContainer(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterType<MenusModule>().As<IMenusModule>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<MenusExecutor>().As<IMenusExecutor>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<RatingsExecutor>().As<IRatingsExecutor>().InstancePerLifetimeScope();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -62,7 +63,6 @@ namespace ModularRestaurant.Bootstrapper
                .AllowAnyHeader());
 
             app.UseExceptionHandling();
-            
 
             if (env.IsDevelopment())
             {
@@ -85,6 +85,7 @@ namespace ModularRestaurant.Bootstrapper
         private void InitializeModules()
         {
             MenusStartup.Initialize(_configuration[ConnectionString]);
+            RatingsStartup.Initialize(_configuration[ConnectionString]);
         }
     }
 }

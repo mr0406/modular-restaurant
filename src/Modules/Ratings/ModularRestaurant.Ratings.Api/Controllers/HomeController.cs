@@ -5,7 +5,12 @@ namespace ModularRestaurant.Ratings.Api.Controllers
     [ApiController]
     public class HomeController : RatingsControllerBase
     {
-        [HttpGet]
+        public HomeController(IRatingsExecutor executor) : base(executor)
+        {
+        }
+        
+        [HttpGet("")]
         public ActionResult<string> Get() => "Ratings API!";
+        
     }
 }
