@@ -80,8 +80,8 @@ namespace ModularRestaurant.Bootstrapper
 
         private void InitializeModules()
         {
-            MenusStartup.Initialize(_configuration[ConnectionString]);
-            RatingsStartup.Initialize(_configuration[ConnectionString]);
+            //MenusStartup.Initialize(_configuration[ConnectionString]);
+            //RatingsStartup.Initialize(_configuration[ConnectionString]);
         }
     }
 }
