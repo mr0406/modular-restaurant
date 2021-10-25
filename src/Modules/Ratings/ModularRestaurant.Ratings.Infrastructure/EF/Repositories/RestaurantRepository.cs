@@ -15,7 +15,13 @@ namespace ModularRestaurant.Ratings.Infrastructure.EF.Repositories
     public class RestaurantRepository : IRestaurantRepository
     {
         private readonly RatingsDbContext _dbContext;
-        private readonly DbSet<Restaurant> _restaurants; 
+        private readonly DbSet<Restaurant> _restaurants;
+
+        public RestaurantRepository(RatingsDbContext dbContext)
+        {
+            _dbContext = dbContext;
+            _restaurants = dbContext.Restaurants;
+        }
 
         public async Task AddAsync(Restaurant restaurant, CancellationToken token)
         {

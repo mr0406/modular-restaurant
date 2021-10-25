@@ -9,10 +9,10 @@ namespace ModularRestaurant.Ratings.Domain.Rules
 {
     internal class RatingIsInRangeRule : IBusinessRule
     {
-        private const int MIN_VALUE = 1;
-        private const int MAX_VALUE = 5;
+        private const int MinValue = 1;
+        private const int MaxValue = 5;
 
-        public string Message => $"Rating must have value between {MIN_VALUE} and {MAX_VALUE}.";
+        public string Message => $"Rating must have value between {MinValue} and {MaxValue}.";
 
         private readonly int _value;
 
@@ -21,6 +21,6 @@ namespace ModularRestaurant.Ratings.Domain.Rules
             _value = value;
         }
 
-        public bool IsBroken() => _value < MIN_VALUE || _value > MAX_VALUE;
+        public bool IsBroken() => _value < MinValue || _value > MaxValue;
     }
 }

@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace ModularRestaurant.Ratings.Api.Controllers
 {
-    [Route(RatingsModule.BasePath + "/[controller]")]
-    public abstract class RatingsControllerBase : ModuleControllerBase
+    [Route("ratings-module/[controller]")]
+    public abstract class RatingsControllerBase : ControllerBase
     {
+        protected readonly IRatingsExecutor Executor;
+        
+        public RatingsControllerBase(IRatingsExecutor executor)
+        {
+            Executor = executor;
+        }
     }
 }

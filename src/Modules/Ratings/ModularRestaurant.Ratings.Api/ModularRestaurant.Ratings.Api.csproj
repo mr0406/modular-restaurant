@@ -7,7 +7,14 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\ModularRestaurant.Ratings.Application\ModularRestaurant.Ratings.Application.csproj" />
     <ProjectReference Include="..\..\..\Shared\ModularRestaurant.Shared.Api\ModularRestaurant.Shared.Api.csproj" />
+    <ProjectReference Include="..\ModularRestaurant.Ratings.Application\ModularRestaurant.Ratings.Application.csproj" />
     <ProjectReference Include="..\ModularRestaurant.Ratings.Infrastructure\ModularRestaurant.Ratings.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.3.0" />
+    <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="7.3.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
   </ItemGroup>
 
 </Project>

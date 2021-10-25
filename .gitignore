@@ -364,3 +364,8 @@ FodyWeavers.xsd
 
 # Logs
 **/.log
+
+# Rider
+.idea
+
+**/appsettings.[Dd]evelopment.json

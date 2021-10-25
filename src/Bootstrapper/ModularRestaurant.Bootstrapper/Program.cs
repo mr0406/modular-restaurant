@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac.Extensions.DependencyInjection;
 
 namespace ModularRestaurant.Bootstrapper
 {
@@ -14,9 +15,11 @@ namespace ModularRestaurant.Bootstrapper
     {
         public static void Main(string[] args)
         {
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile("appsettings.Development.json")
+                .AddJsonFile($"appsettings.{env}.json", optional: true)
                 .Build();
 
             Log.Logger = new LoggerConfiguration().
@@ -42,6 +45,7 @@ namespace ModularRestaurant.Bootstrapper
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseSerilog()
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

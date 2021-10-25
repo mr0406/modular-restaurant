@@ -12,18 +12,26 @@ namespace ModularRestaurant.Ratings.Domain.Entities
 
         public Comment Comment { get; private set; }
 
-        private UserRating(UserId userId, Rating rating)
+        public Comment RestaurantReply { get; private set; }
+
+        private UserRating()
+        {
+        }
+
+        private UserRating(UserId userId, Rating rating, Comment comment)
         {
             UserId = userId;
             Rating = rating;
+
+            if(comment is not null)
+            {
+                Comment = comment;
+            }
         }
 
-        internal static UserRating Create(UserId userId, int ratingValue)
-            => new UserRating(userId, Rating.FromValue(ratingValue));
+        internal static UserRating Create(UserId userId, int ratingValue, string text)
+            => new UserRating(userId, Rating.FromValue(ratingValue), Comment.FromText(text));
 
-        internal void AddComment(string text)
-        {
-
-        }
+        internal void AddRestaurantReply(string text) => RestaurantReply = Comment.FromText(text);
     }
 }

@@ -1,3 +1,5 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -21,15 +23,13 @@ namespace ModularRestaurant.Bootstrapper
 {
     public class Startup
     {
-        private readonly List<IModule> _modules;
-
+        private const string ConnectionString = "Sql:ConnectionString";
+        private IConfiguration _configuration;
+        
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
-            _modules = GetModules();
+            _configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -42,26 +42,26 @@ namespace ModularRestaurant.Bootstrapper
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ModularRestaurant", Version = "v1" });
             });
+        }
 
-            foreach(var module in _modules)
-            {
-                module.Register(services);
-            }
+        public void ConfigureContainer(ContainerBuilder containerBuilder)
+        {
+            containerBuilder.RegisterType<MenusExecutor>().As<IMenusExecutor>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<RatingsExecutor>().As<IRatingsExecutor>().InstancePerLifetimeScope();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var container = app.ApplicationServices.GetAutofacRoot();
+            
+            InitializeModules();
+            
             app.UseCors(builder => builder
                .AllowAnyOrigin()
                .AllowAnyMethod()
                .AllowAnyHeader());
 
             app.UseExceptionHandling();
-
-            foreach (var module in _modules)
-            {
-                module.Use(app);
-            }
 
             if (env.IsDevelopment())
             {
@@ -79,18 +79,12 @@ namespace ModularRestaurant.Bootstrapper
             {
                 endpoints.MapControllers();
             });
-
-            _modules.Clear();
         }
 
-        //TODO: Problem with controllers
-        private List<IModule> GetModules()
+        private void InitializeModules()
         {
-            return new List<IModule>()
-            {
-                new MenusModule(),
-                new RatingsModule()
-            };
+            MenusStartup.Initialize(_configuration[ConnectionString]);
+            RatingsStartup.Initialize(_configuration[ConnectionString]);
         }
     }
 }

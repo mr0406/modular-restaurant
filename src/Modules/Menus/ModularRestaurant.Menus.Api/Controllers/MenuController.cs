@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ModularRestaurant.Menus.Api.Mappings;
-using ModularRestaurant.Menus.Api.Requests;
-using ModularRestaurant.Menus.Application.Commands;
 using ModularRestaurant.Menus.Application.Commands.CreateGroup;
 using ModularRestaurant.Menus.Application.DTOs;
 using ModularRestaurant.Menus.Application.Queries;
@@ -23,27 +20,24 @@ namespace ModularRestaurant.Menus.Api.Controllers
 {
     public class MenuController : MenusControllerBase
     {
+        public MenuController(IMenusExecutor executor) : base(executor)
+        {
+        }
+        
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(MenuDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<MenuDTO>> GetMenu(Guid id)
-            => Ok(await Mediator.Send(new GetMenuQuery(id)));
+        public async Task<ActionResult<MenuDTO>> GetMenu([FromQuery] Guid id)
+            => Ok(await Executor.ExecuteQuery(new GetMenuQuery(id)));
 
         [HttpPost("create")]
         [ProducesResponseType(typeof(MenuDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status409Conflict)]
-        [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Guid>> CreateMenu(CreateMenuRequest request)
-            => Ok(await Mediator.Send(
-                new CreateMenuCommand(
-                    request.RestaurantId)));
+        public async Task<ActionResult<Guid>> CreateMenu([FromBody] CreateMenuCommand command)
+            => Ok(await Executor.ExecuteCommand(command));
 
         [HttpPost("create/group")]
-        public async Task<ActionResult<Unit>> CreateGroupCommand(CreateGroupRequest request)
-            => Ok(await Mediator.Send(
-                new CreateGroupCommand(
-                    request.MenuId,
-                    request.GroupName)));
+        public async Task<ActionResult<Unit>> CreateGroupCommand([FromBody] CreateGroupCommand command)
+            => Ok(await Executor.ExecuteCommand(command));
     }
 }

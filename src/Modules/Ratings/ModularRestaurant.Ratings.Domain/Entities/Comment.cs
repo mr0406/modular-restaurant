@@ -7,6 +7,10 @@ namespace ModularRestaurant.Ratings.Domain.Entities
     {
         public string Text { get; private set; }
 
+        private Comment()
+        {
+        }
+
         private Comment(string text)
         {
             Text = text;
@@ -15,6 +19,7 @@ namespace ModularRestaurant.Ratings.Domain.Entities
         internal static Comment FromText(string text)
         {
             CheckRule(new CommentCannotBeEmptyRule(text));
+            CheckRule(new CommentCannotExceedCharacterLimit(text));
 
             return new Comment(text);
         }

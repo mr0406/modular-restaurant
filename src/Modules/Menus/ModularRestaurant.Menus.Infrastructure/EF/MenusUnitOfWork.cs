@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ModularRestaurant.Menus.Infrastructure.EF
 {
-    internal class MenusUnitOfWork : EFUnitOfWork<MenusDbContext>, IMenusUnitOfWork
+    public class MenusUnitOfWork : EFUnitOfWork<MenusDbContext>, IMenusUnitOfWork
     {
         public MenusUnitOfWork(MenusDbContext dbContext) : base(dbContext)
         {
