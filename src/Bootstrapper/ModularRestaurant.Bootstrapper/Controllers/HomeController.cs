@@ -10,6 +10,6 @@ namespace ModularRestaurant.Bootstrapper.Controllers
     public class HomeController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<string> Index() => "Modular Restaurant API!";
+        public ActionResult<string> Get() => "Modular Restaurant API!";
     }
 }
