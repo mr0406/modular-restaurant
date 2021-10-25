@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ModularRestaurant.Ratings.Application\ModularRestaurant.Ratings.Application.csproj" />
     <ProjectReference Include="..\..\..\Shared\ModularRestaurant.Shared.Api\ModularRestaurant.Shared.Api.csproj" />
     <ProjectReference Include="..\ModularRestaurant.Ratings.Application\ModularRestaurant.Ratings.Application.csproj" />
     <ProjectReference Include="..\ModularRestaurant.Ratings.Infrastructure\ModularRestaurant.Ratings.Infrastructure.csproj" />

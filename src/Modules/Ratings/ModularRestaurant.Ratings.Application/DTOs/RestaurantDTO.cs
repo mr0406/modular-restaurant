@@ -17,7 +17,7 @@ namespace ModularRestaurant.Ratings.Application.DTOs
         [JsonIgnore]
         public long SumOfRatings { get; set; }
 
-        public double? AverageRating => NumberOfRatings == 0 ? null : (double) SumOfRatings / NumberOfRatings;
+        public double? AverageRating => NumberOfRatings == 0 ? null : (double)SumOfRatings / NumberOfRatings;
 
         public List<UserRatingDTO> UserRatings { get; set; }
     }
