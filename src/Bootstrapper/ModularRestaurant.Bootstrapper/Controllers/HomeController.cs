@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ModularRestaurant.Bootstrapper.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class HomeController
+    [Route("")]
+    public class HomeController : ControllerBase
     {
         [HttpGet]
         public ActionResult<string> Index() => "Modular Restaurant API!";

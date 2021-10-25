@@ -2,14 +2,10 @@
 
 namespace ModularRestaurant.Ratings.Api.Controllers
 {
-    [ApiController]
-    public class HomeController : RatingsControllerBase
+    [Route("ratings-module")]
+    public class HomeController : ControllerBase
     {
-        public HomeController(IRatingsExecutor executor) : base(executor)
-        {
-        }
-        
-        [HttpGet("")]
+        [HttpGet]
         public ActionResult<string> Get() => "Ratings API!";
         
     }

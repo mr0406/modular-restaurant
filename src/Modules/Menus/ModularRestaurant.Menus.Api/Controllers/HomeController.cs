@@ -7,14 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ModularRestaurant.Menus.Api.Controllers
 {
-    [ApiController]
-    public class HomeController : MenusControllerBase
+    [Route("menus-module")]
+    public class HomeController : ControllerBase
     {
-        public HomeController(IMenusExecutor executor) : base(executor)
-        {
-        }
-        
-        [HttpGet("")]
+        [HttpGet]
         public ActionResult<string> Get() => "Menus API!";
     }
 }

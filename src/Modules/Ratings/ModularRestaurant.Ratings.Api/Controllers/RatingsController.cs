@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ModularRestaurant.Ratings.Api.Requests;
 using ModularRestaurant.Ratings.Application.Commands.AddRating;
 using ModularRestaurant.Ratings.Application.Commands.AddRestaurant;
 using ModularRestaurant.Ratings.Application.DTOs;
@@ -23,15 +22,11 @@ namespace ModularRestaurant.Ratings.Api.Controllers
             => Ok(await Executor.ExecuteQuery(new GetRestaurantRatingsQuery(id)));
 
         [HttpPost]
-        public async Task<ActionResult> AddRestaurant([FromBody] AddRestaurantRequest addRestaurantRequest)
-            => Ok(await Executor.ExecuteCommand(new AddRestaurantCommand(addRestaurantRequest.Id)));
+        public async Task<ActionResult> AddRestaurant([FromBody] AddRestaurantCommand command)
+            => Ok(await Executor.ExecuteCommand(command));
 
         [HttpPost("addRating")]
-        public async Task<ActionResult> AddRating([FromBody] AddRatingRequest addRatingRequest)
-            => Ok(await Executor.ExecuteCommand(new AddRatingCommand(
-                addRatingRequest.RestaurantId,
-                addRatingRequest.UserId,
-                addRatingRequest.Rating,
-                addRatingRequest.Text)));
+        public async Task<ActionResult> AddRating([FromBody] AddRatingCommand command)
+            => Ok(await Executor.ExecuteCommand(command));
     }
 }
