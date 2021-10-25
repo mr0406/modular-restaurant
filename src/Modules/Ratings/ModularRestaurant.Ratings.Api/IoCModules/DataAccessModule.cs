@@ -18,10 +18,10 @@ namespace ModularRestaurant.Ratings.Api.IoCModules
             builder.Register(c =>
             {
                 var dbContextOptionsBuilder = new DbContextOptionsBuilder<RatingsDbContext>();
-                dbContextOptionsBuilder.UseSqlServer(_connectionString);
+                dbContextOptionsBuilder.UseNpgsql(_connectionString);
 
                 return new RatingsDbContext(dbContextOptionsBuilder.Options);
-            }).AsSelf().InstancePerLifetimeScope();
+            }).AsSelf().As<DbContext>().InstancePerLifetimeScope();
 
             var infrastructureAssembly = typeof(RatingsDbContext).Assembly;
 

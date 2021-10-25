@@ -365,5 +365,7 @@ FodyWeavers.xsd
 # Logs
 **/.log
 
-#
+# Rider
 .idea
+
+**/*.json

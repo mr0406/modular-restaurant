@@ -1,5 +1,7 @@
 ﻿using Autofac;
+using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Menus.Api.IoCModules;
+using ModularRestaurant.Menus.Infrastructure.EF;
 
 namespace ModularRestaurant.Menus.Api
 {
@@ -10,6 +12,7 @@ namespace ModularRestaurant.Menus.Api
         public static void Initialize(string connectionString)
         {
             ConfigureCompositionRoot(connectionString);
+            ApplyMigrations();
         }
 
         private static void ConfigureCompositionRoot(string connectionString)
@@ -22,6 +25,15 @@ namespace ModularRestaurant.Menus.Api
             _container = containerBuilder.Build();
             
             MenusCompositionRoot.SetContainer(_container);
+        }
+
+        private static void ApplyMigrations()
+        {
+            using (var scope = MenusCompositionRoot.BeginLifeTimeScope())
+            {
+                var dbContext = scope.Resolve<MenusDbContext>();
+                dbContext.Database.Migrate();
+            }
         }
     }
 }

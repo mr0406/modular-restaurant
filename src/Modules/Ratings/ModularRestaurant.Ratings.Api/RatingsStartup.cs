@@ -1,5 +1,7 @@
 ﻿using Autofac;
+using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Ratings.Api.IoCModules;
+using ModularRestaurant.Ratings.Infrastructure.EF;
 
 namespace ModularRestaurant.Ratings.Api
 {
@@ -10,6 +12,7 @@ namespace ModularRestaurant.Ratings.Api
         public static void Initialize(string connectionString)
         {
             ConfigureCompositionRoot(connectionString);
+            ApplyMigrations();
         }
 
         private static void ConfigureCompositionRoot(string connectionString)
@@ -22,6 +25,15 @@ namespace ModularRestaurant.Ratings.Api
             _container = containerBuilder.Build();
             
             RatingsCompositionRoot.SetContainer(_container);
+        }
+        
+        private static void ApplyMigrations()
+        {
+            using (var scope = RatingsCompositionRoot.BeginLifeTimeScope())
+            {
+                var dbContext = scope.Resolve<RatingsDbContext>();
+                dbContext.Database.Migrate();
+            }
         }
     }
 }

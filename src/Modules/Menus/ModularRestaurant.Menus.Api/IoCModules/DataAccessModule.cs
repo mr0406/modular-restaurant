@@ -18,10 +18,10 @@ namespace ModularRestaurant.Menus.Api.IoCModules
             builder.Register(c =>
             {
                 var dbContextOptionsBuilder = new DbContextOptionsBuilder<MenusDbContext>();
-                dbContextOptionsBuilder.UseSqlServer(_connectionString);
+                dbContextOptionsBuilder.UseNpgsql(_connectionString);
 
                 return new MenusDbContext(dbContextOptionsBuilder.Options);
-            }).AsSelf().InstancePerLifetimeScope();
+            }).AsSelf().As<DbContext>().InstancePerLifetimeScope();
 
             var infrastructureAssembly = typeof(MenusDbContext).Assembly;
 
