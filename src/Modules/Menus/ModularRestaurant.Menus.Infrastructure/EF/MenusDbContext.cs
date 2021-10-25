@@ -27,11 +27,12 @@ namespace ModularRestaurant.Menus.Infrastructure.EF
         {
             if (!optionsBuilder.IsConfigured)
             {
+                var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
                 IConfigurationRoot configuration = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.json")
-                    .AddJsonFile("appsettings.development.json")
+                    .AddJsonFile($"appsettings.{env}.json", optional: true)
                     .AddEnvironmentVariables()
                     .Build();
 

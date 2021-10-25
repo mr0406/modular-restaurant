@@ -15,9 +15,11 @@ namespace ModularRestaurant.Bootstrapper
     {
         public static void Main(string[] args)
         {
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile("appsettings.Development.json")
+                .AddJsonFile($"appsettings.{env}.json", optional: true)
                 .Build();
 
             Log.Logger = new LoggerConfiguration().
