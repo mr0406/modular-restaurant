@@ -30,7 +30,7 @@ namespace ModularRestaurant.Ratings.Application
         {
             var applicationName = Assembly.GetExecutingAssembly().GetName().Name;
 
-            var infrastructureName = applicationName.Replace("Application", "Infrastructure");
+            var infrastructureName = applicationName!.Replace("Application", "Infrastructure");
 
             return AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(assembly => assembly.GetName().Name == infrastructureName);
         }
