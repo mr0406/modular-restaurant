@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
 
 namespace ModularRestaurant.Bootstrapper
@@ -19,11 +15,10 @@ namespace ModularRestaurant.Bootstrapper
 
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.{env}.json", optional: true)
+                .AddJsonFile($"appsettings.{env}.json", true)
                 .Build();
 
-            Log.Logger = new LoggerConfiguration().
-                ReadFrom.Configuration(config)
+            Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(config)
                 .CreateLogger();
 
             try
@@ -42,8 +37,9 @@ namespace ModularRestaurant.Bootstrapper
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
                 .UseSerilog()
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
@@ -51,5 +47,6 @@ namespace ModularRestaurant.Bootstrapper
                     var port = Environment.GetEnvironmentVariable("PORT");
                     webBuilder.UseStartup<Startup>().UseUrls("http://*:" + port);
                 });
+        }
     }
 }

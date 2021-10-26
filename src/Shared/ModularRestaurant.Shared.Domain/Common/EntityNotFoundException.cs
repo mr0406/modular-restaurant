@@ -9,7 +9,7 @@ namespace ModularRestaurant.Shared.Domain.Common
         public Guid Id { get; }
 
         public EntityNotFoundException(string entityName, Guid id)
-            :base($"{entityName} with Id: {id} not found.")
+            : base($"{entityName} with Id: {id} not found.")
         {
             EntityName = entityName;
             Id = id;

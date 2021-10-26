@@ -2,11 +2,6 @@
 using ModularRestaurant.Ratings.Domain.Entities;
 using ModularRestaurant.Ratings.Domain.Repositories;
 using ModularRestaurant.Shared.Application.CQRS;
-using ModularRestaurant.Shared.Domain.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

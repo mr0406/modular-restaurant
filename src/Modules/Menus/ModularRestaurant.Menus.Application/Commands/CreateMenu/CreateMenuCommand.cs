@@ -1,14 +1,5 @@
-﻿using ModularRestaurant.Menus.Domain.Entities;
-using ModularRestaurant.Menus.Domain.Repositories;
-using ModularRestaurant.Shared.Application;
-using ModularRestaurant.Shared.Application.CQRS;
-using ModularRestaurant.Shared.Domain.Types;
+﻿using ModularRestaurant.Shared.Application.CQRS;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ModularRestaurant.Menus.Application.Commands.CreateMenu
 {

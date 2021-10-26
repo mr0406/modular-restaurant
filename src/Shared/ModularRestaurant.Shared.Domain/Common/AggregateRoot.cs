@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ModularRestaurant.Shared.Domain.Common
+﻿namespace ModularRestaurant.Shared.Domain.Common
 {
     public class AggregateRoot<T>
     {
@@ -12,10 +6,7 @@ namespace ModularRestaurant.Shared.Domain.Common
 
         protected static void CheckRule(IBusinessRule rule)
         {
-            if (rule.IsBroken())
-            {
-                throw new BusinessRuleException(rule);
-            }
+            if (rule.IsBroken()) throw new BusinessRuleException(rule);
         }
     }
 }

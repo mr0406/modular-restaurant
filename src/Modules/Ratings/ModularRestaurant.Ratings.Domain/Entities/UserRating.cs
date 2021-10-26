@@ -1,5 +1,4 @@
-﻿using ModularRestaurant.Ratings.Domain.Rules;
-using ModularRestaurant.Shared.Domain.Common;
+﻿using ModularRestaurant.Shared.Domain.Common;
 using ModularRestaurant.Shared.Domain.Types;
 
 namespace ModularRestaurant.Ratings.Domain.Entities
@@ -23,15 +22,17 @@ namespace ModularRestaurant.Ratings.Domain.Entities
             UserId = userId;
             Rating = rating;
 
-            if(comment is not null)
-            {
-                Comment = comment;
-            }
+            if (comment is not null) Comment = comment;
         }
 
         internal static UserRating Create(UserId userId, int ratingValue, string text)
-            => new UserRating(userId, Rating.FromValue(ratingValue), Comment.FromText(text));
+        {
+            return new(userId, Rating.FromValue(ratingValue), Comment.FromText(text));
+        }
 
-        internal void AddRestaurantReply(string text) => RestaurantReply = Comment.FromText(text);
+        internal void AddRestaurantReply(string text)
+        {
+            RestaurantReply = Comment.FromText(text);
+        }
     }
 }

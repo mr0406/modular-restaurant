@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularRestaurant.Shared.Domain.Types
 {
@@ -12,20 +8,14 @@ namespace ModularRestaurant.Shared.Domain.Types
 
         protected TypeId(Guid value)
         {
-            if (value == Guid.Empty)
-            {
-                throw new InvalidOperationException("Id value cannot be empty!");
-            }
+            if (value == Guid.Empty) throw new InvalidOperationException("Id value cannot be empty!");
 
             Value = value;
         }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
             return obj is TypeId other && Equals(other);
         }
@@ -37,17 +27,14 @@ namespace ModularRestaurant.Shared.Domain.Types
 
         public bool Equals(TypeId other)
         {
-            return this.Value == other?.Value;
+            return Value == other?.Value;
         }
 
         public static bool operator ==(TypeId obj1, TypeId obj2)
         {
-            if (object.Equals(obj1, null))
+            if (Equals(obj1, null))
             {
-                if (object.Equals(obj2, null))
-                {
-                    return true;
-                }
+                if (Equals(obj2, null)) return true;
 
                 return false;
             }

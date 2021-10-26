@@ -1,9 +1,4 @@
 ﻿using ModularRestaurant.Shared.Domain.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularRestaurant.Ratings.Domain.Rules
 {
@@ -21,6 +16,9 @@ namespace ModularRestaurant.Ratings.Domain.Rules
             _value = value;
         }
 
-        public bool IsBroken() => _value < MinValue || _value > MaxValue;
+        public bool IsBroken()
+        {
+            return _value < MinValue || _value > MaxValue;
+        }
     }
 }

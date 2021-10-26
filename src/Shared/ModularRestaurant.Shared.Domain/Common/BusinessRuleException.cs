@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularRestaurant.Shared.Domain.Common
 {
@@ -13,7 +9,7 @@ namespace ModularRestaurant.Shared.Domain.Common
         public string Details { get; }
 
         public BusinessRuleException(IBusinessRule brokenRule)
-            :base(brokenRule.Message)
+            : base(brokenRule.Message)
         {
             BrokenRule = brokenRule;
             Details = brokenRule.Message;

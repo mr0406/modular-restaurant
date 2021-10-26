@@ -8,7 +8,7 @@ namespace ModularRestaurant.Menus.Api
     public static class MenusStartup
     {
         private static IContainer _container;
-        
+
         public static void Initialize(string connectionString)
         {
             ConfigureCompositionRoot(connectionString);
@@ -23,7 +23,7 @@ namespace ModularRestaurant.Menus.Api
             containerBuilder.RegisterModule(new ProcessingModule());
 
             _container = containerBuilder.Build();
-            
+
             MenusCompositionRoot.SetContainer(_container);
         }
 

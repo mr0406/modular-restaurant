@@ -3,7 +3,6 @@ using ModularRestaurant.Menus.Application.DTOs;
 using ModularRestaurant.Menus.Application.Queries;
 using ModularRestaurant.Menus.Domain.Entities;
 using ModularRestaurant.Menus.Infrastructure.EF.Mappings;
-using ModularRestaurant.Shared.Application;
 using ModularRestaurant.Shared.Application.CQRS;
 using ModularRestaurant.Shared.Domain.Types;
 using System.Threading;
@@ -21,6 +20,8 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.QueryHandlers
         }
 
         public async Task<MenuDTO> Handle(GetMenuQuery query, CancellationToken cancellationToken)
-            =>  (await _menus.SingleOrDefaultAsync(x => x.Id == new MenuId(query.Id), cancellationToken)).ToDTO();
+        {
+            return (await _menus.SingleOrDefaultAsync(x => x.Id == new MenuId(query.Id), cancellationToken)).ToDTO();
+        }
     }
 }

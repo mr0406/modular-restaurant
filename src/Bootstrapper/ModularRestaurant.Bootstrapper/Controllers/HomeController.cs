@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ModularRestaurant.Bootstrapper.Controllers
 {
@@ -10,6 +6,9 @@ namespace ModularRestaurant.Bootstrapper.Controllers
     public class HomeController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<string> Get() => "Modular Restaurant API!";
+        public ActionResult<string> Get()
+        {
+            return "Modular Restaurant API!";
+        }
     }
 }

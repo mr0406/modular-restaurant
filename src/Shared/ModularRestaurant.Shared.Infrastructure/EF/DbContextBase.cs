@@ -1,11 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularRestaurant.Shared.Infrastructure.EF
 {
@@ -27,10 +23,10 @@ namespace ModularRestaurant.Shared.Infrastructure.EF
             {
                 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-                IConfigurationRoot configuration = new ConfigurationBuilder()
+                var configuration = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.json")
-                    .AddJsonFile($"appsettings.{env}.json", optional: true)
+                    .AddJsonFile($"appsettings.{env}.json", true)
                     .AddEnvironmentVariables()
                     .Build();
 

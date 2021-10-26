@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ModularRestaurant.Bootstrapper.ExceptionHandling
 {
@@ -22,6 +18,5 @@ namespace ModularRestaurant.Bootstrapper.ExceptionHandling
 
             return app;
         }
-
     }
 }

@@ -1,9 +1,5 @@
 ﻿using MediatR;
 using ModularRestaurant.Shared.Application.CQRS;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,7 +15,8 @@ namespace ModularRestaurant.Shared.Application.Processing.Commands
             _validators = validators;
         }*/
 
-        public async Task<TResult> Handle(TCommand command, CancellationToken cancellationToken, RequestHandlerDelegate<TResult> next)
+        public async Task<TResult> Handle(TCommand command, CancellationToken cancellationToken,
+            RequestHandlerDelegate<TResult> next)
         {
             /*var context = new ValidationContext<TCommand>(command);
 

@@ -10,6 +10,7 @@ namespace ModularRestaurant.Ratings.Domain.Entities
         private Rating()
         {
         }
+
         private Rating(int value)
         {
             Value = value;

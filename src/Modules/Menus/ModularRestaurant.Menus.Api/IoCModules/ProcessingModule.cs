@@ -1,11 +1,12 @@
-﻿using Autofac;
+﻿using System.Reflection;
+using Autofac;
 using MediatR;
 using MediatR.Extensions.Autofac.DependencyInjection;
-using ModularRestaurant.Menus.Application.Commands.CreateGroup;
-using ModularRestaurant.Menus.Application.Processing;
-using ModularRestaurant.Menus.Infrastructure.EF;
+using ModularRestaurant.Shared.Api;
+using ModularRestaurant.Shared.Application;
 using ModularRestaurant.Shared.Application.Processing.Commands;
-using ModularRestaurant.Shared.Application.Processing.Requests;
+using ModularRestaurant.Shared.Infrastructure.MsSql;
+using Module = Autofac.Module;
 
 namespace ModularRestaurant.Menus.Api.IoCModules
 {
@@ -13,18 +14,19 @@ namespace ModularRestaurant.Menus.Api.IoCModules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            //fix that: need Application and Infrastructure Assemblies
+            var applicationAssembly = Assembly.GetExecutingAssembly().GetApplication();
+            var infrastructureAssembly = Assembly.GetExecutingAssembly().GetInfrastructure();
 
-            builder.RegisterType<MenusUnitOfWork>().As<IMenusUnitOfWork>().InstancePerLifetimeScope();
-            
-            builder.RegisterMediatR(typeof(CreateGroupCommand).Assembly, typeof(MenusDbContext).Assembly);
-            
+            builder.RegisterType<EFUnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+
+            builder.RegisterMediatR(applicationAssembly, infrastructureAssembly);
+
             /*builder.RegisterGeneric(typeof(RequestLoggingBehavior<,>))
                 .As(typeof(IPipelineBehavior<,>));
 
             builder.RegisterGeneric(typeof(ValidatingBehavior<,>))
                 .As(typeof(IPipelineBehavior<,>));*/
-            builder.RegisterGeneric(typeof(MenusUnitOfWorkBehavior<,>))
+            builder.RegisterGeneric(typeof(UnitOfWorkBehavior<,>))
                 .As(typeof(IPipelineBehavior<,>));
         }
     }

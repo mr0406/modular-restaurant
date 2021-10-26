@@ -1,9 +1,4 @@
 ﻿using ModularRestaurant.Shared.Domain.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularRestaurant.Ratings.Domain.Rules
 {
@@ -20,6 +15,9 @@ namespace ModularRestaurant.Ratings.Domain.Rules
             _text = text;
         }
 
-        public bool IsBroken() => _text.Length > MaxCharacters;
+        public bool IsBroken()
+        {
+            return _text.Length > MaxCharacters;
+        }
     }
 }

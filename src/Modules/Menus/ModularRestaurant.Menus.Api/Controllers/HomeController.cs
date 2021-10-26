@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace ModularRestaurant.Menus.Api.Controllers
 {
@@ -11,6 +6,9 @@ namespace ModularRestaurant.Menus.Api.Controllers
     public class HomeController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<string> Get() => "Menus API!";
+        public ActionResult<string> Get()
+        {
+            return "Menus API!";
+        }
     }
 }

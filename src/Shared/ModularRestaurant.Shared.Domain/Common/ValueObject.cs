@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularRestaurant.Shared.Domain.Common
 {
@@ -15,12 +13,9 @@ namespace ModularRestaurant.Shared.Domain.Common
 
         public static bool operator ==(ValueObject obj1, ValueObject obj2)
         {
-            if (object.Equals(obj1, null))
+            if (Equals(obj1, null))
             {
-                if (object.Equals(obj2, null))
-                {
-                    return true;
-                }
+                if (Equals(obj2, null)) return true;
 
                 return false;
             }
@@ -40,20 +35,17 @@ namespace ModularRestaurant.Shared.Domain.Common
 
         public override bool Equals(object obj)
         {
-            if (obj == null || GetType() != obj.GetType())
-            {
-                return false;
-            }
+            if (obj == null || GetType() != obj.GetType()) return false;
 
             return GetProperties().All(p => PropertiesAreEqual(obj, p))
-                && GetFields().All(f => FieldsAreEqual(obj, f));
+                   && GetFields().All(f => FieldsAreEqual(obj, f));
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                int hash = 29;
+                var hash = 29;
                 foreach (var prop in GetProperties())
                 {
                     var value = prop.GetValue(this, null);
@@ -72,22 +64,20 @@ namespace ModularRestaurant.Shared.Domain.Common
 
         private bool PropertiesAreEqual(object obj, PropertyInfo p)
         {
-            return object.Equals(p.GetValue(this, null), p.GetValue(obj, null));
+            return Equals(p.GetValue(this, null), p.GetValue(obj, null));
         }
 
         private bool FieldsAreEqual(object obj, FieldInfo f)
         {
-            return object.Equals(f.GetValue(this), f.GetValue(obj));
+            return Equals(f.GetValue(this), f.GetValue(obj));
         }
 
         private IEnumerable<PropertyInfo> GetProperties()
         {
             if (_properties is null)
-            {
                 _properties = GetType()
                     .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                     .ToList();
-            }
 
             return _properties;
         }
@@ -95,10 +85,8 @@ namespace ModularRestaurant.Shared.Domain.Common
         private IEnumerable<FieldInfo> GetFields()
         {
             if (_fields is null)
-            {
                 _fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .ToList();
-            }
 
             return _fields;
         }
@@ -107,15 +95,12 @@ namespace ModularRestaurant.Shared.Domain.Common
         {
             var currentHash = value?.GetHashCode() ?? 0;
 
-            return (seed * 13) + currentHash;
+            return seed * 13 + currentHash;
         }
-        
+
         protected static void CheckRule(IBusinessRule rule)
         {
-            if (rule.IsBroken())
-            {
-                throw new BusinessRuleException(rule);
-            }
+            if (rule.IsBroken()) throw new BusinessRuleException(rule);
         }
     }
 }

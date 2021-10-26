@@ -8,7 +8,7 @@ namespace ModularRestaurant.Ratings.Api
     public class RatingsStartup
     {
         private static IContainer _container;
-        
+
         public static void Initialize(string connectionString)
         {
             ConfigureCompositionRoot(connectionString);
@@ -23,10 +23,10 @@ namespace ModularRestaurant.Ratings.Api
             containerBuilder.RegisterModule(new ProcessingModule());
 
             _container = containerBuilder.Build();
-            
+
             RatingsCompositionRoot.SetContainer(_container);
         }
-        
+
         private static void ApplyMigrations()
         {
             using (var scope = RatingsCompositionRoot.BeginLifeTimeScope())

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ModularRestaurant.Menus.Domain.Entities;
 using ModularRestaurant.Shared.Domain.Common;
 
@@ -19,7 +16,11 @@ namespace ModularRestaurant.Menus.Domain.Rules
             _groupName = groupName;
         }
 
-        public bool IsBroken() => _groups.Any(x => x.Name == _groupName);
+        public bool IsBroken()
+        {
+            return _groups.Any(x => x.Name == _groupName);
+        }
+
         public string Message => "Group name must be unique";
     }
 }

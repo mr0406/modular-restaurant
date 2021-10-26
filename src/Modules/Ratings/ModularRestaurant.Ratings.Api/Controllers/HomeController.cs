@@ -6,7 +6,9 @@ namespace ModularRestaurant.Ratings.Api.Controllers
     public class HomeController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<string> Get() => "Ratings API!";
-        
+        public ActionResult<string> Get()
+        {
+            return "Ratings API!";
+        }
     }
 }

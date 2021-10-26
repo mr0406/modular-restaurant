@@ -1,10 +1,6 @@
 ﻿using ModularRestaurant.Menus.Domain.Rules;
 using ModularRestaurant.Shared.Domain.Common;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularRestaurant.Menus.Domain.Entities
 {
@@ -13,14 +9,16 @@ namespace ModularRestaurant.Menus.Domain.Entities
         public string Name { get; private set; }
 
         public IReadOnlyList<Item> Items => _items;
-        private List<Item> _items = new List<Item>();
+        private List<Item> _items = new();
 
         private Group(string name)
         {
             Name = name;
         }
 
-        private Group() { }
+        private Group()
+        {
+        }
 
         public static Group CreateNew(string name)
         {

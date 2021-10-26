@@ -1,11 +1,7 @@
 ﻿using ModularRestaurant.Menus.Domain.Entities;
-using ModularRestaurant.Shared.Domain;
 using ModularRestaurant.Shared.Domain.Common;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularRestaurant.Menus.Domain.Rules
 {
@@ -20,6 +16,9 @@ namespace ModularRestaurant.Menus.Domain.Rules
             _items = items;
         }
 
-        public bool IsBroken() => _items is null || !_items.Any();
+        public bool IsBroken()
+        {
+            return _items is null || !_items.Any();
+        }
     }
 }

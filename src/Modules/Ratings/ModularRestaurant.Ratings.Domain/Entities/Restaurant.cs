@@ -4,8 +4,6 @@ using ModularRestaurant.Shared.Domain.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularRestaurant.Ratings.Domain.Entities
 {
@@ -24,22 +22,22 @@ namespace ModularRestaurant.Ratings.Domain.Entities
         }
 
         //TODO: Removed after add integration with restaurantModule
-        public static Restaurant Create(Guid id) 
+        public static Restaurant Create(Guid id)
         {
             return new Restaurant(new RestaurantId(id));
         }
 
-        public void AddUserRating(UserId userId, int ratingValue, string text) 
+        public void AddUserRating(UserId userId, int ratingValue, string text)
         {
             CheckRule(new UserCanOnlyRateRestaurantOnceRule(userId, _userRatings));
 
             _userRatings.Add(UserRating.Create(userId, ratingValue, text));
         }
 
-        public void AddCommentToUserRating(UserId userId, string text) 
+        public void AddCommentToUserRating(UserId userId, string text)
         {
             var userRating = UserRatings.Single(x => x.UserId == userId);
             userRating.AddRestaurantReply(text);
-        } 
+        }
     }
 }

@@ -1,12 +1,8 @@
 ﻿using ModularRestaurant.Menus.Domain.Rules;
-using ModularRestaurant.Shared.Domain;
 using ModularRestaurant.Shared.Domain.Common;
 using ModularRestaurant.Shared.Domain.Types;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularRestaurant.Menus.Domain.Entities
 {
@@ -42,6 +38,8 @@ namespace ModularRestaurant.Menus.Domain.Entities
             _groups = groups;
         }
 
-        private Menu() { }
+        private Menu()
+        {
+        }
     }
 }

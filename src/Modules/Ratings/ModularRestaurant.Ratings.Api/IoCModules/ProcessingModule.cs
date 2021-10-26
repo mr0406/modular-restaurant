@@ -1,9 +1,12 @@
-﻿using Autofac;
+﻿using System.Reflection;
+using Autofac;
 using MediatR;
 using MediatR.Extensions.Autofac.DependencyInjection;
-using ModularRestaurant.Ratings.Application.Commands.AddRating;
-using ModularRestaurant.Ratings.Application.Processing;
-using ModularRestaurant.Ratings.Infrastructure.EF;
+using ModularRestaurant.Shared.Api;
+using ModularRestaurant.Shared.Application;
+using ModularRestaurant.Shared.Application.Processing.Commands;
+using ModularRestaurant.Shared.Infrastructure.MsSql;
+using Module = Autofac.Module;
 
 namespace ModularRestaurant.Ratings.Api.IoCModules
 {
@@ -11,11 +14,14 @@ namespace ModularRestaurant.Ratings.Api.IoCModules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<RatingsUnitOfWork>().As<IRatingsUnitOfWork>().InstancePerLifetimeScope();
+            var applicationAssembly = Assembly.GetExecutingAssembly().GetApplication();
+            var infrastructureAssembly = Assembly.GetExecutingAssembly().GetInfrastructure();
             
-            builder.RegisterMediatR(typeof(AddRatingCommand).Assembly, typeof(RatingsDbContext).Assembly);
-            
-            builder.RegisterGeneric(typeof(RatingsUnitOfWorkBehavior<,>))
+            builder.RegisterType<EFUnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+
+            builder.RegisterMediatR(applicationAssembly, infrastructureAssembly);
+
+            builder.RegisterGeneric(typeof(UnitOfWorkBehavior<,>))
                 .As(typeof(IPipelineBehavior<,>));
         }
     }
