@@ -62,7 +62,7 @@ namespace ModularRestaurant.Ratings.Domain.UnitTests.UserRatingTests
             Action action = () => _userRating.AddRestaurantReply(_restaurantReply);
             
             action.Should().Throw<BusinessRuleException>()
-                .Where(x => x.BrokenRule is CanReplyToUserRatingOnceRule);
+                .Where(x => x.BrokenRule is CanReplyToUserRatingOnlyOnceRule);
         }
     }
 }

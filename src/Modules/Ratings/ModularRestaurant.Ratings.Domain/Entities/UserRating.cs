@@ -37,7 +37,7 @@ namespace ModularRestaurant.Ratings.Domain.Entities
 
         public void AddRestaurantReply(string restaurantReply)
         {
-            CheckRule(new CanReplyToUserRatingOnceRule(RestaurantReply));
+            CheckRule(new CanReplyToUserRatingOnlyOnceRule(RestaurantReply));
             
             restaurantReply = restaurantReply?.Trim();
             

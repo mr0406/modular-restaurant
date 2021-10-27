@@ -38,7 +38,7 @@ namespace ModularRestaurant.Ratings.Domain.Entities
         {
             var userRating = UserRatings.SingleOrDefault(x => x.UserId == userId);
             
-            CheckRule(new CanAddReplyToExistingUserRatingRule(userRating));
+            CheckRule(new CanAddReplyOnlyToExistingUserRatingRule(userRating));
             
             userRating!.AddRestaurantReply(text);
         }
