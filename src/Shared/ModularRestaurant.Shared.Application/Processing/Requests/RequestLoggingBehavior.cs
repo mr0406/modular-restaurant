@@ -1,33 +1,33 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace ModularRestaurant.Shared.Application.Processing.Requests
 {
     public class RequestLoggingBehavior<TRequest, TResult> : IPipelineBehavior<TRequest, TResult>
         where TRequest : IRequest<TResult>
     {
-        private readonly ILogger<RequestLoggingBehavior<TRequest, TResult>> _logger;
+        private readonly ILogger _logger;
 
-        public RequestLoggingBehavior(ILogger<RequestLoggingBehavior<TRequest, TResult>> logger)
+        public RequestLoggingBehavior(ILogger logger)
         {
             _logger = logger;
         }
 
-        public async Task<TResult> Handle(TRequest reqeust, CancellationToken cancellationToken,
+        public async Task<TResult> Handle(TRequest request, CancellationToken cancellationToken,
             RequestHandlerDelegate<TResult> next)
         {
             try
             {
                 var result = await next();
-                _logger.LogInformation($"{reqeust.GetType().Name} executed successfully.");
+                _logger.Information($"{request.GetType().Name} executed successfully.");
                 return result;
             }
             catch (Exception)
             {
-                _logger.LogError($"{reqeust.GetType().Name} executed unsuccessfully.");
+                _logger.Error($"{request.GetType().Name} executed unsuccessfully.");
                 throw;
             }
         }

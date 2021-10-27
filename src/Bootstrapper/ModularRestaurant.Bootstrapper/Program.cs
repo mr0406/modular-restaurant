@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
 using Autofac.Extensions.DependencyInjection;
+using Serilog.Formatting.Compact;
 
 namespace ModularRestaurant.Bootstrapper
 {
@@ -16,9 +17,12 @@ namespace ModularRestaurant.Bootstrapper
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile($"appsettings.{env}.json", true)
+                .AddEnvironmentVariables()
                 .Build();
 
-            Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(config)
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(config)
+                .Enrich.FromLogContext()
                 .CreateLogger();
 
             try
@@ -37,7 +41,7 @@ namespace ModularRestaurant.Bootstrapper
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args)
+        private static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
                 .UseSerilog()

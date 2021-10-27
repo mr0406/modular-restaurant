@@ -8,13 +8,14 @@ using Microsoft.OpenApi.Models;
 using ModularRestaurant.Bootstrapper.ExceptionHandling;
 using ModularRestaurant.Menus.Api;
 using ModularRestaurant.Ratings.Api;
+using Serilog;
 
 namespace ModularRestaurant.Bootstrapper
 {
     public class Startup
     {
         private const string ConnectionString = "Sql:ConnectionString";
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public Startup(IConfiguration configuration)
         {
@@ -36,6 +37,9 @@ namespace ModularRestaurant.Bootstrapper
 
         public void ConfigureContainer(ContainerBuilder containerBuilder)
         {
+            var logger = Log.Logger;
+            containerBuilder.RegisterInstance(logger).As<ILogger>().SingleInstance();
+            
             containerBuilder.RegisterType<MenusExecutor>().As<IMenusExecutor>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<RatingsExecutor>().As<IRatingsExecutor>().InstancePerLifetimeScope();
         }

@@ -5,6 +5,7 @@ using ModularRestaurant.Shared.Domain.Types;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace ModularRestaurant.Menus.Application.Commands.CreateMenu
 {
@@ -12,7 +13,7 @@ namespace ModularRestaurant.Menus.Application.Commands.CreateMenu
     {
         private readonly IMenuRepository _menuRepository;
 
-        public CreateMenuCommandHandler(IMenuRepository menuRepository)
+        public CreateMenuCommandHandler(ILogger logger, IMenuRepository menuRepository)
         {
             _menuRepository = menuRepository;
         }

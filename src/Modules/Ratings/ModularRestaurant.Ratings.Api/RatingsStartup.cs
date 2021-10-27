@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Ratings.Api.IoCModules;
 using ModularRestaurant.Ratings.Infrastructure.EF;
+using Serilog;
 
 namespace ModularRestaurant.Ratings.Api
 {
@@ -19,6 +20,9 @@ namespace ModularRestaurant.Ratings.Api
         {
             var containerBuilder = new ContainerBuilder();
 
+            var logger = Log.Logger;
+            containerBuilder.RegisterInstance(logger).As<ILogger>().SingleInstance();
+            
             containerBuilder.RegisterModule(new DataAccessModule(connectionString));
             containerBuilder.RegisterModule(new ProcessingModule());
 

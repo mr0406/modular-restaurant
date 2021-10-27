@@ -8,6 +8,7 @@ using System;
 using System.Threading.Tasks;
 using MediatR;
 using ModularRestaurant.Menus.Application.Commands.CreateMenu;
+using Serilog;
 
 namespace ModularRestaurant.Menus.Api.Controllers
 {
@@ -22,6 +23,7 @@ namespace ModularRestaurant.Menus.Api.Controllers
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<MenuDTO>> GetMenu([FromRoute] Guid id)
         {
+            
             return Ok(await Executor.ExecuteQuery(new GetMenuQuery(id)));
         }
 

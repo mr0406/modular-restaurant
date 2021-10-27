@@ -8,7 +8,7 @@ namespace ModularRestaurant.Shared.Api
     public static class AssemblyProvider
     {
         public static Assembly GetInfrastructure(this Assembly assembly)
-            => GetAssembly(assembly, "Infrastructure");
+            => GetAssembly(assembly, "Infrastructures");
         
         public static Assembly GetApplication(this Assembly assembly)
             => GetAssembly(assembly, "Application");
@@ -33,7 +33,8 @@ namespace ModularRestaurant.Shared.Api
             }
             catch (Exception e)
             {
-                Log.Logger.Error(e.Message);
+                var logger = Log.Logger.ForContext(typeof(AssemblyProvider));
+                logger.Error(e.Message);
                 throw;
             }
         }
