@@ -18,8 +18,6 @@ namespace ModularRestaurant.Ratings.Infrastructure.EF.Configuration
             {
                 x.OwnsOne(x => x.UserId, y => { y.Property(a => a.Value).HasColumnName("UserId"); });
                 x.OwnsOne(x => x.Rating, y => { y.Property(a => a.Value).HasColumnName("Rating"); });
-                x.OwnsOne(x => x.Comment, y => { y.Property(a => a.Text).HasColumnName("Comment"); });
-                x.OwnsOne(x => x.RestaurantReply, y => { y.Property(a => a.Text).HasColumnName("RestaurantReply"); });
             });
         }
     }

@@ -2,7 +2,7 @@
 
 namespace ModularRestaurant.Ratings.Domain.Rules
 {
-    internal class RatingIsInRangeRule : IBusinessRule
+    public class RatingIsInRangeRule : IBusinessRule
     {
         private const int MinValue = 1;
         private const int MaxValue = 5;

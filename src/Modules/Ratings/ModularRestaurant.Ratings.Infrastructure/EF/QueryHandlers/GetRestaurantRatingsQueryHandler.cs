@@ -33,8 +33,8 @@ namespace ModularRestaurant.Ratings.Infrastructure.EF.QueryHandlers
                     {
                         UserId = y.UserId.Value,
                         Rating = y.Rating.Value,
-                        Comment = y.Comment.Text,
-                        RestaurantReply = y.RestaurantReply.Text
+                        Comment = y.Comment,
+                        RestaurantReply = y.RestaurantReply
                     }).Skip((query.Page - 1) * query.Size).Take(query.Size).ToList()
                 })
                 .SingleOrDefaultAsync(token);

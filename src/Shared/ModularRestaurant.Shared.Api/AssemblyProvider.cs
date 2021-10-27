@@ -8,7 +8,7 @@ namespace ModularRestaurant.Shared.Api
     public static class AssemblyProvider
     {
         public static Assembly GetInfrastructure(this Assembly assembly)
-            => GetAssembly(assembly, "Infrastructures");
+            => GetAssembly(assembly, "Infrastructure");
         
         public static Assembly GetApplication(this Assembly assembly)
             => GetAssembly(assembly, "Application");

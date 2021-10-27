@@ -4,6 +4,7 @@ using ModularRestaurant.Ratings.Domain.Repositories;
 using ModularRestaurant.Shared.Application.CQRS;
 using System.Threading;
 using System.Threading.Tasks;
+using ModularRestaurant.Shared.Domain.Types;
 
 namespace ModularRestaurant.Ratings.Application.Commands.AddRestaurant
 {
@@ -18,7 +19,8 @@ namespace ModularRestaurant.Ratings.Application.Commands.AddRestaurant
 
         public async Task<Unit> Handle(AddRestaurantCommand command, CancellationToken token)
         {
-            var restaurant = Restaurant.Create(command.Id);
+            var restaurantId = new RestaurantId(command.Id);
+            var restaurant = Restaurant.Create(restaurantId);
 
             await _restaurantRepository.AddAsync(restaurant, token);
 

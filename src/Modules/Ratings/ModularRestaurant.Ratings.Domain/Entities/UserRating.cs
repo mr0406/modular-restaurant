@@ -1,4 +1,5 @@
-﻿using ModularRestaurant.Shared.Domain.Common;
+﻿using ModularRestaurant.Ratings.Domain.Rules;
+using ModularRestaurant.Shared.Domain.Common;
 using ModularRestaurant.Shared.Domain.Types;
 
 namespace ModularRestaurant.Ratings.Domain.Entities
@@ -9,15 +10,15 @@ namespace ModularRestaurant.Ratings.Domain.Entities
 
         public Rating Rating { get; private set; }
 
-        public Comment Comment { get; private set; }
+        public string Comment { get; private set; }
 
-        public Comment RestaurantReply { get; private set; }
+        public string RestaurantReply { get; private set; }
 
         private UserRating()
         {
         }
 
-        private UserRating(UserId userId, Rating rating, Comment comment)
+        private UserRating(UserId userId, Rating rating, string comment)
         {
             UserId = userId;
             Rating = rating;
@@ -25,14 +26,25 @@ namespace ModularRestaurant.Ratings.Domain.Entities
             if (comment is not null) Comment = comment;
         }
 
-        internal static UserRating Create(UserId userId, int ratingValue, string text)
+        public static UserRating Create(UserId userId, int ratingValue, string comment)
         {
-            return new(userId, Rating.FromValue(ratingValue), Comment.FromText(text));
+            comment = comment?.Trim();
+            
+            CheckRule(new CommentCannotExceedCharacterLimit(comment));
+            
+            return new(userId, Rating.FromValue(ratingValue), comment);
         }
 
-        internal void AddRestaurantReply(string text)
+        public void AddRestaurantReply(string restaurantReply)
         {
-            RestaurantReply = Comment.FromText(text);
+            CheckRule(new CanReplyToUserRatingOnlyOnceRule(RestaurantReply));
+            
+            restaurantReply = restaurantReply?.Trim();
+            
+            CheckRule(new RestaurantReplyCannotBeEmptyRule(restaurantReply));
+            CheckRule(new RestaurantReplyCannotExceedCharacterLimit(restaurantReply));
+            
+            RestaurantReply = restaurantReply;
         }
     }
 }
