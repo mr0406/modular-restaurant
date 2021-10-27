@@ -16,7 +16,7 @@ namespace ModularRestaurant.Ratings.Domain.Entities
             Value = value;
         }
 
-        internal static Rating FromValue(int value)
+        public static Rating FromValue(int value)
         {
             CheckRule(new RatingIsInRangeRule(value));
 
