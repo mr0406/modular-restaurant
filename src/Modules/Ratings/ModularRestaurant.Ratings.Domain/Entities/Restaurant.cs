@@ -22,9 +22,9 @@ namespace ModularRestaurant.Ratings.Domain.Entities
         }
 
         //TODO: Removed after add integration with restaurantModule
-        public static Restaurant Create(Guid id)
+        public static Restaurant Create(RestaurantId id)
         {
-            return new Restaurant(new RestaurantId(id));
+            return new Restaurant(id);
         }
 
         public void AddUserRating(UserId userId, int ratingValue, string text)
@@ -34,10 +34,13 @@ namespace ModularRestaurant.Ratings.Domain.Entities
             _userRatings.Add(UserRating.Create(userId, ratingValue, text));
         }
 
-        public void AddCommentToUserRating(UserId userId, string text)
+        public void AddReplyToUserRating(UserId userId, string text)
         {
-            var userRating = UserRatings.Single(x => x.UserId == userId);
-            userRating.AddRestaurantReply(text);
+            var userRating = UserRatings.SingleOrDefault(x => x.UserId == userId);
+            
+            CheckRule(new CanAddReplyToExistingUserRatingRule(userRating));
+            
+            userRating!.AddRestaurantReply(text);
         }
     }
 }

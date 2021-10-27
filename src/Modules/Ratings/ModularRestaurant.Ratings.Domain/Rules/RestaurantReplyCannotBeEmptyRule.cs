@@ -2,13 +2,13 @@
 
 namespace ModularRestaurant.Ratings.Domain.Rules
 {
-    public class CommentCannotBeEmptyRule : IBusinessRule
+    public class RestaurantReplyCannotBeEmptyRule : IBusinessRule
     {
-        public string Message => "Comment cannot be empty.";
+        public string Message => "Restaurant reply cannot be empty.";
 
         private readonly string _text;
 
-        public CommentCannotBeEmptyRule(string text)
+        public RestaurantReplyCannotBeEmptyRule(string text)
         {
             _text = text;
         }

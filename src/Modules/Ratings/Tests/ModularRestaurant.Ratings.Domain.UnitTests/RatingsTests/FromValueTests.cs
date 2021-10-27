@@ -1,12 +1,14 @@
-﻿using ModularRestaurant.Ratings.Domain.Entities;
+﻿using System;
+using FluentAssertions;
+using ModularRestaurant.Ratings.Domain.Entities;
 using ModularRestaurant.Ratings.Domain.Rules;
 using ModularRestaurant.Shared.Domain.Common;
 using NUnit.Framework;
 
-namespace ModularRestaurant.Ratings.Domain.UnitTests
+namespace ModularRestaurant.Ratings.Domain.UnitTests.RatingsTests
 {
     [TestFixture]
-    public class RatingTests
+    public class FromValueTests
     {
         [Test]
         [TestCase(1)]
@@ -15,8 +17,9 @@ namespace ModularRestaurant.Ratings.Domain.UnitTests
         public void FromValue_WhenValueIsCorrect_IsSuccessful(int value)
         {
             var rating = Rating.FromValue(value);
-            
-            Assert.That(rating.Value, Is.EqualTo(value));
+
+            rating.Should().NotBeNull();
+            rating.Value.Should().Be(value);
         }
 
         [Test]
@@ -25,8 +28,10 @@ namespace ModularRestaurant.Ratings.Domain.UnitTests
         [TestCase(6)]
         public void FromValue_WhenRatingIsNotInRange_IsNotPossible(int value)
         {
-            var e = Assert.Throws<BusinessRuleException>(() => Rating.FromValue(value));
-            Assert.IsInstanceOf<RatingIsInRangeRule>(e!.BrokenRule);
+            Action action = () => Rating.FromValue(value);
+
+            action.Should().Throw<BusinessRuleException>()
+                .Where(x => x.BrokenRule is RatingIsInRangeRule);
         }
     }
 }
