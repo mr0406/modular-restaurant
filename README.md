@@ -1,6 +1,6 @@
 # Modular Restaurant
 
-![](https://github.com/mr0406/modular-restaurant/.github/workflows/dotnet/badge.svg)
+![](https://github.com/mr0406/modular-restaurant/actions/workflows/dotnet.yml/badge.svg)
 
 ## Introduction
 Modular Restaurant is an open source project written in .NET 5.0.\
