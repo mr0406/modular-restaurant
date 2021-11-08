@@ -369,3 +369,5 @@ FodyWeavers.xsd
 .idea
 
 **/appsettings.[Dd]evelopment.json
+
+**/appsettings.[Tt]esting.json

@@ -1,10 +1,15 @@
-﻿using ModularRestaurant.Menus.Domain.Rules;
-using ModularRestaurant.Shared.Domain.Common;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using ModularRestaurant.Menus.Domain.Rules.Groups;
+using ModularRestaurant.Menus.Domain.Rules.Items;
+using ModularRestaurant.Menus.Domain.Types;
+using ModularRestaurant.Shared.Domain.Common;
+using ModularRestaurant.Shared.Domain.Extensions;
 
 namespace ModularRestaurant.Menus.Domain.Entities
 {
-    public class Group : ValueObject
+    public class Group : Entity<GroupId>
     {
         public string Name { get; private set; }
 
@@ -13,25 +18,59 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
         private Group(string name)
         {
+            Id = new GroupId(Guid.NewGuid());
             Name = name;
         }
 
+        internal Group GetCopy()
+        {
+            var group = new Group(Name)
+            {
+                _items = _items.Select(x => x.GetCopy()).ToList()
+            };
+            
+            return group;
+        }
+        
+        internal void CheckConsistency()
+        {
+            CheckRule(new GroupMustHaveAtLeastOneItem(_items));
+        }
+        
         private Group()
         {
         }
 
-        public static Group CreateNew(string name)
+        public static Group Create(string name)
         {
-            //CheckRule(new GroupCannotBeEmptyRule(items));
-
             return new Group(name);
         }
 
-        public void EditItems(List<Item> items)
+        internal void ChangeName(string newName)
         {
-            CheckRule(new GroupCannotBeEmptyRule(items));
+            Name = newName;
+        }
 
-            _items = items;
+        internal void AddItem(string itemName)
+        {
+            CheckRule(new ItemNameMustBeUniqueRule(_items, itemName));
+            
+            var item = Item.Create(itemName);
+            _items.Add(item);
+        }
+
+        internal void ChangeItemName(ItemId itemId, string newItemName)
+        {
+            CheckRule(new ItemNameMustBeUniqueRule(_items, newItemName));
+
+            var item = _items.FindOrThrow(itemId);
+            item.ChangeName(newItemName);
+        }
+
+        internal void RemoveItem(ItemId itemId)
+        {
+            var item = _items.FindOrThrow(itemId);
+            _items.Remove(item);
         }
     }
 }

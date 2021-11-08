@@ -22,7 +22,7 @@ namespace ModularRestaurant.Menus.Application.Commands.CreateMenu
         {
             var restaurantId = new RestaurantId(request.RestaurantId);
 
-            var menu = Menu.CreateNew(restaurantId);
+            var menu = Menu.Create(restaurantId, request.InternalName, _menuRepository);
 
             await _menuRepository.AddAsync(menu, cancellationToken);
 

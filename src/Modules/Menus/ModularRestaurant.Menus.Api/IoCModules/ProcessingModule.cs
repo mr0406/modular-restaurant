@@ -6,12 +6,11 @@ using ModularRestaurant.Shared.Api;
 using ModularRestaurant.Shared.Application;
 using ModularRestaurant.Shared.Application.Processing.Commands;
 using ModularRestaurant.Shared.Application.Processing.Requests;
-using ModularRestaurant.Shared.Infrastructure.MsSql;
-using Module = Autofac.Module;
+using ModularRestaurant.Shared.Infrastructure.EF;
 
 namespace ModularRestaurant.Menus.Api.IoCModules
 {
-    internal class ProcessingModule : Module
+    internal class ProcessingModule : Autofac.Module
     {
         protected override void Load(ContainerBuilder builder)
         {

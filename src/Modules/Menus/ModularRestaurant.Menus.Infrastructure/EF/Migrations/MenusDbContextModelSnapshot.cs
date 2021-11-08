@@ -25,6 +25,12 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("InternalName")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
                     b.Property<Guid?>("RestaurantId")
                         .HasColumnType("uuid");
 
@@ -37,18 +43,18 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Migrations
                 {
                     b.OwnsMany("ModularRestaurant.Menus.Domain.Entities.Group", "Groups", b1 =>
                         {
-                            b1.Property<Guid>("MenuId")
+                            b1.Property<Guid>("Id")
                                 .HasColumnType("uuid");
 
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("integer")
-                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                            b1.Property<Guid>("MenuId")
+                                .HasColumnType("uuid");
 
                             b1.Property<string>("Name")
                                 .HasColumnType("text");
 
-                            b1.HasKey("MenuId", "Id");
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("MenuId");
 
                             b1.ToTable("Groups");
 
@@ -57,26 +63,23 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Migrations
 
                             b1.OwnsMany("ModularRestaurant.Menus.Domain.Entities.Item", "Items", b2 =>
                                 {
-                                    b2.Property<Guid>("GroupMenuId")
+                                    b2.Property<Guid>("Id")
                                         .HasColumnType("uuid");
 
-                                    b2.Property<int>("GroupId")
-                                        .HasColumnType("integer");
-
-                                    b2.Property<int>("Id")
-                                        .ValueGeneratedOnAdd()
-                                        .HasColumnType("integer")
-                                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                                    b2.Property<Guid>("GroupId")
+                                        .HasColumnType("uuid");
 
                                     b2.Property<string>("Name")
                                         .HasColumnType("text");
 
-                                    b2.HasKey("GroupMenuId", "GroupId", "Id");
+                                    b2.HasKey("Id");
+
+                                    b2.HasIndex("GroupId");
 
                                     b2.ToTable("Items");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("GroupMenuId", "GroupId");
+                                        .HasForeignKey("GroupId");
                                 });
 
                             b1.Navigation("Items");

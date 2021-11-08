@@ -43,6 +43,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularRestaurant.Ratings.D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E4A3B046-8191-40BD-8974-1119F37D7C8A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{29DC7350-6A7D-48F6-92B8-714F9A55649C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularRestaurant.Menus.Domain.UnitTests", "Modules\Menus\Tests\ModularRestaurant.Menus.Domain.UnitTests\ModularRestaurant.Menus.Domain.UnitTests.csproj", "{895CF214-FE2C-4A35-BA9D-5CE9102FE76F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularRestaurant.Menus.IntegrationTests", "Modules\Menus\Tests\ModularRestaurant.Menus.IntegrationTests\ModularRestaurant.Menus.IntegrationTests.csproj", "{9F90CB13-4BA2-4C69-B2BD-D8710D1D19B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +111,14 @@ Global
 		{EB18A144-4503-4E20-9D1B-3E4D172DF7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB18A144-4503-4E20-9D1B-3E4D172DF7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB18A144-4503-4E20-9D1B-3E4D172DF7D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{895CF214-FE2C-4A35-BA9D-5CE9102FE76F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{895CF214-FE2C-4A35-BA9D-5CE9102FE76F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{895CF214-FE2C-4A35-BA9D-5CE9102FE76F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{895CF214-FE2C-4A35-BA9D-5CE9102FE76F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F90CB13-4BA2-4C69-B2BD-D8710D1D19B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F90CB13-4BA2-4C69-B2BD-D8710D1D19B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F90CB13-4BA2-4C69-B2BD-D8710D1D19B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F90CB13-4BA2-4C69-B2BD-D8710D1D19B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -127,6 +141,9 @@ Global
 		{8E71C32D-D17D-48B9-9816-A536339B89CC} = {83831930-9D39-4163-B4AD-84DA793F07B6}
 		{E4A3B046-8191-40BD-8974-1119F37D7C8A} = {83831930-9D39-4163-B4AD-84DA793F07B6}
 		{EB18A144-4503-4E20-9D1B-3E4D172DF7D6} = {E4A3B046-8191-40BD-8974-1119F37D7C8A}
+		{29DC7350-6A7D-48F6-92B8-714F9A55649C} = {2DFE08C7-2698-41AE-9183-0F1BBFE87E60}
+		{895CF214-FE2C-4A35-BA9D-5CE9102FE76F} = {29DC7350-6A7D-48F6-92B8-714F9A55649C}
+		{9F90CB13-4BA2-4C69-B2BD-D8710D1D19B4} = {29DC7350-6A7D-48F6-92B8-714F9A55649C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47A32488-6012-4CFA-8301-02A01ABB8840}

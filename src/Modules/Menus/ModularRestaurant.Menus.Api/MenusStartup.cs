@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Menus.Api.IoCModules;
 using ModularRestaurant.Menus.Infrastructure.EF;
 using Serilog;
-using Serilog.Extensions.Logging;
 
 namespace ModularRestaurant.Menus.Api
 {

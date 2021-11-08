@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ModularRestaurant.Shared.Application;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using ModularRestaurant.Shared.Application;
 
-namespace ModularRestaurant.Shared.Infrastructure.MsSql
+namespace ModularRestaurant.Shared.Infrastructure.EF
 {
     public class EFUnitOfWork : IUnitOfWork
     {

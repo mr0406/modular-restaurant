@@ -4,8 +4,6 @@ namespace ModularRestaurant.Ratings.Domain.Rules
 {
     public class CanReplyToUserRatingOnlyOnceRule : IBusinessRule
     {
-        public string Message => "Cannot reply to user rating more than once.";
-
         private readonly string _existingReply;
 
         public CanReplyToUserRatingOnlyOnceRule(string existingReply)
@@ -14,5 +12,7 @@ namespace ModularRestaurant.Ratings.Domain.Rules
         }
 
         public bool IsBroken() => _existingReply is not null;
+        
+        public string Message => "Cannot reply to user rating more than once.";
     }
 }

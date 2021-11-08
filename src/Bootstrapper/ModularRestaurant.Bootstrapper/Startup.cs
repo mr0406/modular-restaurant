@@ -32,7 +32,10 @@ namespace ModularRestaurant.Bootstrapper
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "ModularRestaurant", Version = "v1"});
+                c.CustomSchemaIds(x => x.FullName);
             });
+            
+            InitializeModules();
         }
 
         public void ConfigureContainer(ContainerBuilder containerBuilder)
@@ -47,9 +50,9 @@ namespace ModularRestaurant.Bootstrapper
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             var container = app.ApplicationServices.GetAutofacRoot();
-
+            
             InitializeModules();
-
+            
             app.UseCors(builder => builder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
@@ -58,7 +61,11 @@ namespace ModularRestaurant.Bootstrapper
             app.UseExceptionHandling();
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ModularRestaurant v1"));
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ModularRestaurant v1");
+                c.DefaultModelsExpandDepth(-1);
+            });
 
             //app.UseHttpsRedirection();
 

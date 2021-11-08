@@ -35,7 +35,7 @@ namespace ModularRestaurant.Ratings.Domain.Entities
             return new(userId, Rating.FromValue(ratingValue), comment);
         }
 
-        public void AddRestaurantReply(string restaurantReply)
+        internal void AddRestaurantReply(string restaurantReply)
         {
             CheckRule(new CanReplyToUserRatingOnlyOnceRule(RestaurantReply));
             

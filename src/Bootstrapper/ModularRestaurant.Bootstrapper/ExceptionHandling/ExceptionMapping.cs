@@ -1,7 +1,7 @@
-﻿using ModularRestaurant.Shared.Domain.Common;
-using System;
+﻿using System;
 using System.Net;
 using ModularRestaurant.Shared.Api;
+using ModularRestaurant.Shared.Domain.Exceptions;
 
 namespace ModularRestaurant.Bootstrapper.ExceptionHandling
 {
@@ -13,8 +13,8 @@ namespace ModularRestaurant.Bootstrapper.ExceptionHandling
             {
                 BusinessRuleException businessRuleException => new ErrorResponse(
                     new ErrorMessage(businessRuleException.Message), HttpStatusCode.Conflict),
-                EntityNotFoundException entityNotFoundException => new ErrorResponse(
-                    new ErrorMessage(entityNotFoundException.Message), HttpStatusCode.NotFound),
+                ObjectNotFoundException objectNotFoundException => new ErrorResponse(
+                    new ErrorMessage(objectNotFoundException.Message), HttpStatusCode.NotFound),
                 _ => new ErrorResponse(new ErrorMessage("Internal server error."), HttpStatusCode.InternalServerError)
             };
         }

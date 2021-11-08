@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Ratings.Domain.Entities;
 using ModularRestaurant.Ratings.Domain.Repositories;
-using ModularRestaurant.Shared.Domain.Common;
 using ModularRestaurant.Shared.Domain.Types;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using ModularRestaurant.Shared.Domain.Exceptions;
 
 namespace ModularRestaurant.Ratings.Infrastructure.EF.Repositories
 {
@@ -34,7 +34,7 @@ namespace ModularRestaurant.Ratings.Infrastructure.EF.Repositories
             }
             catch (Exception)
             {
-                throw new EntityNotFoundException(nameof(Restaurant), restaurantId.Value);
+                throw new ObjectNotFoundException(typeof(Restaurant), restaurantId.Value);
             }
 
             return restaurant;

@@ -8,8 +8,6 @@ namespace ModularRestaurant.Ratings.Domain.Rules
 {
     public class UserCanOnlyRateRestaurantOnceRule : IBusinessRule
     {
-        public string Message => "Cannot rate restaurant more than once.";
-
         private readonly UserId _userId;
         private readonly List<UserRating> _userRatings;
 
@@ -19,9 +17,8 @@ namespace ModularRestaurant.Ratings.Domain.Rules
             _userRatings = userRatings;
         }
 
-        public bool IsBroken()
-        {
-            return _userRatings.Select(x => x.UserId).Contains(_userId);
-        }
+        public bool IsBroken() => _userRatings.Select(x => x.UserId).Contains(_userId);
+        
+        public string Message => "Cannot rate restaurant more than once.";
     }
 }

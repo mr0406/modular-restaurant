@@ -1,4 +1,6 @@
-﻿namespace ModularRestaurant.Shared.Domain.Common
+﻿using ModularRestaurant.Shared.Domain.Exceptions;
+
+namespace ModularRestaurant.Shared.Domain.Common
 {
     public class AggregateRoot<T>
     {

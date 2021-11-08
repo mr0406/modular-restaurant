@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Menus.Domain.Entities;
 using ModularRestaurant.Menus.Domain.Repositories;
 using ModularRestaurant.Shared.Domain.Types;
 using System.Threading;
 using System.Threading.Tasks;
+using ModularRestaurant.Shared.Domain.Exceptions;
 
 namespace ModularRestaurant.Menus.Infrastructure.EF.Repositories
 {
@@ -25,7 +27,24 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Repositories
 
         public async Task<Menu> GetAsync(MenuId menuId, CancellationToken token)
         {
-            return await _menus.SingleAsync(x => x.Id == menuId, token);
+            var menu = await _menus.SingleOrDefaultAsync(x => x.Id == menuId, token);
+            if (menu is null) throw new ObjectNotFoundException(typeof(Menu), menuId.Value);
+            return menu;
+        }
+
+        public async Task<Menu> GetActiveMenuInRestaurant(RestaurantId restaurantId)
+        {
+            return await _menus.SingleOrDefaultAsync(x => x.RestaurantId == restaurantId && x.IsActive);
+        }
+
+        public async Task<bool> DoesRestaurantHaveActiveMenuAsync(RestaurantId restaurantId)
+        {
+            return await Task.FromResult(_menus.Any(x => x.RestaurantId == restaurantId && x.IsActive));
+        }
+
+        public async Task<bool> DoesRestaurantHaveMenuWithThisInternalNameAsync(RestaurantId restaurantId, string internalMenuName)
+        {
+            return await Task.FromResult(_menus.Any(x => x.RestaurantId == restaurantId && x.InternalName == internalMenuName));
         }
     }
 }

@@ -10,10 +10,12 @@ namespace ModularRestaurant.Ratings.Domain.UnitTests.RestaurantTests
         [Test]
         public void Create_WhenDataIsCorrect_IsSuccessful()
         {
-            var restaurant = Restaurant.Create(_restaurantId);
+            var restaurantId = Provider.GetRestaurantId();
+            
+            var restaurant = Restaurant.Create(restaurantId);
 
             restaurant.Should().NotBeNull();
-            restaurant.Id.Should().BeEquivalentTo(_restaurantId);
+            restaurant.Id.Should().BeEquivalentTo(restaurantId);
         }
     }
 }

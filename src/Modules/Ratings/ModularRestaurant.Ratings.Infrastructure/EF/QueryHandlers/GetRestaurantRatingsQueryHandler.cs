@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ModularRestaurant.Ratings.Application.DTOs;
 using ModularRestaurant.Ratings.Application.Queries;
 using ModularRestaurant.Ratings.Domain.Entities;
 using ModularRestaurant.Shared.Application.CQRS;
@@ -12,24 +11,23 @@ using System.Threading.Tasks;
 
 namespace ModularRestaurant.Ratings.Infrastructure.EF.QueryHandlers
 {
-    public class GetRestaurantRatingsQueryHandler : IQueryHandler<GetRestaurantRatingsQuery, RestaurantDTO>
+    public class GetRestaurantRatingsQueryHandler : IQueryHandler<GetRestaurantRatingsQuery, GetRestaurantRatingsQueryResult>
     {
         private readonly DbSet<Restaurant> _restaurants;
 
-        public GetRestaurantRatingsQueryHandler(RatingsDbContext dbContext)
+        public GetRestaurantRatingsQueryHandler(RatingsDbContext ratingsDbContext)
         {
-            _restaurants = dbContext.Restaurants;
+            _restaurants = ratingsDbContext.Restaurants;
         }
 
-        public async Task<RestaurantDTO> Handle(GetRestaurantRatingsQuery query, CancellationToken token)
+        public async Task<GetRestaurantRatingsQueryResult> Handle(GetRestaurantRatingsQuery query, CancellationToken token)
         {
-            var restaurant = await _restaurants.Where(x => x.Id == new RestaurantId(query.Id))
-                .Select(x => new RestaurantDTO()
+            var restaurant = await _restaurants.Where(x => x.Id == new RestaurantId(query.RestaurantId))
+                .Select(x => new GetRestaurantRatingsQueryResult()
                 {
-                    Id = x.Id.Value,
-                    NumberOfRatings = x.UserRatings.Count(),
+                    NumberOfRatings = x.UserRatings.Count,
                     SumOfRatings = x.UserRatings.Sum(y => y.Rating.Value),
-                    UserRatings = x.UserRatings.Select(y => new UserRatingDTO
+                    UserRatings = x.UserRatings.Select(y => new GetRestaurantRatingsQueryResult.UserRating
                     {
                         UserId = y.UserId.Value,
                         Rating = y.Rating.Value,

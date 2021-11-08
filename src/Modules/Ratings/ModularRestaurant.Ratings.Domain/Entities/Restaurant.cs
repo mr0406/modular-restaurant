@@ -1,7 +1,6 @@
 ﻿using ModularRestaurant.Ratings.Domain.Rules;
 using ModularRestaurant.Shared.Domain.Common;
 using ModularRestaurant.Shared.Domain.Types;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,6 +37,7 @@ namespace ModularRestaurant.Ratings.Domain.Entities
         {
             var userRating = UserRatings.SingleOrDefault(x => x.UserId == userId);
             
+            //TODO: Consider use FindOrThrow, because this is not business rule at all
             CheckRule(new CanAddReplyOnlyToExistingUserRatingRule(userRating));
             
             userRating!.AddRestaurantReply(text);

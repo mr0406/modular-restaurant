@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ModularRestaurant.Ratings.Application.Commands.AddRating;
 using ModularRestaurant.Ratings.Application.Commands.AddRestaurant;
-using ModularRestaurant.Ratings.Application.DTOs;
 using ModularRestaurant.Ratings.Application.Queries;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using ModularRestaurant.Shared.Api;
 
 namespace ModularRestaurant.Ratings.Api.Controllers
 {
@@ -14,22 +15,24 @@ namespace ModularRestaurant.Ratings.Api.Controllers
         {
         }
 
-        [HttpGet("{id:guid}")]
-        public async Task<ActionResult<RestaurantDTO>> Get([FromRoute] Guid id, [FromQuery] int page = 1, [FromQuery] int size = 10)
-        {
-            return Ok(await Executor.ExecuteQuery(new GetRestaurantRatingsQuery(id, page, size)));
-        }
+        [HttpGet("{restaurantId:guid}")]
+        [ProducesResponseType(typeof(GetRestaurantRatingsQueryResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<GetRestaurantRatingsQueryResult>> Get([FromRoute] Guid restaurantId, [FromQuery] int page = 1, [FromQuery] int size = 10)
+            => Ok(await Executor.ExecuteQuery(new GetRestaurantRatingsQuery(restaurantId, page, size)));
 
-        [HttpPost]
+        [HttpPost("add-restaurant")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status409Conflict)]
         public async Task<ActionResult> AddRestaurant([FromBody] AddRestaurantCommand command)
-        {
-            return Ok(await Executor.ExecuteCommand(command));
-        }
+            => Ok(await Executor.ExecuteCommand(command));
 
-        [HttpPost("addRating")]
+        [HttpPost("add-rating")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status409Conflict)]
         public async Task<ActionResult> AddRating([FromBody] AddRatingCommand command)
-        {
-            return Ok(await Executor.ExecuteCommand(command));
-        }
+            => Ok(await Executor.ExecuteCommand(command));
+        
+        //TODO: Add method for AddRestaurantReply
     }
 }

@@ -3,11 +3,10 @@ using Autofac;
 using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Menus.Infrastructure.EF;
 using ModularRestaurant.Shared.Api;
-using Module = Autofac.Module;
 
 namespace ModularRestaurant.Menus.Api.IoCModules
 {
-    internal class DataAccessModule : Module
+    internal class DataAccessModule : Autofac.Module
     {
         private readonly string _connectionString;
 

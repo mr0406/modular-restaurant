@@ -1,27 +1,35 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ModularRestaurant.Menus.Application.DTOs;
-using ModularRestaurant.Menus.Application.Queries;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Menus.Domain.Entities;
-using ModularRestaurant.Menus.Infrastructure.EF.Mappings;
 using ModularRestaurant.Shared.Application.CQRS;
 using ModularRestaurant.Shared.Domain.Types;
 using System.Threading;
 using System.Threading.Tasks;
+using ModularRestaurant.Menus.Application.Queries.GetMenu;
 
 namespace ModularRestaurant.Menus.Infrastructure.EF.QueryHandlers
 {
-    public class GetMenuQueryHandler : IQueryHandler<GetMenuQuery, MenuDTO>
+    public class GetMenuQueryHandler : IQueryHandler<GetMenuQuery, GetMenuQueryResult>
     {
         private readonly DbSet<Menu> _menus;
 
-        public GetMenuQueryHandler(MenusDbContext dbContext)
+        public GetMenuQueryHandler(MenusDbContext menusDbContext)
         {
-            _menus = dbContext.Menus;
+            _menus = menusDbContext.Menus;
         }
 
-        public async Task<MenuDTO> Handle(GetMenuQuery query, CancellationToken cancellationToken)
+        public async Task<GetMenuQueryResult> Handle(GetMenuQuery query, CancellationToken cancellationToken)
         {
-            return (await _menus.SingleOrDefaultAsync(x => x.Id == new MenuId(query.Id), cancellationToken)).ToDTO();
+            var menuId = new MenuId(query.Id);
+            
+            return await _menus.Where(x => x.Id == menuId)
+                .Select(menu => new GetMenuQueryResult
+                {
+                    Groups = menu.Groups.Select(
+                        group => new GetMenuQueryResult.Group(group.Id.Value, group.Name, group.Items.Select(
+                            item => new GetMenuQueryResult.Item(item.Id.Value, item.Name))))
+                })
+                .SingleOrDefaultAsync(cancellationToken);
         }
     }
 }

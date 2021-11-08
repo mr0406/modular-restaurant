@@ -10,7 +10,7 @@ namespace ModularRestaurant.Menus.Api
         {
             _container = container;
         }
-
+        
         internal static ILifetimeScope BeginLifeTimeScope()
         {
             return _container.BeginLifetimeScope();

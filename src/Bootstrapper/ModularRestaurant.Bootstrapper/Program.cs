@@ -4,7 +4,6 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
 using Autofac.Extensions.DependencyInjection;
-using Serilog.Formatting.Compact;
 
 namespace ModularRestaurant.Bootstrapper
 {

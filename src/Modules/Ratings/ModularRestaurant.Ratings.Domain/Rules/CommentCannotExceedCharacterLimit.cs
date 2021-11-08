@@ -6,8 +6,6 @@ namespace ModularRestaurant.Ratings.Domain.Rules
     {
         private const int MaxCharacters = 500;
 
-        public string Message => $"Comment longer than max character limit: {MaxCharacters}";
-
         private readonly string _text;
 
         public CommentCannotExceedCharacterLimit(string text)
@@ -15,9 +13,9 @@ namespace ModularRestaurant.Ratings.Domain.Rules
             _text = text;
         }
 
-        public bool IsBroken()
-        {
-            return _text.Length > MaxCharacters;
-        }
+        public bool IsBroken() => _text.Length > MaxCharacters;
+        
+        
+        public string Message => $"Comment cannot be longer than: {MaxCharacters} characters.";
     }
 }
