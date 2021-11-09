@@ -33,11 +33,11 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeItems
                 } 
             }
 
-            if (request.ItemsToAdd?.Names is not null)
+            if (request.ItemsToAdd?.Items is not null)
             {
-                foreach (var itemName in request.ItemsToAdd.Names)
+                foreach (var itemToAdd in request.ItemsToAdd.Items)
                 {
-                    menu.AddItemToGroup(groupId, itemName);
+                    menu.AddItemToGroup(groupId, itemToAdd.Name, itemToAdd.Description);
                 }   
             }
 
@@ -47,6 +47,7 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeItems
                 {
                     var itemId = new ItemId(itemToUpdate.Id);
                     menu.ChangeItemName(groupId, itemId, itemToUpdate.NewName);
+                    menu.ChangeItemDescription(groupId, itemId, itemToUpdate.NewDescription);
                 }   
             }
 

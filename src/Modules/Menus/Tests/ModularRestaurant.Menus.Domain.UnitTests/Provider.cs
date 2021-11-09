@@ -24,6 +24,8 @@ namespace ModularRestaurant.Menus.Domain.UnitTests
         
         internal static string GetItemName() => "itemName";
 
+        internal static string GetItemDescription() => "itemDescription";
+
         internal static Guid GetItemGuid() => new("1263C7A0-BA1C-4EB2-89D0-661622BC1731");
 
         internal static ItemId GetItemId() => new(GetItemGuid());
@@ -68,7 +70,7 @@ namespace ModularRestaurant.Menus.Domain.UnitTests
         {
             var menu = GetEmptyMenu();
             menu.AddGroup(GetGroupName());
-            menu.AddItemToGroup(menu.Groups[0].Id, GetItemName());
+            menu.AddItemToGroup(menu.Groups[0].Id, GetItemName(), GetItemDescription());
 
             return menu;
         }
@@ -87,6 +89,6 @@ namespace ModularRestaurant.Menus.Domain.UnitTests
 
         internal static Group GetEmptyGroup() => Group.Create(GetGroupName());
 
-        internal static Item GetItem() => Item.Create(GetItemName());
+        internal static Item GetItem() => Item.Create(GetItemName(), GetItemDescription());
     }
 }
