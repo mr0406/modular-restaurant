@@ -8,16 +8,16 @@ namespace ModularRestaurant.Menus.Domain.Rules.Restaurants
     {
         private readonly RestaurantId _restaurantId;
         private readonly string _newInternalMenuName;
-        private readonly IMenuRepository _menuRepository;
-        
-        public InternalNameMustBeUniqueInRestaurantMenusRule(RestaurantId restaurantId, string newInternalMenuName, IMenuRepository menuRepository)
+        private readonly IRestaurantRepository _restaurantRepository;
+
+        public InternalNameMustBeUniqueInRestaurantMenusRule(RestaurantId restaurantId, string newInternalMenuName, IRestaurantRepository restaurantRepository)
         {
             _restaurantId = restaurantId;
             _newInternalMenuName = newInternalMenuName;
-            _menuRepository = menuRepository;
+            _restaurantRepository = restaurantRepository;
         }
 
-        public bool IsBroken() => _menuRepository.DoesRestaurantHaveMenuWithThisInternalNameAsync(_restaurantId, _newInternalMenuName).Result;
+        public bool IsBroken() => _restaurantRepository.DoesHaveMenuWithThisInternalName(_restaurantId, _newInternalMenuName).Result;
 
         public string Message => "Internal menu name must be unique in restaurant";
     }

@@ -11,10 +11,12 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeGroups
     public class ChangeGroupsCommandHandler : ICommandHandler<ChangeGroupsCommand, Unit>
     {
         private readonly IMenuRepository _menuRepository;
+        private readonly IRestaurantRepository _restaurantRepository;
 
-        public ChangeGroupsCommandHandler(IMenuRepository menuRepository)
+        public ChangeGroupsCommandHandler(IMenuRepository menuRepository, IRestaurantRepository restaurantRepository)
         {
             _menuRepository = menuRepository;
+            _restaurantRepository = restaurantRepository;
         }
         
         public async Task<Unit> Handle(ChangeGroupsCommand request, CancellationToken cancellationToken)
@@ -27,7 +29,7 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeGroups
                 foreach (var groupIdToRemove in request.GroupsToRemove.Ids)
                 {
                     var groupId = new GroupId(groupIdToRemove);
-                    menu.RemoveGroup(groupId);
+                    menu.RemoveGroup(groupId, _restaurantRepository);
                 }
             }
 
@@ -35,7 +37,7 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeGroups
             {
                 foreach (var groupName in request.GroupsToAdd.Names)
                 {
-                    menu.AddGroup(groupName);
+                    menu.AddGroup(groupName, _restaurantRepository);
                 }   
             }
 
@@ -44,7 +46,7 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeGroups
                 foreach (var groupToUpdate in request.GroupsToUpdate.Groups)
                 {
                     var groupId = new GroupId(groupToUpdate.Id);
-                    menu.ChangeGroupName(groupId, groupToUpdate.NewName);
+                    menu.ChangeGroupName(groupId, groupToUpdate.NewName, _restaurantRepository);
                 }   
             }
 

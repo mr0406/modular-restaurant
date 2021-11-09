@@ -12,17 +12,19 @@ namespace ModularRestaurant.Menus.Application.Commands.CreateMenu
     public class CreateMenuCommandHandler : ICommandHandler<CreateMenuCommand, Guid>
     {
         private readonly IMenuRepository _menuRepository;
+        private readonly IRestaurantRepository _restaurantRepository;
 
-        public CreateMenuCommandHandler(ILogger logger, IMenuRepository menuRepository)
+        public CreateMenuCommandHandler(IMenuRepository menuRepository, IRestaurantRepository restaurantRepository)
         {
             _menuRepository = menuRepository;
+            _restaurantRepository = restaurantRepository;
         }
 
         public async Task<Guid> Handle(CreateMenuCommand request, CancellationToken cancellationToken)
         {
             var restaurantId = new RestaurantId(request.RestaurantId);
 
-            var menu = Menu.Create(restaurantId, request.InternalName, _menuRepository);
+            var menu = Menu.Create(restaurantId, request.InternalName, _restaurantRepository);
 
             await _menuRepository.AddAsync(menu, cancellationToken);
 

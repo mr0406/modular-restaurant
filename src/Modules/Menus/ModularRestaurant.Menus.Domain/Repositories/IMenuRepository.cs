@@ -7,14 +7,8 @@ namespace ModularRestaurant.Menus.Domain.Repositories
 {
     public interface IMenuRepository
     {
-        Task AddAsync(Menu menu, CancellationToken token);
+        Task AddAsync(Menu menu, CancellationToken token = default);
         
-        Task<Menu> GetAsync(MenuId menuId, CancellationToken token);
-        
-        Task<Menu> GetActiveMenuInRestaurant(RestaurantId restaurantId);
-
-        Task<bool> DoesRestaurantHaveActiveMenuAsync(RestaurantId restaurantId);
-
-        Task<bool> DoesRestaurantHaveMenuWithThisInternalNameAsync(RestaurantId restaurantId, string internalMenuName);
+        Task<Menu> GetAsync(MenuId menuId, CancellationToken token = default);
     }
 }

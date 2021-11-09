@@ -10,10 +10,12 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeMenuInternalName
     public class ChangeMenuInternalNameCommandHandler : ICommandHandler<ChangeMenuInternalNameCommand, Unit>
     {
         private readonly IMenuRepository _menuRepository;
+        private readonly IRestaurantRepository _restaurantRepository;
         
-        public ChangeMenuInternalNameCommandHandler(IMenuRepository menuRepository)
+        public ChangeMenuInternalNameCommandHandler(IMenuRepository menuRepository, IRestaurantRepository restaurantRepository)
         {
             _menuRepository = menuRepository;
+            _restaurantRepository = restaurantRepository;
         }
         
         public async Task<Unit> Handle(ChangeMenuInternalNameCommand request, CancellationToken cancellationToken)
@@ -21,7 +23,7 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeMenuInternalName
             var menuId = new MenuId(request.MenuId);
             var menu = await _menuRepository.GetAsync(menuId, cancellationToken);
             
-            menu.ChangeInternalName(request.NewInternalName, _menuRepository);
+            menu.ChangeInternalName(request.NewInternalName, _restaurantRepository);
             
             return Unit.Value;
         }

@@ -11,10 +11,12 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeItems
     public class ChangeItemsCommandHandler : ICommandHandler<ChangeItemsCommand, Unit>
     {
         private readonly IMenuRepository _menuRepository;
+        private readonly IRestaurantRepository _restaurantRepository;
 
-        public ChangeItemsCommandHandler(IMenuRepository menuRepository)
+        public ChangeItemsCommandHandler(IMenuRepository menuRepository, IRestaurantRepository restaurantRepository)
         {
             _menuRepository = menuRepository;
+            _restaurantRepository = restaurantRepository;
         }
         
         public async Task<Unit> Handle(ChangeItemsCommand request, CancellationToken cancellationToken)
@@ -29,7 +31,7 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeItems
                 foreach (var itemIdToRemove in request.ItemsToRemove.Ids)
                 {
                     var itemId = new ItemId(itemIdToRemove);
-                    menu.RemoveItemFromGroup(groupId, itemId);
+                    menu.RemoveItemFromGroup(groupId, itemId, _restaurantRepository);
                 } 
             }
 
@@ -37,7 +39,7 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeItems
             {
                 foreach (var itemName in request.ItemsToAdd.Names)
                 {
-                    menu.AddItemToGroup(groupId, itemName);
+                    menu.AddItemToGroup(groupId, itemName, _restaurantRepository);
                 }   
             }
 
@@ -46,7 +48,7 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeItems
                 foreach (var itemToUpdate in request.ItemsToUpdate.Items)
                 {
                     var itemId = new ItemId(itemToUpdate.Id);
-                    menu.ChangeItemName(groupId, itemId, itemToUpdate.NewName);
+                    menu.ChangeItemName(groupId, itemId, itemToUpdate.NewName, _restaurantRepository);
                 }   
             }
 

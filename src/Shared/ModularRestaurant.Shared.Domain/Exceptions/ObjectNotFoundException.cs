@@ -2,17 +2,17 @@
 
 namespace ModularRestaurant.Shared.Domain.Exceptions
 {
-    public class ObjectNotFoundException : Exception
+    public class ObjectNotFoundException : NotFoundException
     {
-        public Type Type { get; }
-        
+        public readonly Type Type;
         //TODO: consider user TypeId instead of Guid
-        public Guid Id { get; }
+        public readonly Guid Id;
         
-        public ObjectNotFoundException(Type type, Guid Id)
-            : base($"{type.Name} with Id: {Id} not found.")
+        public ObjectNotFoundException(Type type, Guid id)
+            : base($"{type.Name} with Id: {id} not found.")
         {
             Type = type;
+            Id = id;
         }
     }
 }

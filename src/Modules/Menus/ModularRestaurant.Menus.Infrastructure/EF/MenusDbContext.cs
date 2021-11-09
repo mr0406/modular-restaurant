@@ -7,6 +7,7 @@ namespace ModularRestaurant.Menus.Infrastructure.EF
     public class MenusDbContext : DbContextBase
     {
         public DbSet<Menu> Menus { get; set; }
+        public DbSet<Restaurant> Restaurants { get; set; }
 
         public MenusDbContext()
         {

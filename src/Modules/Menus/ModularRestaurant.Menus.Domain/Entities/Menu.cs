@@ -20,23 +20,21 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
         public IReadOnlyList<Group> Groups => _groups;
         private List<Group> _groups = new();
-        public bool IsActive { get; private set; }
-        
+
         private Menu(RestaurantId restaurantId, string internalName)
         {
             Id = new MenuId(Guid.NewGuid());
             InternalName = internalName;
             RestaurantId = restaurantId;
-            IsActive = false;
         }
         
         private Menu()
         {
         }
 
-        public Menu GetCopy(string newInternalName, IMenuRepository menuRepository)
+        public Menu GetCopy(string newInternalName, IRestaurantRepository restaurantRepository)
         {
-            CheckRule(new InternalNameMustBeUniqueInRestaurantMenusRule(RestaurantId, newInternalName, menuRepository));
+            CheckRule(new InternalNameMustBeUniqueInRestaurantMenusRule(RestaurantId, newInternalName, restaurantRepository));
             
             var menu = new Menu(RestaurantId, newInternalName)
             {
@@ -46,84 +44,70 @@ namespace ModularRestaurant.Menus.Domain.Entities
             return menu;
         }
         
-        public void Activate(IMenuRepository menuRepository)
+        internal void Activate()
         {
-            CheckRule(new CannotActivateActiveMenuRule(IsActive));
-            //CheckRule(new RestaurantCannotHaveMoreThanOneActiveMenuRule(RestaurantId, menuRepository));
             CheckRule(new ActiveMenuMustHaveAtLeastOneGroup(_groups));
             
-            //TODO: Change that, this is not the best solution, Restaurant should be an aggregate
-            var currentActiveMenu = menuRepository.GetActiveMenuInRestaurant(RestaurantId).Result;
-            currentActiveMenu?.Deactivate();
-            
             _groups.ForEach(x => x.CheckConsistency());
-            
-            IsActive = true;
         }
 
-        public void Deactivate()
+        public static Menu Create(RestaurantId restaurantId, string internalName, IRestaurantRepository restaurantRepository)
         {
-            CheckRule(new CannotDeactivateInactiveMenuRule(IsActive));
-            IsActive = false;
-        }
-
-        public static Menu Create(RestaurantId restaurantId, string internalName, IMenuRepository menuRepository)
-        {
-            CheckRule(new InternalNameMustBeUniqueInRestaurantMenusRule(restaurantId, internalName, menuRepository));
+            CheckRule(new InternalNameMustBeUniqueInRestaurantMenusRule(restaurantId, internalName, restaurantRepository));
             return new Menu(restaurantId, internalName);
         }
 
-        public void ChangeInternalName(string newInternalName, IMenuRepository menuRepository)
+        public void ChangeInternalName(string newInternalName, IRestaurantRepository restaurantRepository)
         {
-            CheckRule(new InternalNameMustBeUniqueInRestaurantMenusRule(RestaurantId, newInternalName, menuRepository));
+            CheckRule(new InternalNameMustBeUniqueInRestaurantMenusRule(RestaurantId, newInternalName, restaurantRepository));
             InternalName = newInternalName;
         }
         
         //TODO: consider use full group object
-        public void AddGroup(string groupName)
+        public void AddGroup(string groupName, IRestaurantRepository restaurantRepository)
         {
-            CheckRule(new CannotChangeActiveMenuRule(IsActive));
+            CheckRule(new CannotChangeActiveMenuRule(restaurantRepository, RestaurantId, Id));
             CheckRule(new GroupNameMustBeUniqueRule(_groups, groupName));
 
             _groups.Add(Group.Create(groupName));
         }
 
-        public void ChangeGroupName(GroupId groupId, string newGroupName)
+        public void ChangeGroupName(GroupId groupId, string newGroupName, IRestaurantRepository restaurantRepository)
         {
-            CheckRule(new CannotChangeActiveMenuRule(IsActive));
+            CheckRule(new CannotChangeActiveMenuRule(restaurantRepository, RestaurantId, Id));
             CheckRule(new GroupNameMustBeUniqueRule(_groups, newGroupName));
 
             var group = _groups.FindOrThrow(groupId);
             group.ChangeName(newGroupName);
         }
 
-        public void AddItemToGroup(GroupId groupId, string itemName)
+        public void AddItemToGroup(GroupId groupId, string itemName, IRestaurantRepository restaurantRepository)
         {
-            CheckRule(new CannotChangeActiveMenuRule(IsActive));
+            CheckRule(new CannotChangeActiveMenuRule(restaurantRepository, RestaurantId, Id));
 
             var group = _groups.FindOrThrow(groupId);
             group.AddItem(itemName);
         }
 
-        public void RemoveItemFromGroup(GroupId groupId, ItemId itemId)
+        public void RemoveItemFromGroup(GroupId groupId, ItemId itemId, IRestaurantRepository restaurantRepository)
         {
-            CheckRule(new CannotChangeActiveMenuRule(IsActive));
+            CheckRule(new CannotChangeActiveMenuRule(restaurantRepository, RestaurantId, Id));
 
             var group = _groups.FindOrThrow(groupId);
             group.RemoveItem(itemId);
         }
 
-        public void ChangeItemName(GroupId groupId, ItemId itemId, string newItemName)
+        public void ChangeItemName(GroupId groupId, ItemId itemId, string newItemName, IRestaurantRepository restaurantRepository)
         {
-            CheckRule(new CannotChangeActiveMenuRule(IsActive));
+            CheckRule(new CannotChangeActiveMenuRule(restaurantRepository, RestaurantId, Id));
 
             var group = _groups.FindOrThrow(groupId);
             group.ChangeItemName(itemId, newItemName);
         }
 
-        public void RemoveGroup(GroupId groupId)
+        public void RemoveGroup(GroupId groupId, IRestaurantRepository restaurantRepository)
         {
-            CheckRule(new CannotChangeActiveMenuRule(IsActive));
+            CheckRule(new CannotChangeActiveMenuRule(restaurantRepository, RestaurantId, Id));
 
             var group = _groups.FindOrThrow(groupId);
             _groups.Remove(group);

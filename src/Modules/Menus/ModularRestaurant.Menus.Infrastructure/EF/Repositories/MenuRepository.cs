@@ -11,12 +11,10 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Repositories
 {
     internal class MenuRepository : IMenuRepository
     {
-        private readonly MenusDbContext _dbContext;
         private readonly DbSet<Menu> _menus;
 
         public MenuRepository(MenusDbContext dbContext)
         {
-            _dbContext = dbContext;
             _menus = dbContext.Menus;
         }
 
@@ -30,21 +28,6 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Repositories
             var menu = await _menus.SingleOrDefaultAsync(x => x.Id == menuId, token);
             if (menu is null) throw new ObjectNotFoundException(typeof(Menu), menuId.Value);
             return menu;
-        }
-
-        public async Task<Menu> GetActiveMenuInRestaurant(RestaurantId restaurantId)
-        {
-            return await _menus.SingleOrDefaultAsync(x => x.RestaurantId == restaurantId && x.IsActive);
-        }
-
-        public async Task<bool> DoesRestaurantHaveActiveMenuAsync(RestaurantId restaurantId)
-        {
-            return await Task.FromResult(_menus.Any(x => x.RestaurantId == restaurantId && x.IsActive));
-        }
-
-        public async Task<bool> DoesRestaurantHaveMenuWithThisInternalNameAsync(RestaurantId restaurantId, string internalMenuName)
-        {
-            return await Task.FromResult(_menus.Any(x => x.RestaurantId == restaurantId && x.InternalName == internalMenuName));
         }
     }
 }

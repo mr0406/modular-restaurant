@@ -13,8 +13,8 @@ namespace ModularRestaurant.Bootstrapper.ExceptionHandling
             {
                 BusinessRuleException businessRuleException => new ErrorResponse(
                     new ErrorMessage(businessRuleException.Message), HttpStatusCode.Conflict),
-                ObjectNotFoundException objectNotFoundException => new ErrorResponse(
-                    new ErrorMessage(objectNotFoundException.Message), HttpStatusCode.NotFound),
+                NotFoundException notFoundException => new ErrorResponse(
+                    new ErrorMessage(notFoundException.Message), HttpStatusCode.NotFound),
                 _ => new ErrorResponse(new ErrorMessage("Internal server error."), HttpStatusCode.InternalServerError)
             };
         }
