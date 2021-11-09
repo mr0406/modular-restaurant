@@ -11,11 +11,13 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.ItemTests
         public void Create_WithCorrectData_IsSuccessful()
         {
             var name = "ITEM_NAME";
+            var description = "ITEM_DESCRIPTION";
 
-            var item = Item.Create(name);
+            var item = Item.Create(name, description);
 
             item.Should().NotBeNull();
             item.Name.Should().Be(name);
+            item.Description.Should().Be(description);
         }
     }
 }

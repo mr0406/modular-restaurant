@@ -51,11 +51,12 @@ namespace ModularRestaurant.Menus.Domain.Entities
             Name = newName;
         }
 
-        internal void AddItem(string itemName)
+        internal void AddItem(string itemName, string itemDescription)
         {
             CheckRule(new ItemNameMustBeUniqueRule(_items, itemName));
+            CheckRule(new ItemDescriptionCannotExceedCharacterLimitRule(itemDescription));
             
-            var item = Item.Create(itemName);
+            var item = Item.Create(itemName, itemDescription);
             _items.Add(item);
         }
 
@@ -65,6 +66,14 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
             var item = _items.FindOrThrow(itemId);
             item.ChangeName(newItemName);
+        }
+
+        internal void ChangeItemDescription(ItemId itemId, string newItemDescription)
+        {
+            CheckRule(new ItemDescriptionCannotExceedCharacterLimitRule(newItemDescription));
+
+            var item = _items.FindOrThrow(itemId);
+            item.ChangeDescription(newItemDescription);
         }
 
         internal void RemoveItem(ItemId itemId)
