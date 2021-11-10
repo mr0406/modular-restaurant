@@ -10,12 +10,10 @@ namespace ModularRestaurant.Menus.Application.Commands.DeactivateMenu
     public class DeactivateMenuCommandHandler : ICommandHandler<DeactivateMenuCommand, Unit>
     {
         private readonly IRestaurantRepository _restaurantRepository;
-        private readonly IMenuRepository _menuRepository;
 
-        public DeactivateMenuCommandHandler(IRestaurantRepository restaurantRepository, IMenuRepository menuRepository)
+        public DeactivateMenuCommandHandler(IRestaurantRepository restaurantRepository)
         {
             _restaurantRepository = restaurantRepository;
-            _menuRepository = menuRepository;
         }
         
         public async Task<Unit> Handle(DeactivateMenuCommand request, CancellationToken cancellationToken)
@@ -25,7 +23,7 @@ namespace ModularRestaurant.Menus.Application.Commands.DeactivateMenu
 
             var restaurant = await _restaurantRepository.GetAsync(restaurantId, cancellationToken);
             
-            restaurant.DeactivateMenu(menuId, _menuRepository);
+            restaurant.DeactivateMenu(menuId);
 
             return Unit.Value;
         }

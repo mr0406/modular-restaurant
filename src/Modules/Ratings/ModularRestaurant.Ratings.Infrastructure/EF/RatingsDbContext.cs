@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Ratings.Domain.Entities;
+using ModularRestaurant.Shared.Infrastructure;
 using ModularRestaurant.Shared.Infrastructure.EF;
 
 namespace ModularRestaurant.Ratings.Infrastructure.EF
@@ -12,7 +13,7 @@ namespace ModularRestaurant.Ratings.Infrastructure.EF
         {
         }
 
-        public RatingsDbContext(DbContextOptions<RatingsDbContext> options) : base(options)
+        public RatingsDbContext(DbContextOptions<RatingsDbContext> options, IRatingsDomainEventPublisher publisher) : base(options, publisher)
         {
         }
 

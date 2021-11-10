@@ -10,12 +10,10 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeActiveMenu
     public class ChangeActiveMenuCommandHandler : ICommandHandler<ChangeActiveMenuCommand, Unit>
     {
         private readonly IRestaurantRepository _restaurantRepository;
-        private readonly IMenuRepository _menuRepository;
 
-        public ChangeActiveMenuCommandHandler(IRestaurantRepository restaurantRepository, IMenuRepository menuRepository)
+        public ChangeActiveMenuCommandHandler(IRestaurantRepository restaurantRepository)
         {
             _restaurantRepository = restaurantRepository;
-            _menuRepository = menuRepository;
         }
 
         public async Task<Unit> Handle(ChangeActiveMenuCommand request, CancellationToken cancellationToken)
@@ -25,7 +23,7 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeActiveMenu
             
             var restaurant = await _restaurantRepository.GetAsync(restaurantId, cancellationToken);
             
-            restaurant.ChangeActiveMenu(menuId, _menuRepository);
+            restaurant.ChangeActiveMenu(menuId);
 
             return Unit.Value;
         }

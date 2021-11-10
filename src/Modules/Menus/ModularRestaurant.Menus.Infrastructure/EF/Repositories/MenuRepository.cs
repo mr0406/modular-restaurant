@@ -29,5 +29,10 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Repositories
             if (menu is null) throw new ObjectNotFoundException(typeof(Menu), menuId.Value);
             return menu;
         }
+
+        public async Task<Menu> GetActiveMenu(RestaurantId restaurantId, CancellationToken token = default)
+        {
+            return await _menus.SingleOrDefaultAsync(x => x.RestaurantId == restaurantId && x.IsActive, token);
+        }
     }
 }

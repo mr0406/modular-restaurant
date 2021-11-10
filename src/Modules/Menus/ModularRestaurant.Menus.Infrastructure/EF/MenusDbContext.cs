@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Menus.Domain.Entities;
+using ModularRestaurant.Shared.Infrastructure;
 using ModularRestaurant.Shared.Infrastructure.EF;
 
 namespace ModularRestaurant.Menus.Infrastructure.EF
@@ -13,7 +14,7 @@ namespace ModularRestaurant.Menus.Infrastructure.EF
         {
         }
 
-        public MenusDbContext(DbContextOptions<MenusDbContext> options) : base(options)
+        public MenusDbContext(DbContextOptions<MenusDbContext> options, IMenusDomainEventPublisher publisher) : base(options, publisher)
         {
         }
 

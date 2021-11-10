@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Ratings.Api.IoCModules;
+using ModularRestaurant.Ratings.Infrastructure;
 using ModularRestaurant.Ratings.Infrastructure.EF;
 using Serilog;
 
@@ -22,7 +23,8 @@ namespace ModularRestaurant.Ratings.Api
 
             var logger = Log.Logger;
             containerBuilder.RegisterInstance(logger).As<ILogger>().SingleInstance();
-            
+            containerBuilder.RegisterType<RatingsDomainEventPublisher>().As<IRatingsDomainEventPublisher>().InstancePerLifetimeScope();
+
             containerBuilder.RegisterModule(new DataAccessModule(connectionString));
             containerBuilder.RegisterModule(new ProcessingModule());
 

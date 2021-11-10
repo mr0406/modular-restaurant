@@ -5,6 +5,7 @@ using ModularRestaurant.Ratings.Application.Queries;
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using ModularRestaurant.Ratings.Infrastructure;
 using ModularRestaurant.Shared.Api;
 
 namespace ModularRestaurant.Ratings.Api.Controllers

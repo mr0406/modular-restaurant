@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ModularRestaurant.Menus.Domain.Events;
 using ModularRestaurant.Menus.Domain.Exceptions;
 using ModularRestaurant.Menus.Domain.Repositories;
 using ModularRestaurant.Menus.Domain.Rules.Menus;
@@ -9,7 +10,8 @@ namespace ModularRestaurant.Menus.Domain.Entities
 {
     public class Restaurant : AggregateRoot<RestaurantId>
     {
-        public MenuId ActiveMenuId { get; private set; }
+        //TODO: check this, this is redundant to IsActive in menu
+        public MenuId ActiveMenuId { get; private set; } //consider not store this in db
 
         public IReadOnlyList<MenuId> MenuIds => _menuIds;
         private List<MenuId> _menuIds = new();
@@ -29,22 +31,16 @@ namespace ModularRestaurant.Menus.Domain.Entities
             return new Restaurant(id);
         }
 
-        public void DeactivateMenu(MenuId menuId, IMenuRepository menuRepository)
+        public void DeactivateMenu(MenuId menuId)
         {
-            CheckMenuExists(menuId);
-            CheckRule(new CannotDeactivateInactiveMenuRule(ActiveMenuId, menuId));
-
             ActiveMenuId = null;
+            _events.Add(new MenuDeactivatedByRestaurantEvent(Id, menuId));
         }
 
-        public void ChangeActiveMenu(MenuId newActiveMenuId, IMenuRepository menuRepository)
+        public void ChangeActiveMenu(MenuId newActiveMenuId)
         {
-            CheckMenuExists(newActiveMenuId);
-            CheckRule(new CannotActivateActiveMenuRule(ActiveMenuId, newActiveMenuId));
-            
-            var menu = menuRepository.GetAsync(newActiveMenuId).Result;
-            menu.Activate();
             ActiveMenuId = newActiveMenuId;
+            _events.Add(new ActiveMenuChangedByRestaurantEvent(Id, newActiveMenuId));
         }
 
         private void CheckMenuExists(MenuId menuId)

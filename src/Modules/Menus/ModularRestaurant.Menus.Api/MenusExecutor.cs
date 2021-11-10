@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Autofac;
 using MediatR;
+using ModularRestaurant.Menus.Infrastructure;
 using ModularRestaurant.Shared.Application.CQRS;
+using ModularRestaurant.Shared.Infrastructure;
 
 namespace ModularRestaurant.Menus.Api
 {

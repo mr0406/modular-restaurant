@@ -10,5 +10,7 @@ namespace ModularRestaurant.Menus.Domain.Repositories
         Task AddAsync(Menu menu, CancellationToken token = default);
         
         Task<Menu> GetAsync(MenuId menuId, CancellationToken token = default);
+
+        Task<Menu> GetActiveMenu(RestaurantId restaurantId, CancellationToken token = default);
     }
 }

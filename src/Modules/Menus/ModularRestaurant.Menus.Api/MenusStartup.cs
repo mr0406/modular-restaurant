@@ -1,7 +1,9 @@
 ﻿using Autofac;
 using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Menus.Api.IoCModules;
+using ModularRestaurant.Menus.Infrastructure;
 using ModularRestaurant.Menus.Infrastructure.EF;
+using ModularRestaurant.Shared.Infrastructure;
 using Serilog;
 
 namespace ModularRestaurant.Menus.Api
@@ -22,6 +24,7 @@ namespace ModularRestaurant.Menus.Api
 
             var logger = Log.Logger;
             containerBuilder.RegisterInstance(logger).As<ILogger>().SingleInstance();
+            containerBuilder.RegisterType<MenusDomainEventPublisher>().As<IMenusDomainEventPublisher>().InstancePerLifetimeScope();
             
             containerBuilder.RegisterModule(new DataAccessModule(connectionString));
             containerBuilder.RegisterModule(new ProcessingModule());

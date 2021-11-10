@@ -7,7 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using ModularRestaurant.Bootstrapper.ExceptionHandling;
 using ModularRestaurant.Menus.Api;
+using ModularRestaurant.Menus.Infrastructure;
 using ModularRestaurant.Ratings.Api;
+using ModularRestaurant.Ratings.Infrastructure;
 using Serilog;
 
 namespace ModularRestaurant.Bootstrapper

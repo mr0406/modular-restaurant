@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
 using ModularRestaurant.Shared.Application.CQRS;
+using ModularRestaurant.Shared.Domain.Common;
 
-namespace ModularRestaurant.Ratings.Api
+namespace ModularRestaurant.Shared.Infrastructure
 {
-    public interface IRatingsExecutor
+    public interface IModuleExecutor
     {
         Task<TResult> ExecuteQuery<TResult>(IQuery<TResult> query);
 

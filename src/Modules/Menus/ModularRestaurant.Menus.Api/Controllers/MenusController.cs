@@ -14,6 +14,7 @@ using ModularRestaurant.Menus.Application.Queries.GetGroups;
 using ModularRestaurant.Menus.Application.Queries.GetItems;
 using ModularRestaurant.Menus.Application.Queries.GetMenu;
 using ModularRestaurant.Menus.Application.Queries.GetRestaurantMenus;
+using ModularRestaurant.Menus.Infrastructure;
 
 namespace ModularRestaurant.Menus.Api.Controllers
 {
