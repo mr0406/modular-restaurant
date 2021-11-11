@@ -5,6 +5,7 @@ using MediatR.Extensions.Autofac.DependencyInjection;
 using ModularRestaurant.Shared.Api;
 using ModularRestaurant.Shared.Application;
 using ModularRestaurant.Shared.Application.Processing.Commands;
+using ModularRestaurant.Shared.Application.Processing.Events;
 using ModularRestaurant.Shared.Application.Processing.Requests;
 using ModularRestaurant.Shared.Infrastructure.EF;
 
@@ -27,6 +28,9 @@ namespace ModularRestaurant.Menus.Api.IoCModules
             builder.RegisterGeneric(typeof(ValidatingBehavior<,>))
                 .As(typeof(IPipelineBehavior<,>));
             builder.RegisterGeneric(typeof(UnitOfWorkBehavior<,>))
+                .As(typeof(IPipelineBehavior<,>));
+
+            builder.RegisterGeneric(typeof(AfterEventHandleSaveBehavior<>))
                 .As(typeof(IPipelineBehavior<,>));
         }
     }

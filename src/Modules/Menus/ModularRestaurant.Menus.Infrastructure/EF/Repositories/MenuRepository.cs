@@ -12,10 +12,12 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Repositories
     internal class MenuRepository : IMenuRepository
     {
         private readonly DbSet<Menu> _menus;
+        private readonly MenusDbContext _dbContext;
 
         public MenuRepository(MenusDbContext dbContext)
         {
             _menus = dbContext.Menus;
+            _dbContext = dbContext;
         }
 
         public async Task AddAsync(Menu menu, CancellationToken token)
@@ -26,6 +28,7 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Repositories
         public async Task<Menu> GetAsync(MenuId menuId, CancellationToken token)
         {
             var menu = await _menus.SingleOrDefaultAsync(x => x.Id == menuId, token);
+
             if (menu is null) throw new ObjectNotFoundException(typeof(Menu), menuId.Value);
             return menu;
         }

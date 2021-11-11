@@ -12,6 +12,8 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Configuration
         {
             builder.HasKey(m => m.Id);
 
+            builder.HasOne<Restaurant>().WithMany().HasForeignKey(x => x.RestaurantId);
+
             builder.Property(m => m.Id)
                 .HasConversion(id => id.Value, id => new MenuId(id));
 

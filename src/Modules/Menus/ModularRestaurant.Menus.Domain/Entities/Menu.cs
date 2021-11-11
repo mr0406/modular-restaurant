@@ -52,6 +52,8 @@ namespace ModularRestaurant.Menus.Domain.Entities
             CheckRule(new ActiveMenuMustHaveAtLeastOneGroup(_groups));
             
             _groups.ForEach(x => x.CheckConsistency());
+
+            IsActive = true;
         }
 
         public void Deactivate()
