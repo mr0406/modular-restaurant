@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using ModularRestaurant.Menus.Domain.Repositories;
+using ModularRestaurant.Menus.Domain.Services;
 using ModularRestaurant.Shared.Application.CQRS;
 using ModularRestaurant.Shared.Domain.Types;
 
@@ -9,21 +9,19 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeActiveMenu
 {
     public class ChangeActiveMenuCommandHandler : ICommandHandler<ChangeActiveMenuCommand, Unit>
     {
-        private readonly IMenuRepository _menuRepository;
+        private readonly IMenuActivityService _menuActivityService;
 
-        public ChangeActiveMenuCommandHandler(IMenuRepository menuRepository)
+        public ChangeActiveMenuCommandHandler(IMenuActivityService menuActivityService)
         {
-            _menuRepository = menuRepository;
+            _menuActivityService = menuActivityService;
         }
 
         public async Task<Unit> Handle(ChangeActiveMenuCommand request, CancellationToken cancellationToken)
         {
             var restaurantId = new RestaurantId(request.RestaurantId);
-
             var menuId = new MenuId(request.NewActiveMenuId);
-            
-            var menuToActivate = await _menuRepository.GetAsync(menuId, cancellationToken);
-            menuToActivate.Activate(_menuRepository);
+
+            await _menuActivityService.ChangeActive(restaurantId, menuId);
             
             return Unit.Value;
         }

@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace ModularRestaurant.Ratings.Domain.Entities
 {
+    //TODO: Remove that and make UserRating an aggregate
     public class Restaurant : AggregateRoot<RestaurantId>
     {
         public IReadOnlyList<UserRating> UserRatings => _userRatings;
