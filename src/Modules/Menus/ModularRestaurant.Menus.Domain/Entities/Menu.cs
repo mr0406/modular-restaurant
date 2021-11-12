@@ -3,7 +3,6 @@ using ModularRestaurant.Shared.Domain.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ModularRestaurant.Menus.Domain.Repositories;
 using ModularRestaurant.Menus.Domain.Rules.Groups;
 using ModularRestaurant.Menus.Domain.Rules.Menus;
 using ModularRestaurant.Menus.Domain.Rules.Restaurants;
@@ -49,7 +48,6 @@ namespace ModularRestaurant.Menus.Domain.Entities
         
         internal void Activate()
         {
-            CheckRule(new CannotActivateActiveMenuRule(IsActive));
             CheckRule(new ActiveMenuMustHaveAtLeastOneGroup(_groups));
 
             _groups.ForEach(x => x.CheckConsistency());
@@ -59,7 +57,6 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
         internal void Deactivate()
         {
-            CheckRule(new CannotDeactivateInactiveMenuRule(IsActive));
             IsActive = false;
         }
 

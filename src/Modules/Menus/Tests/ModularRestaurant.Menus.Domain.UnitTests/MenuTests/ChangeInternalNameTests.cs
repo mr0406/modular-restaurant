@@ -12,11 +12,11 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.MenuTests
         [Test]
         public void ChangeInternalName_WhenDataIsCorrect_IsSuccessful()
         {
-            var menuRepository = Provider.GetMenuRepository();
+            var checker = Provider.GetUniquenessCheckerWhichPass();
             var menu = Provider.GetActiveMenu();
             var newInternalName = "NewInternalName";
             
-            menu.ChangeInternalName(newInternalName, menuRepository);
+            menu.ChangeInternalName(newInternalName, checker);
 
             menu.InternalName.Should().Be(newInternalName);
         }
@@ -24,11 +24,11 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.MenuTests
         [Test]
         public void ChangeInternalName_WhenNewInternalNameIsNotUnique_IsNotPossible()
         {
-            var menuRepository = Provider.GetMenuRepositoryWithNameConflict();
+            var checker = Provider.GetUniquenessCheckerWhichFails();
             var menu = Provider.GetActiveMenu();
             var newInternalName = "NewInternalName";
             
-            Action action = () => menu.ChangeInternalName(newInternalName, menuRepository);
+            Action action = () => menu.ChangeInternalName(newInternalName, checker);
 
             action.Should().Throw<BusinessRuleException>()
                 .Where(x => x.BrokenRule is InternalNameMustBeUniqueInRestaurantMenusRule);

@@ -4,7 +4,7 @@ using ModularRestaurant.Shared.Domain.Types;
 
 namespace ModularRestaurant.Menus.Domain.Services
 {
-    public class MenuInternalNameUniquenessChecker : IMenuInternalNameUniquenessChecker
+    public class MenuInternalNameUniquenessChecker : DomainService, IMenuInternalNameUniquenessChecker
     {
         private readonly IMenuRepository _menuRepository;
 

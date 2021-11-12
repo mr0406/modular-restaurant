@@ -11,7 +11,7 @@ namespace ModularRestaurant.Menus.Domain.Repositories
         
         Task<Menu> GetAsync(MenuId menuId, CancellationToken token = default);
         
-        Task<Menu> GetActiveMenuInRestaurant(RestaurantId restaurantId);
+        Task<Menu> GetActiveMenuInRestaurant(RestaurantId restaurantId, CancellationToken token = default);
 
         Task<bool> CheckExists(RestaurantId restaurantId, string internalMenuName);
     }

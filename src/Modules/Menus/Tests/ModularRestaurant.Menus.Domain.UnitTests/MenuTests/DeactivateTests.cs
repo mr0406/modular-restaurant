@@ -9,7 +9,7 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.MenuTests
     [TestFixture]
     public class DeactivateTests
     {
-        [Test]
+        /*[Test]
         public void Deactivate_WhenMenuIsActive_IsSuccessful()
         {
             var menu = Provider.GetActiveMenu();
@@ -28,6 +28,6 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.MenuTests
 
             action.Should().Throw<BusinessRuleException>()
                 .Where(x => x.BrokenRule is CannotDeactivateInactiveMenuRule);
-        }
+        }*/
     }
 }

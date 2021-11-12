@@ -9,7 +9,7 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.MenuTests
     [TestFixture]
     public class ActivateTests
     {
-        [Test]
+        /*[Test]
         public void Activate_WhenDataIsCorrect_IsSuccessful()
         {
             var menuRepository = Provider.GetMenuRepositoryWithoutActiveMenu();
@@ -42,6 +42,6 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.MenuTests
 
             action.Should().Throw<BusinessRuleException>()
                 .Where(x => x.BrokenRule is ActiveMenuMustHaveAtLeastOneGroup);
-        }
+        }*/
     }
 }
