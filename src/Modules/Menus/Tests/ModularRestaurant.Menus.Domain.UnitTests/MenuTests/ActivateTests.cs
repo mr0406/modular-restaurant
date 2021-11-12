@@ -1,8 +1,4 @@
-﻿using System;
-using FluentAssertions;
-using ModularRestaurant.Menus.Domain.Rules.Menus;
-using ModularRestaurant.Shared.Domain.Exceptions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace ModularRestaurant.Menus.Domain.UnitTests.MenuTests
 {

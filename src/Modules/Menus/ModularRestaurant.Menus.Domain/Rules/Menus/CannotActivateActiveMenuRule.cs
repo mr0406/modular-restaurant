@@ -1,6 +1,5 @@
 ﻿using ModularRestaurant.Menus.Domain.Entities;
 using ModularRestaurant.Shared.Domain.Common;
-using ModularRestaurant.Shared.Domain.Types;
 
 namespace ModularRestaurant.Menus.Domain.Rules.Menus
 {

@@ -6,7 +6,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using ModularRestaurant.Menus.Domain.Services;
-using Serilog;
 
 namespace ModularRestaurant.Menus.Application.Commands.CreateMenu
 {

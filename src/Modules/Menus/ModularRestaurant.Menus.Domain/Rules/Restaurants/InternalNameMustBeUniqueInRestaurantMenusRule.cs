@@ -1,5 +1,4 @@
-﻿using ModularRestaurant.Menus.Domain.Repositories;
-using ModularRestaurant.Menus.Domain.Services;
+﻿using ModularRestaurant.Menus.Domain.Services;
 using ModularRestaurant.Shared.Domain.Common;
 using ModularRestaurant.Shared.Domain.Types;
 
