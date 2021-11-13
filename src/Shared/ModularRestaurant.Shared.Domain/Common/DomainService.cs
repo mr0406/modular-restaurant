@@ -1,7 +1,6 @@
-﻿using ModularRestaurant.Shared.Domain.Common;
-using ModularRestaurant.Shared.Domain.Exceptions;
+﻿using ModularRestaurant.Shared.Domain.Exceptions;
 
-namespace ModularRestaurant.Menus.Domain.Services
+namespace ModularRestaurant.Shared.Domain.Common
 {
     public abstract class DomainService
     {

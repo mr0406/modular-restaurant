@@ -18,10 +18,9 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.MenuActivityServiceTests
         {
             var menuToActivate = Provider.GetReadyToActivateMenu();
             var menuRepository = Provider.GetMenuRepository(menuToActivate);
-            var restaurantId = Provider.GetRestaurantId();
             var service = new MenuActivityService(menuRepository);
             
-            await service.ChangeActive(restaurantId, menuToActivate.Id);
+            await service.ChangeActive(It.IsAny<RestaurantId>(), It.IsAny<MenuId>());
             
             menuToActivate.IsActive.Should().BeTrue();
         }
@@ -32,10 +31,9 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.MenuActivityServiceTests
             var menuToActivate = Provider.GetReadyToActivateMenu();
             var currentActiveMenu = Provider.GetActiveMenu();
             var menuRepository = Provider.GetMenuRepository(menuToActivate, currentActiveMenu);
-            var restaurantId = Provider.GetRestaurantId();
             var service = new MenuActivityService(menuRepository);
             
-            await service.ChangeActive(restaurantId, menuToActivate.Id);
+            await service.ChangeActive(It.IsAny<RestaurantId>(), It.IsAny<MenuId>());
             
             menuToActivate.IsActive.Should().BeTrue();
             currentActiveMenu.IsActive.Should().BeFalse();
