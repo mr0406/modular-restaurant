@@ -6,6 +6,7 @@ using ModularRestaurant.Menus.Domain.Repositories;
 using ModularRestaurant.Menus.Domain.Services;
 using ModularRestaurant.Menus.Domain.Types;
 using ModularRestaurant.Shared.Domain.Types;
+using ModularRestaurant.Shared.Domain.ValueObjects;
 using Moq;
 
 namespace ModularRestaurant.Menus.Domain.UnitTests
@@ -27,6 +28,8 @@ namespace ModularRestaurant.Menus.Domain.UnitTests
         internal static string GetItemName() => "itemName";
 
         internal static string GetItemDescription() => "itemDescription";
+
+        internal static Money GetItemPrice() => Money.Create(123, "XXX");
 
         internal static Guid GetItemGuid() => new("1263C7A0-BA1C-4EB2-89D0-661622BC1731");
 
@@ -54,7 +57,7 @@ namespace ModularRestaurant.Menus.Domain.UnitTests
         {
             var menu = GetEmptyMenu();
             menu.AddGroup(GetGroupName());
-            menu.AddItemToGroup(menu.Groups[0].Id, GetItemName(), GetItemDescription());
+            menu.AddItemToGroup(menu.Groups[0].Id, GetItemName(), GetItemDescription(), GetItemPrice());
 
             return menu;
         }
@@ -91,6 +94,6 @@ namespace ModularRestaurant.Menus.Domain.UnitTests
         
         internal static Group GetEmptyGroup() => Group.Create(GetGroupName());
 
-        internal static Item GetItem() => Item.Create(GetItemName(), GetItemDescription());
+        internal static Item GetItem() => Item.Create(GetItemName(), GetItemDescription(), GetItemPrice());
     }
 }
