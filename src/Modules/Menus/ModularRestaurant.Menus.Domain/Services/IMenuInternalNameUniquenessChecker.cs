@@ -5,6 +5,6 @@ namespace ModularRestaurant.Menus.Domain.Services
 {
     public interface IMenuInternalNameUniquenessChecker
     {
-        Task<bool> Check(RestaurantId restaurantId, string newInternalName);
+        Task<bool> CheckIsUnique(RestaurantId restaurantId, string newInternalName);
     }
 }

@@ -12,27 +12,27 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.MenuInternalNameUniquenessChe
     public class CheckTests
     {
         [Test]
-        public async Task Check_NotExists_ReturnTrue()
+        public async Task CheckIsUnique_NotExists_ReturnsTrue()
         {
             var menuRepository = new Mock<IMenuRepository>();
             menuRepository.Setup(x => x.CheckExists(It.IsAny<RestaurantId>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(false));
             var service = new MenuInternalNameUniquenessChecker(menuRepository.Object);
 
-            var isUnique = await service.Check(It.IsAny<RestaurantId>(), It.IsAny<string>());
+            var isUnique = await service.CheckIsUnique(It.IsAny<RestaurantId>(), It.IsAny<string>());
 
             isUnique.Should().BeTrue();
         }
 
         [Test]
-        public async Task Check_Exists_ReturnFalse()
+        public async Task CheckIsUnique_Exists_ReturnsFalse()
         {
             var menuRepository = new Mock<IMenuRepository>();
             menuRepository.Setup(x => x.CheckExists(It.IsAny<RestaurantId>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(true));
             var service = new MenuInternalNameUniquenessChecker(menuRepository.Object);
             
-            var isUnique = await service.Check(It.IsAny<RestaurantId>(), It.IsAny<string>());
+            var isUnique = await service.CheckIsUnique(It.IsAny<RestaurantId>(), It.IsAny<string>());
 
             isUnique.Should().BeFalse();
         }

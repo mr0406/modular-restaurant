@@ -18,7 +18,7 @@ namespace ModularRestaurant.Menus.Domain.Rules.Restaurants
             _menuInternalNameUniquenessChecker = menuInternalNameUniquenessChecker;
         }
 
-        public bool IsBroken() => !_menuInternalNameUniquenessChecker.Check(_restaurantId, _newInternalMenuName).Result;
+        public bool IsBroken() => !_menuInternalNameUniquenessChecker.CheckIsUnique(_restaurantId, _newInternalMenuName).Result;
 
         public string Message => "Internal menu name must be unique in restaurant";
     }

@@ -14,11 +14,11 @@ namespace ModularRestaurant.Menus.Domain.Services
             _menuRepository = menuRepository;
         }
         
-        public async Task<bool> Check(RestaurantId restaurantId, string newInternalName)
+        public async Task<bool> CheckIsUnique(RestaurantId restaurantId, string newInternalName)
         {
-            var exists = await _menuRepository.CheckExists(restaurantId, newInternalName);
+            var isUnique = !await _menuRepository.CheckExists(restaurantId, newInternalName);
 
-            return !exists;
+            return isUnique;
         }
     }
 }

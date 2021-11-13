@@ -35,7 +35,7 @@ namespace ModularRestaurant.Menus.Domain.UnitTests
         internal static IMenuInternalNameUniquenessChecker GetUniquenessCheckerWhichPass()
         {
             var mock = new Mock<IMenuInternalNameUniquenessChecker>();
-            mock.Setup(x => x.Check(It.IsAny<RestaurantId>(), It.IsAny<string>()))
+            mock.Setup(x => x.CheckIsUnique(It.IsAny<RestaurantId>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(true));
 
             return mock.Object;
@@ -44,7 +44,7 @@ namespace ModularRestaurant.Menus.Domain.UnitTests
         internal static IMenuInternalNameUniquenessChecker GetUniquenessCheckerWhichFails()
         {
             var mock = new Mock<IMenuInternalNameUniquenessChecker>();
-            mock.Setup(x => x.Check(It.IsAny<RestaurantId>(), It.IsAny<string>()))
+            mock.Setup(x => x.CheckIsUnique(It.IsAny<RestaurantId>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(false));
 
             return mock.Object;
