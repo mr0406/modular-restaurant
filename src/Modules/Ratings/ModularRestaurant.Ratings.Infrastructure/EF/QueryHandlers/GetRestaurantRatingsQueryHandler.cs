@@ -41,7 +41,7 @@ namespace ModularRestaurant.Ratings.Infrastructure.EF.QueryHandlers
 
             return restaurant;
 
-            if (restaurant.NumberOfRatings > 0)
+            /*if (restaurant.NumberOfRatings > 0)
             {
                 var a = GetUserDetailsFromOtherModule(restaurant.UserRatings.Select(x => x.UserId)).ToList();
 
@@ -50,7 +50,7 @@ namespace ModularRestaurant.Ratings.Infrastructure.EF.QueryHandlers
                         a.Single(x => x.Id == restaurant.UserRatings[i].UserId).Username;
             }
 
-            return restaurant;
+            return restaurant;*/
         }
 
         public static IEnumerable<UserDetails> GetUserDetailsFromOtherModule(IEnumerable<Guid> userIds)

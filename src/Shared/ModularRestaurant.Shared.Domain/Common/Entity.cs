@@ -2,14 +2,9 @@
 
 namespace ModularRestaurant.Shared.Domain.Common
 {
-    public abstract class Entity<T>
+    public abstract class Entity<T> : Entity where T : TypeId
     {
         public T Id { get; protected set; }
-        
-        protected static void CheckRule(IBusinessRule rule)
-        {
-            if (rule.IsBroken()) throw new BusinessRuleException(rule);
-        }
     }
     
     public abstract class Entity

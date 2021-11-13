@@ -3,10 +3,10 @@ using ModularRestaurant.Shared.Domain.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ModularRestaurant.Menus.Domain.Repositories;
 using ModularRestaurant.Menus.Domain.Rules.Groups;
 using ModularRestaurant.Menus.Domain.Rules.Menus;
 using ModularRestaurant.Menus.Domain.Rules.Restaurants;
+using ModularRestaurant.Menus.Domain.Services;
 using ModularRestaurant.Menus.Domain.Types;
 using ModularRestaurant.Shared.Domain.Extensions;
 
@@ -34,9 +34,9 @@ namespace ModularRestaurant.Menus.Domain.Entities
         {
         }
 
-        public Menu GetCopy(string newInternalName, IMenuRepository menuRepository)
+        public Menu GetCopy(string newInternalName, IMenuInternalNameUniquenessChecker menuInternalNameUniquenessChecker)
         {
-            CheckRule(new InternalNameMustBeUniqueInRestaurantMenusRule(RestaurantId, newInternalName, menuRepository));
+            CheckRule(new InternalNameMustBeUniqueInRestaurantMenusRule(RestaurantId, newInternalName, menuInternalNameUniquenessChecker));
             
             var menu = new Menu(RestaurantId, newInternalName)
             {
@@ -46,40 +46,32 @@ namespace ModularRestaurant.Menus.Domain.Entities
             return menu;
         }
         
-        public void Activate(IMenuRepository menuRepository)
+        internal void Activate()
         {
-            CheckRule(new CannotActivateActiveMenuRule(IsActive));
-            //CheckRule(new RestaurantCannotHaveMoreThanOneActiveMenuRule(RestaurantId, menuRepository));
             CheckRule(new ActiveMenuMustHaveAtLeastOneGroup(_groups));
-            
-            //TODO: Change that, this is not the best solution, Restaurant should be an aggregate
-            var currentActiveMenu = menuRepository.GetActiveMenuInRestaurant(RestaurantId).Result;
-            currentActiveMenu?.Deactivate();
-            
+
             _groups.ForEach(x => x.CheckConsistency());
             
             IsActive = true;
         }
 
-        public void Deactivate()
+        internal void Deactivate()
         {
-            CheckRule(new CannotDeactivateInactiveMenuRule(IsActive));
             IsActive = false;
         }
 
-        public static Menu Create(RestaurantId restaurantId, string internalName, IMenuRepository menuRepository)
+        public static Menu Create(RestaurantId restaurantId, string internalName, IMenuInternalNameUniquenessChecker menuInternalNameUniquenessChecker)
         {
-            CheckRule(new InternalNameMustBeUniqueInRestaurantMenusRule(restaurantId, internalName, menuRepository));
+            CheckRule(new InternalNameMustBeUniqueInRestaurantMenusRule(restaurantId, internalName, menuInternalNameUniquenessChecker));
             return new Menu(restaurantId, internalName);
         }
 
-        public void ChangeInternalName(string newInternalName, IMenuRepository menuRepository)
+        public void ChangeInternalName(string newInternalName, IMenuInternalNameUniquenessChecker menuInternalNameUniquenessChecker)
         {
-            CheckRule(new InternalNameMustBeUniqueInRestaurantMenusRule(RestaurantId, newInternalName, menuRepository));
+            CheckRule(new InternalNameMustBeUniqueInRestaurantMenusRule(RestaurantId, newInternalName, menuInternalNameUniquenessChecker));
             InternalName = newInternalName;
         }
         
-        //TODO: consider use full group object
         public void AddGroup(string groupName)
         {
             CheckRule(new CannotChangeActiveMenuRule(IsActive));

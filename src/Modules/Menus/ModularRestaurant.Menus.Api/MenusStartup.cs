@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Menus.Api.IoCModules;
+using ModularRestaurant.Menus.Domain.Services;
 using ModularRestaurant.Menus.Infrastructure.EF;
 using Serilog;
 
@@ -25,6 +26,10 @@ namespace ModularRestaurant.Menus.Api
             
             containerBuilder.RegisterModule(new DataAccessModule(connectionString));
             containerBuilder.RegisterModule(new ProcessingModule());
+
+            containerBuilder.RegisterType<MenuActivityService>().As<IMenuActivityService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<MenuInternalNameUniquenessChecker>().As<IMenuInternalNameUniquenessChecker>()
+                .InstancePerLifetimeScope();
 
             _container = containerBuilder.Build();
 

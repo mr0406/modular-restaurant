@@ -13,11 +13,11 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.MenuTests
         [Test]
         public void GetCopy_WithCorrectNewInternalName_IsSuccessful()
         {
-            var menuRepository = Provider.GetMenuRepository();
+            var checker = Provider.GetUniquenessCheckerWhichPass();
             var newInternalName = "newInternalName";
             var menu = Provider.GetActiveMenu();
             
-            var menuCopy = menu.GetCopy(newInternalName, menuRepository);
+            var menuCopy = menu.GetCopy(newInternalName, checker);
 
             menuCopy.Should().NotBeNull();
             menuCopy.InternalName.Should().Be(newInternalName);
@@ -40,12 +40,12 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.MenuTests
         [Test]
         public void GetCopy_NameIsNotUnique_IsNotPossible()
         {
-            var menuRepository = Provider.GetMenuRepositoryWithNameConflict();
+            var checker = Provider.GetUniquenessCheckerWhichFails();
             var newInternalName = "newInternalName";
             var menu = Provider.GetActiveMenu();
             
             
-            Action action = () => menu.GetCopy(newInternalName, menuRepository);
+            Action action = () => menu.GetCopy(newInternalName, checker);
 
             action.Should().Throw<BusinessRuleException>()
                 .Where(x => x.BrokenRule is InternalNameMustBeUniqueInRestaurantMenusRule);

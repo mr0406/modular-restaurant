@@ -1,14 +1,7 @@
-﻿using ModularRestaurant.Shared.Domain.Exceptions;
-
-namespace ModularRestaurant.Shared.Domain.Common
+﻿namespace ModularRestaurant.Shared.Domain.Common
 {
-    public class AggregateRoot<T>
+    public abstract class AggregateRoot<T> : Entity<T> where T : TypeId
     {
-        public T Id { get; protected set; }
-
-        protected static void CheckRule(IBusinessRule rule)
-        {
-            if (rule.IsBroken()) throw new BusinessRuleException(rule);
-        }
+        
     }
 }

@@ -12,7 +12,7 @@ namespace ModularRestaurant.Menus.IntegrationTests
     [TestFixture]
     public class AddMenuTest : TestBase
     {
-        //[Test]
+        /*[Test]
         public async Task CreateMenu()
         {
             var client = Factory.CreateClient();
@@ -33,6 +33,6 @@ namespace ModularRestaurant.Menus.IntegrationTests
 
             menu.Should().NotBeNull();
             menu.Groups.Count().Should().Be(0);
-        }
+        }*/
     }
 }
