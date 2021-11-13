@@ -9,6 +9,7 @@ using ModularRestaurant.Menus.Domain.Rules.Menus;
 using ModularRestaurant.Menus.Domain.Rules.Restaurants;
 using ModularRestaurant.Menus.Domain.Types;
 using ModularRestaurant.Shared.Domain.Extensions;
+using ModularRestaurant.Shared.Domain.ValueObjects;
 
 namespace ModularRestaurant.Menus.Domain.Entities
 {
@@ -97,12 +98,12 @@ namespace ModularRestaurant.Menus.Domain.Entities
             group.ChangeName(newGroupName);
         }
 
-        public void AddItemToGroup(GroupId groupId, string itemName, string itemDescription)
+        public void AddItemToGroup(GroupId groupId, string itemName, string itemDescription, Money itemPrice)
         {
             CheckRule(new CannotChangeActiveMenuRule(IsActive));
 
             var group = _groups.FindOrThrow(groupId);
-            group.AddItem(itemName, itemDescription);
+            group.AddItem(itemName, itemDescription, itemPrice);
         }
 
         public void RemoveItemFromGroup(GroupId groupId, ItemId itemId)
@@ -127,6 +128,14 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
             var group = _groups.FindOrThrow(groupId);
             group.ChangeItemDescription(itemId, newItemDescription);
+        }
+
+        public void ChangeItemPrice(GroupId groupId, ItemId itemId, Money newItemPrice)
+        {
+            CheckRule(new CannotChangeActiveMenuRule(IsActive));
+
+            var group = _groups.FindOrThrow(groupId);
+            group.ChangeItemPrice(itemId, newItemPrice);
         }
 
         public void RemoveGroup(GroupId groupId)

@@ -5,6 +5,7 @@ using ModularRestaurant.Menus.Domain.Repositories;
 using ModularRestaurant.Menus.Domain.Types;
 using ModularRestaurant.Shared.Application.CQRS;
 using ModularRestaurant.Shared.Domain.Types;
+using ModularRestaurant.Shared.Domain.ValueObjects;
 
 namespace ModularRestaurant.Menus.Application.Commands.ChangeItems
 {
@@ -37,7 +38,8 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeItems
             {
                 foreach (var itemToAdd in request.ItemsToAdd.Items)
                 {
-                    menu.AddItemToGroup(groupId, itemToAdd.Name, itemToAdd.Description);
+                    var itemPrice = Money.Create(itemToAdd.PriceValue, itemToAdd.PriceCurrency);
+                    menu.AddItemToGroup(groupId, itemToAdd.Name, itemToAdd.Description, itemPrice);
                 }   
             }
 
@@ -46,8 +48,10 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeItems
                 foreach (var itemToUpdate in request.ItemsToUpdate.Items)
                 {
                     var itemId = new ItemId(itemToUpdate.Id);
+                    var itemPrice = Money.Create(itemToUpdate.NewPriceValue, itemToUpdate.NewPriceCurrency);
                     menu.ChangeItemName(groupId, itemId, itemToUpdate.NewName);
                     menu.ChangeItemDescription(groupId, itemId, itemToUpdate.NewDescription);
+                    menu.ChangeItemPrice(groupId, itemId, itemPrice);
                 }   
             }
 

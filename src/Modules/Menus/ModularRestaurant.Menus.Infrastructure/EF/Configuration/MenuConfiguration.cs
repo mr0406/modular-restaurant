@@ -26,6 +26,11 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Configuration
                     a.HasKey(a => a.Id);
                     a.Property(a => a.Id)
                         .HasConversion(id => id.Value, id => new ItemId(id));
+                    a.OwnsOne(a => a.Price, p =>
+                    {
+                        p.Property(p => p.Value).HasColumnName("PriceValue");
+                        p.Property(p => p.Currency).HasColumnName("PriceCurrency");
+                    });
                 }); 
                 x.HasKey(x => x.Id);
                 x.Property(x => x.Id)

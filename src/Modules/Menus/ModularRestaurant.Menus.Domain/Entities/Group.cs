@@ -6,6 +6,7 @@ using ModularRestaurant.Menus.Domain.Rules.Items;
 using ModularRestaurant.Menus.Domain.Types;
 using ModularRestaurant.Shared.Domain.Common;
 using ModularRestaurant.Shared.Domain.Extensions;
+using ModularRestaurant.Shared.Domain.ValueObjects;
 
 namespace ModularRestaurant.Menus.Domain.Entities
 {
@@ -51,12 +52,13 @@ namespace ModularRestaurant.Menus.Domain.Entities
             Name = newName;
         }
 
-        internal void AddItem(string itemName, string itemDescription)
+        internal void AddItem(string itemName, string itemDescription, Money itemPrice)
         {
             CheckRule(new ItemNameMustBeUniqueRule(_items, itemName));
             CheckRule(new ItemDescriptionCannotExceedCharacterLimitRule(itemDescription));
+            CheckRule(new ItemPriceMustBeGreaterThanZeroRule(itemPrice));
             
-            var item = Item.Create(itemName, itemDescription);
+            var item = Item.Create(itemName, itemDescription, itemPrice);
             _items.Add(item);
         }
 
@@ -74,6 +76,14 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
             var item = _items.FindOrThrow(itemId);
             item.ChangeDescription(newItemDescription);
+        }
+
+        internal void ChangeItemPrice(ItemId itemId, Money newItemPrice)
+        {
+            CheckRule(new ItemPriceMustBeGreaterThanZeroRule(newItemPrice));
+
+            var item = _items.FindOrThrow(itemId);
+            item.ChangePrice(newItemPrice);
         }
 
         internal void RemoveItem(ItemId itemId)
