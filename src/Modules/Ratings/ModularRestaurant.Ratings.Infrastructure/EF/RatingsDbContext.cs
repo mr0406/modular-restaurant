@@ -6,7 +6,7 @@ namespace ModularRestaurant.Ratings.Infrastructure.EF
 {
     public class RatingsDbContext : DbContextBase
     {
-        public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<UserRating> UserRatings { get; set; }
 
         public RatingsDbContext()
         {
