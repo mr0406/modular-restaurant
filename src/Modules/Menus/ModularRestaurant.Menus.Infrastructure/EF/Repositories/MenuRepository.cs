@@ -32,17 +32,12 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Repositories
             return menu;
         }
 
-        public async Task<Menu> GetActiveMenuInRestaurant(RestaurantId restaurantId)
+        public async Task<Menu> GetActiveMenuInRestaurant(RestaurantId restaurantId, CancellationToken token = default)
         {
             return await _menus.SingleOrDefaultAsync(x => x.RestaurantId == restaurantId && x.IsActive);
         }
 
-        public async Task<bool> DoesRestaurantHaveActiveMenuAsync(RestaurantId restaurantId)
-        {
-            return await Task.FromResult(_menus.Any(x => x.RestaurantId == restaurantId && x.IsActive));
-        }
-
-        public async Task<bool> DoesRestaurantHaveMenuWithThisInternalNameAsync(RestaurantId restaurantId, string internalMenuName)
+        public async Task<bool> CheckExists(RestaurantId restaurantId, string internalMenuName)
         {
             return await Task.FromResult(_menus.Any(x => x.RestaurantId == restaurantId && x.InternalName == internalMenuName));
         }

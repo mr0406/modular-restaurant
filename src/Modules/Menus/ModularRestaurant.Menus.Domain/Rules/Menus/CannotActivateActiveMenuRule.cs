@@ -1,17 +1,26 @@
-﻿using ModularRestaurant.Shared.Domain.Common;
+﻿using ModularRestaurant.Menus.Domain.Entities;
+using ModularRestaurant.Shared.Domain.Common;
 
 namespace ModularRestaurant.Menus.Domain.Rules.Menus
 {
     public class CannotActivateActiveMenuRule : IBusinessRule
     {
-        private readonly bool _isActive;
+        private readonly Menu _menuToActivate;
+        private readonly Menu _currentActiveMenu;
 
-        public CannotActivateActiveMenuRule(bool isActive)
+
+        public CannotActivateActiveMenuRule(Menu currentActiveMenu, Menu menuToActivate)
         {
-            _isActive = isActive;
+            _menuToActivate = menuToActivate;
+            _currentActiveMenu = currentActiveMenu;
         }
 
-        public bool IsBroken() => _isActive;
+        public bool IsBroken()
+        {
+            if (_currentActiveMenu is null) return false;
+
+            return _menuToActivate.Id == _currentActiveMenu.Id;
+        }
 
         public string Message => "Menu is already active. Cannot activate active menu.";
     }

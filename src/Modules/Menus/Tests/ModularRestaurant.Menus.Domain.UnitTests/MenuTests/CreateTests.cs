@@ -17,9 +17,9 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.MenuTests
             var restaurantGuid = new Guid("FE14A582-57B2-4538-82A0-09284FDD016E");
             var restaurantId = new RestaurantId(restaurantGuid);
             var internalName = "INTERNAL_NAME";
-            var menuRepository = Provider.GetMenuRepository();
+            var checker = Provider.GetUniquenessCheckerWhichPass();
 
-            var menu = Menu.Create(restaurantId, internalName, menuRepository);
+            var menu = Menu.Create(restaurantId, internalName, checker);
 
             menu.Should().NotBeNull();
             menu.InternalName.Should().Be(internalName);
@@ -30,11 +30,11 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.MenuTests
         [Test]
         public void Create_InternalNameIsNotUnique_IsNotPossible()
         {
-            var menuRepository = Provider.GetMenuRepositoryWithNameConflict();
             var internalName = Provider.GetMenuInternalName();
             var restaurantId = Provider.GetRestaurantId();
+            var checker = Provider.GetUniquenessCheckerWhichFails();
             
-            Action action = () => Menu.Create(restaurantId, internalName, menuRepository);
+            Action action = () => Menu.Create(restaurantId, internalName, checker);
 
             action.Should().Throw<BusinessRuleException>()
                 .Where(x => x.BrokenRule is InternalNameMustBeUniqueInRestaurantMenusRule);
