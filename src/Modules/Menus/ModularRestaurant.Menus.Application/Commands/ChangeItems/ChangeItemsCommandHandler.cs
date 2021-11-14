@@ -1,6 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using ModularRestaurant.Menus.Domain.Entities;
 using ModularRestaurant.Menus.Domain.Repositories;
 using ModularRestaurant.Menus.Domain.Types;
 using ModularRestaurant.Shared.Application.CQRS;
@@ -27,35 +30,61 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeItems
 
             if (request.ItemsToRemove?.Ids is not null)
             {
-                foreach (var itemIdToRemove in request.ItemsToRemove.Ids)
-                {
-                    var itemId = new ItemId(itemIdToRemove);
-                    menu.RemoveItemFromGroup(groupId, itemId);
-                } 
+                RemoveItems(request.ItemsToRemove, menu, groupId);
             }
 
             if (request.ItemsToAdd?.Items is not null)
             {
-                foreach (var itemToAdd in request.ItemsToAdd.Items)
-                {
-                    var itemPrice = Money.Create(itemToAdd.PriceValue, itemToAdd.PriceCurrency);
-                    menu.AddItemToGroup(groupId, itemToAdd.Name, itemToAdd.Description, itemPrice);
-                }   
+                AddItems(request.ItemsToAdd, menu, groupId);
             }
 
             if (request.ItemsToUpdate?.Items is not null)
             {
-                foreach (var itemToUpdate in request.ItemsToUpdate.Items)
-                {
-                    var itemId = new ItemId(itemToUpdate.Id);
-                    var itemPrice = Money.Create(itemToUpdate.NewPriceValue, itemToUpdate.NewPriceCurrency);
-                    menu.ChangeItemName(groupId, itemId, itemToUpdate.NewName);
-                    menu.ChangeItemDescription(groupId, itemId, itemToUpdate.NewDescription);
-                    menu.ChangeItemPrice(groupId, itemId, itemPrice);
-                }   
+                UpdateItems(request.ItemsToUpdate, menu, groupId);
             }
 
             return Unit.Value;
+        }
+
+        private static void RemoveItems(ItemsToRemove itemsToRemove, Menu menu, GroupId groupId)
+        {
+            foreach (var itemIdToRemove in itemsToRemove.Ids)
+            {
+                var itemId = new ItemId(itemIdToRemove);
+                menu.RemoveItemFromGroup(groupId, itemId);
+            } 
+        }
+
+        private static void AddItems(ItemsToAdd itemsToAdd, Menu menu, GroupId groupId)
+        {
+            foreach (var itemToAdd in itemsToAdd.Items)
+            {
+                var itemPrice = Money.Create(itemToAdd.PriceValue, itemToAdd.PriceCurrency);
+                menu.AddItemToGroup(groupId, itemToAdd.Name, itemToAdd.Description, itemPrice);
+            }
+        }
+
+        private static void UpdateItems(ItemsToUpdate itemsToUpdate, Menu menu, GroupId groupId)
+        {
+            foreach (var itemToUpdate in itemsToUpdate.Items)
+            {
+                var itemId = new ItemId(itemToUpdate.Id);
+                if (itemToUpdate.NewPriceCurrency != null && itemToUpdate.NewPriceValue != null)
+                {
+                    var itemPrice = Money.Create(itemToUpdate.NewPriceValue.Value, itemToUpdate.NewPriceCurrency);
+                    menu.ChangeItemPrice(groupId, itemId, itemPrice);
+                }
+
+                if (itemToUpdate.NewName != null)
+                {
+                    menu.ChangeItemName(groupId, itemId, itemToUpdate.NewName);
+                }
+
+                if (itemToUpdate.NewDescription != null)
+                {
+                    menu.ChangeItemDescription(groupId, itemId, itemToUpdate.NewDescription);
+                }
+            }
         }
     }
 }

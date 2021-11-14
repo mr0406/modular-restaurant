@@ -15,7 +15,7 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeItems
 
     public record ItemsToUpdate(List<UpdateItem> Items);
 
-    public record UpdateItem(Guid Id, string NewName, string NewDescription, decimal NewPriceValue,
+    public record UpdateItem(Guid Id, string NewName, string NewDescription, decimal? NewPriceValue,
         string NewPriceCurrency);
 
     public record ItemsToRemove(List<Guid> Ids);
