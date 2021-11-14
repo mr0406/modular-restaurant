@@ -22,7 +22,7 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.QueryHandlers
         {
             var restaurantId = new RestaurantId(request.RestaurantId);
             var menus = await _menus.Where(x => x.RestaurantId == restaurantId)
-                                    .Select(x => new GetRestaurantMenusQueryResult.Menu(x.InternalName, x.IsActive))
+                                    .Select(x => new GetRestaurantMenusQueryResult.Menu(x.Id.Value, x.InternalName, x.IsActive))
                                     .ToListAsync(cancellationToken);
             
             return new GetRestaurantMenusQueryResult
