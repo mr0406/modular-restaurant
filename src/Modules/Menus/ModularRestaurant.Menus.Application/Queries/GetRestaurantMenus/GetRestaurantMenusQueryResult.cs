@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ModularRestaurant.Menus.Application.Queries.GetRestaurantMenus
 {
@@ -6,6 +7,6 @@ namespace ModularRestaurant.Menus.Application.Queries.GetRestaurantMenus
     {
         public IEnumerable<Menu> Menus { get; init; }
         
-        public record Menu(string InternalName, bool IsActive);
+        public record Menu(Guid Id, string InternalName, bool IsActive);
     }
 }
