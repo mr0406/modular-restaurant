@@ -13,7 +13,7 @@ namespace ModularRestaurant.Shared.Domain.ValueObjects
         {
         }
 
-        protected Money(decimal value, string currency)
+        private Money(decimal value, string currency)
         {
             Value = value;
             Currency = currency;
@@ -21,6 +21,7 @@ namespace ModularRestaurant.Shared.Domain.ValueObjects
 
         public static Money Create(decimal value, string currency)
         {
+            CheckRule(new MoneyCurrencyCannotBeNullOrEmptyRule(currency));
             return new Money(value, currency);
         }
 
