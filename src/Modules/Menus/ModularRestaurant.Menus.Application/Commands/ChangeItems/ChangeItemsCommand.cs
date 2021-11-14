@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MediatR;
 using ModularRestaurant.Shared.Application.CQRS;
+using ModularRestaurant.Shared.Domain.ValueObjects;
 
 namespace ModularRestaurant.Menus.Application.Commands.ChangeItems
 {
@@ -10,11 +11,12 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeItems
 
     public record ItemsToAdd(List<AddItem> Items);
 
-    public record AddItem(string Name, string Description);
+    public record AddItem(string Name, string Description, decimal PriceValue, string PriceCurrency);
 
     public record ItemsToUpdate(List<UpdateItem> Items);
 
-    public record UpdateItem(Guid Id, string NewName, string NewDescription);
+    public record UpdateItem(Guid Id, string NewName, string NewDescription, decimal? NewPriceValue,
+        string NewPriceCurrency);
 
     public record ItemsToRemove(List<Guid> Ids);
 }

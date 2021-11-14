@@ -1,6 +1,7 @@
 ﻿using System;
 using ModularRestaurant.Menus.Domain.Types;
 using ModularRestaurant.Shared.Domain.Common;
+using ModularRestaurant.Shared.Domain.ValueObjects;
 
 namespace ModularRestaurant.Menus.Domain.Entities
 {
@@ -8,12 +9,14 @@ namespace ModularRestaurant.Menus.Domain.Entities
     {
         public string Name { get; private set; }
         public string Description { get; private set; }
+        public Money Price { get; private set; }
 
-        private Item(string name, string description)
+        private Item(string name, string description, Money price)
         {
             Id = new ItemId(Guid.NewGuid());
             Name = name;
             Description = description;
+            Price = price;
         }
 
         private Item()
@@ -22,12 +25,12 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
         internal Item GetCopy()
         {
-            return new(Name, Description);
+            return new(Name, Description, Price);
         }
 
-        public static Item Create(string name, string description)
+        public static Item Create(string name, string description, Money price)
         {
-            return new Item(name, description);
+            return new Item(name, description, price);
         }
 
         //TODO: Consider, cannot change to same name as exists?
@@ -39,6 +42,11 @@ namespace ModularRestaurant.Menus.Domain.Entities
         internal void ChangeDescription(string newDescription)
         {
             Description = newDescription;
+        }
+
+        internal void ChangePrice(Money price)
+        {
+            Price = price;
         }
     }
 }
