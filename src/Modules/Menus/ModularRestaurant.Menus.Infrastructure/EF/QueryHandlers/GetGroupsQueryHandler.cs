@@ -26,7 +26,7 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.QueryHandlers
                 .Select(menu => new GetGroupsQueryResult
                 {
                     Groups = menu.Groups.Select(
-                        group => new GetGroupsQueryResult.Group(group.Name))
+                        group => new GetGroupsQueryResult.Group(group.Id.Value, group.Name))
                 }).SingleOrDefaultAsync(cancellationToken);
         }
     }
