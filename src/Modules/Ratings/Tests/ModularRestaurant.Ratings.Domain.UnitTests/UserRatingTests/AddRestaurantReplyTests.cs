@@ -50,7 +50,7 @@ namespace ModularRestaurant.Ratings.Domain.UnitTests.UserRatingTests
         public void AddRestaurantReply_WhenReplyIsTooLong_IsNotPossible()
         {
             var userRating = Provider.GetUserRatingWithoutReply();
-            var replyCharacterLimit = Provider.GetRestaurantReplyCharacterLimi();
+            var replyCharacterLimit = Provider.GetRestaurantReplyCharacterLimit();
             var tooLongReply = new string('a', replyCharacterLimit + 1);
 
             Action action = () => userRating.AddRestaurantReply(tooLongReply);

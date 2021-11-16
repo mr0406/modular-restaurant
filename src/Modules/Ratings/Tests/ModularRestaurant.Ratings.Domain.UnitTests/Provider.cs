@@ -27,7 +27,7 @@ namespace ModularRestaurant.Ratings.Domain.UnitTests
         
         internal static string GetRestaurantReply() => "reply";
 
-        internal static int GetRestaurantReplyCharacterLimi() => 500;
+        internal static int GetRestaurantReplyCharacterLimit() => 500;
 
         internal static IUserRatingUniquenessChecker GetUniquenessCheckerWhichPass()
         {
