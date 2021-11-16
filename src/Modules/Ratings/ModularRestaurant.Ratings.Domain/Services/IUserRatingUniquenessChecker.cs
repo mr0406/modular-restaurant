@@ -3,8 +3,8 @@ using ModularRestaurant.Shared.Domain.Types;
 
 namespace ModularRestaurant.Ratings.Domain.Services
 {
-    public interface IUserNotRateRestaurantChecker
+    public interface IUserRatingUniquenessChecker
     {
-        Task<bool> CheckRatingNotExists(UserId userId, RestaurantId restaurantId);
+        Task<bool> CheckIsUnique(UserId userId, RestaurantId restaurantId);
     }
 }

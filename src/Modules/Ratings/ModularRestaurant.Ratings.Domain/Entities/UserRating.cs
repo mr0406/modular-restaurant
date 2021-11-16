@@ -32,15 +32,16 @@ namespace ModularRestaurant.Ratings.Domain.Entities
             if (comment is not null) Comment = comment;
         }
 
-        public static UserRating Create(UserId userId, RestaurantId restaurantId, int ratingValue, 
-            string comment, IUserNotRateRestaurantChecker userNotRateRestaurantChecker)
+        public static UserRating Create(UserId userId, RestaurantId restaurantId, Rating rating, 
+            string comment, IUserRatingUniquenessChecker userRatingUniquenessChecker)
         {
             comment = comment?.Trim();
+            comment = string.IsNullOrEmpty(comment) ? null : comment; 
             
-            CheckRule(new UserCanOnlyRateRestaurantOnceRule(userId, restaurantId, userNotRateRestaurantChecker));
+            CheckRule(new UserCanOnlyRateRestaurantOnceRule(userId, restaurantId, userRatingUniquenessChecker));
             CheckRule(new CommentCannotExceedCharacterLimit(comment));
             
-            return new(restaurantId, userId, Rating.FromValue(ratingValue), comment);
+            return new(restaurantId, userId, rating, comment);
         }
 
         public void AddRestaurantReply(string reply)

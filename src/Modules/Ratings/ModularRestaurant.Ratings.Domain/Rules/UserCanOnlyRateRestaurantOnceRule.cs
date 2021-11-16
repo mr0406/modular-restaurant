@@ -11,17 +11,17 @@ namespace ModularRestaurant.Ratings.Domain.Rules
     {
         private readonly UserId _userId;
         private readonly RestaurantId _restaurantId;
-        private readonly IUserNotRateRestaurantChecker _userNotRateRestaurantChecker;
+        private readonly IUserRatingUniquenessChecker _userRatingUniquenessChecker;
 
 
-        public UserCanOnlyRateRestaurantOnceRule(UserId userId, RestaurantId restaurantId, IUserNotRateRestaurantChecker userNotRateRestaurantChecker)
+        public UserCanOnlyRateRestaurantOnceRule(UserId userId, RestaurantId restaurantId, IUserRatingUniquenessChecker userRatingUniquenessChecker)
         {
             _userId = userId;
             _restaurantId = restaurantId;
-            _userNotRateRestaurantChecker = userNotRateRestaurantChecker;
+            _userRatingUniquenessChecker = userRatingUniquenessChecker;
         }
 
-        public bool IsBroken() => !_userNotRateRestaurantChecker.CheckRatingNotExists(_userId, _restaurantId).Result;
+        public bool IsBroken() => !_userRatingUniquenessChecker.CheckIsUnique(_userId, _restaurantId).Result;
         
         public string Message => "Cannot rate restaurant more than once.";
     }

@@ -27,7 +27,7 @@ namespace ModularRestaurant.Ratings.Api
             containerBuilder.RegisterModule(new DataAccessModule(connectionString));
             containerBuilder.RegisterModule(new ProcessingModule());
 
-            containerBuilder.RegisterType<UserNotRateRestaurantChecker>().As<IUserNotRateRestaurantChecker>()
+            containerBuilder.RegisterType<UserRatingUniquenessChecker>().As<IUserRatingUniquenessChecker>()
                 .InstancePerLifetimeScope();
             
             _container = containerBuilder.Build();

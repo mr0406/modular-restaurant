@@ -13,8 +13,7 @@ namespace ModularRestaurant.Ratings.Domain.Rules
             _text = text;
         }
 
-        public bool IsBroken() => _text.Length > MaxCharacters;
-        
+        public bool IsBroken() => _text is not null && _text.Length > MaxCharacters;
         
         public string Message => $"Comment cannot be longer than: {MaxCharacters} characters.";
     }

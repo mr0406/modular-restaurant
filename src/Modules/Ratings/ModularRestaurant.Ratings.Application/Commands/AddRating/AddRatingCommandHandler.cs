@@ -13,20 +13,21 @@ namespace ModularRestaurant.Ratings.Application.Commands.AddRating
     public class AddRatingCommandHandler : ICommandHandler<AddRatingCommand, Guid>
     {
         private readonly IUserRatingRepository _userRatingRepository;
-        private readonly IUserNotRateRestaurantChecker _userNotRateRestaurantChecker;
+        private readonly IUserRatingUniquenessChecker _userRatingUniquenessChecker;
 
-        public AddRatingCommandHandler(IUserRatingRepository userRatingRepository, IUserNotRateRestaurantChecker userNotRateRestaurantChecker)
+        public AddRatingCommandHandler(IUserRatingRepository userRatingRepository, IUserRatingUniquenessChecker userRatingUniquenessChecker)
         {
             _userRatingRepository = userRatingRepository;
-            _userNotRateRestaurantChecker = userNotRateRestaurantChecker;
+            _userRatingUniquenessChecker = userRatingUniquenessChecker;
         }
 
         public async Task<Guid> Handle(AddRatingCommand command, CancellationToken token)
         {
             var userId = new UserId(command.UserId);
             var restaurantId = new RestaurantId(command.RestaurantId);
+            var rating = Rating.FromValue(command.Value);
             
-            var userRating = UserRating.Create(userId, restaurantId, command.Value, command.Text, _userNotRateRestaurantChecker);
+            var userRating = UserRating.Create(userId, restaurantId, rating, command.Text, _userRatingUniquenessChecker);
 
             await _userRatingRepository.AddAsync(userRating, token);
 
