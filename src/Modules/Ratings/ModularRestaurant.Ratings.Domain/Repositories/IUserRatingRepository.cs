@@ -10,5 +10,7 @@ namespace ModularRestaurant.Ratings.Domain.Repositories
         Task AddAsync(UserRating userRating, CancellationToken cancellationToken = default);
 
         Task<UserRating> GetAsync(UserRatingId userRatingId, CancellationToken cancellationToken = default);
+
+        Task<bool> CheckExists(UserId userId, RestaurantId restaurantId, CancellationToken cancellationToken = default);
     }
 }

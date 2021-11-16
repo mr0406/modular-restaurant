@@ -10,23 +10,31 @@ namespace ModularRestaurant.Ratings.Infrastructure.EF.Repositories
 {
     public class UserRatingRepository : IUserRatingRepository
     {
-        private readonly DbSet<UserRating> _useRatings;
+        private readonly DbSet<UserRating> _userRatings;
         
         public UserRatingRepository(RatingsDbContext ratingsDbContext)
         {
-            _useRatings = ratingsDbContext.UserRatings;
+            _userRatings = ratingsDbContext.UserRatings;
         }
         
         public async Task AddAsync(UserRating userRating, CancellationToken cancellationToken = default)
         {
-            await _useRatings.AddAsync(userRating, cancellationToken);
+            await _userRatings.AddAsync(userRating, cancellationToken);
         }
 
         public async Task<UserRating> GetAsync(UserRatingId userRatingId, CancellationToken cancellationToken = default)
         {
-            var menu = await _useRatings.SingleOrDefaultAsync(x => x.Id == userRatingId, cancellationToken);
+            var menu = await _userRatings.SingleOrDefaultAsync(x => x.Id == userRatingId, cancellationToken);
             if (menu is null) throw new ObjectNotFoundException(typeof(UserRating), userRatingId.Value);
             return menu;
+        }
+
+        public async Task<bool> CheckExists(UserId userId, RestaurantId restaurantId, CancellationToken cancellationToken = default)
+        {
+            var userRating = await _userRatings.SingleOrDefaultAsync(x => x.UserId == userId && x.RestaurantId == restaurantId,
+                cancellationToken);
+
+            return userRating is not null;
         }
     }
 }

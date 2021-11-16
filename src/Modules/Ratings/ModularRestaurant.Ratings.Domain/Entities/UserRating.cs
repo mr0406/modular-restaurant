@@ -1,5 +1,6 @@
 ﻿using System;
 using ModularRestaurant.Ratings.Domain.Rules;
+using ModularRestaurant.Ratings.Domain.Services;
 using ModularRestaurant.Shared.Domain.Common;
 using ModularRestaurant.Shared.Domain.Types;
 
@@ -31,11 +32,12 @@ namespace ModularRestaurant.Ratings.Domain.Entities
             if (comment is not null) Comment = comment;
         }
 
-        public static UserRating Create(UserId userId, RestaurantId restaurantId, int ratingValue, string comment)
+        public static UserRating Create(UserId userId, RestaurantId restaurantId, int ratingValue, 
+            string comment, IUserNotRateRestaurantChecker userNotRateRestaurantChecker)
         {
             comment = comment?.Trim();
             
-            //TODO: User can only rate once rule, add service for that
+            CheckRule(new UserCanOnlyRateRestaurantOnceRule(userId, restaurantId, userNotRateRestaurantChecker));
             CheckRule(new CommentCannotExceedCharacterLimit(comment));
             
             return new(restaurantId, userId, Rating.FromValue(ratingValue), comment);
