@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Ratings.Api.IoCModules;
+using ModularRestaurant.Ratings.Domain.Services;
 using ModularRestaurant.Ratings.Infrastructure.EF;
 using Serilog;
 
@@ -26,6 +27,9 @@ namespace ModularRestaurant.Ratings.Api
             containerBuilder.RegisterModule(new DataAccessModule(connectionString));
             containerBuilder.RegisterModule(new ProcessingModule());
 
+            containerBuilder.RegisterType<UserRatingUniquenessChecker>().As<IUserRatingUniquenessChecker>()
+                .InstancePerLifetimeScope();
+            
             _container = containerBuilder.Build();
 
             RatingsCompositionRoot.SetContainer(_container);

@@ -3,21 +3,25 @@ using ModularRestaurant.Shared.Domain.Common;
 using ModularRestaurant.Shared.Domain.Types;
 using System.Collections.Generic;
 using System.Linq;
+using ModularRestaurant.Ratings.Domain.Services;
 
 namespace ModularRestaurant.Ratings.Domain.Rules
 {
     public class UserCanOnlyRateRestaurantOnceRule : IBusinessRule
     {
         private readonly UserId _userId;
-        private readonly List<UserRating> _userRatings;
+        private readonly RestaurantId _restaurantId;
+        private readonly IUserRatingUniquenessChecker _userRatingUniquenessChecker;
 
-        public UserCanOnlyRateRestaurantOnceRule(UserId userId, List<UserRating> userRatings)
+
+        public UserCanOnlyRateRestaurantOnceRule(UserId userId, RestaurantId restaurantId, IUserRatingUniquenessChecker userRatingUniquenessChecker)
         {
             _userId = userId;
-            _userRatings = userRatings;
+            _restaurantId = restaurantId;
+            _userRatingUniquenessChecker = userRatingUniquenessChecker;
         }
 
-        public bool IsBroken() => _userRatings.Select(x => x.UserId).Contains(_userId);
+        public bool IsBroken() => !_userRatingUniquenessChecker.CheckIsUnique(_userId, _restaurantId).Result;
         
         public string Message => "Cannot rate restaurant more than once.";
     }

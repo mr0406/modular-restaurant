@@ -1,12 +1,16 @@
-﻿using ModularRestaurant.Ratings.Domain.Rules;
+﻿using System;
+using ModularRestaurant.Ratings.Domain.Rules;
+using ModularRestaurant.Ratings.Domain.Services;
 using ModularRestaurant.Shared.Domain.Common;
 using ModularRestaurant.Shared.Domain.Types;
 
 namespace ModularRestaurant.Ratings.Domain.Entities
 {
-    public class UserRating : Entity
+    public class UserRating : AggregateRoot<UserRatingId>
     {
         public UserId UserId { get; private set; }
+        
+        public RestaurantId RestaurantId { get; private set; }
 
         public Rating Rating { get; private set; }
 
@@ -18,33 +22,37 @@ namespace ModularRestaurant.Ratings.Domain.Entities
         {
         }
 
-        private UserRating(UserId userId, Rating rating, string comment)
+        private UserRating(RestaurantId restaurantId, UserId userId, Rating rating, string comment)
         {
+            Id = new UserRatingId(Guid.NewGuid());
             UserId = userId;
+            RestaurantId = restaurantId;
             Rating = rating;
 
             if (comment is not null) Comment = comment;
         }
 
-        public static UserRating Create(UserId userId, int ratingValue, string comment)
+        public static UserRating Create(UserId userId, RestaurantId restaurantId, Rating rating, 
+            string comment, IUserRatingUniquenessChecker userRatingUniquenessChecker)
         {
             comment = comment?.Trim();
+            comment = string.IsNullOrEmpty(comment) ? null : comment; 
             
+            CheckRule(new UserCanOnlyRateRestaurantOnceRule(userId, restaurantId, userRatingUniquenessChecker));
             CheckRule(new CommentCannotExceedCharacterLimit(comment));
             
-            return new(userId, Rating.FromValue(ratingValue), comment);
+            return new(restaurantId, userId, rating, comment);
         }
 
-        internal void AddRestaurantReply(string restaurantReply)
+        public void AddRestaurantReply(string reply)
         {
+            reply = reply?.Trim();
+            
             CheckRule(new CanReplyToUserRatingOnlyOnceRule(RestaurantReply));
+            CheckRule(new RestaurantReplyCannotBeEmptyRule(reply));
+            CheckRule(new RestaurantReplyCannotExceedCharacterLimit(reply));
             
-            restaurantReply = restaurantReply?.Trim();
-            
-            CheckRule(new RestaurantReplyCannotBeEmptyRule(restaurantReply));
-            CheckRule(new RestaurantReplyCannotExceedCharacterLimit(restaurantReply));
-            
-            RestaurantReply = restaurantReply;
+            RestaurantReply = reply;
         }
     }
 }
