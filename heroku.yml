@@ -1,5 +1,6 @@
 build:
   docker:
+    #TODO: change that
     web: Dockerfile
 run:
   web: dotnet ModularRestaurant.Bootstrapper.dll

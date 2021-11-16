@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using ModularRestaurant.Bootstrapper.ExceptionHandling;
 using ModularRestaurant.Menus.Api;
 using ModularRestaurant.Ratings.Api;
+using Prometheus;
 using Serilog;
 
 namespace ModularRestaurant.Bootstrapper
@@ -51,14 +52,22 @@ namespace ModularRestaurant.Bootstrapper
         {
             var container = app.ApplicationServices.GetAutofacRoot();
             
+            app.UseRouting();
+            app.UseHttpMetrics();
+            
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapMetrics();
+            });
+
+            
             InitializeModules();
             
             app.UseCors(builder => builder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
-
-            app.UseExceptionHandling();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -69,11 +78,9 @@ namespace ModularRestaurant.Bootstrapper
 
             //app.UseHttpsRedirection();
 
-            app.UseRouting();
-
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseExceptionHandling();
         }
 
         private void InitializeModules()

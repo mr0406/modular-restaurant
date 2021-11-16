@@ -1,0 +1,49 @@
+version : '3'
+ 
+services:
+  modular-restaurant:
+    depends_on:
+      db:
+        condition: service_healthy
+    image: modular-restaurant
+    ports:
+      - 8082:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  db:
+    expose: 
+      - "5432"
+    image: postgres
+    shm_size: '4gb'
+    container_name: db
+    restart: unless-stopped
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: "pg_isready --username=postgres && psql --username=postgres --list"
+      timeout: 10s
+      retries: 20
+
+  prometheus:
+    image: prom/prometheus
+    restart: always
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  grafana: 
+    image: grafana/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=P@ssw0rd
+    restart: always
+    ports:
+      - 3000:3000
+
+volumes:
+  postgres:
