@@ -6,7 +6,6 @@ WORKDIR /src
 COPY ["src/Bootstrapper", "Bootstrapper"]
 COPY ["src/Modules", "Modules"]
 COPY ["src/Shared", "Shared"]
-#COPY ["src/Bootstrapper/ModularRestaurant.Bootstrapper/ModularRestaurant.Bootstrapper.csproj", "ModularRestaurant.Bootstrapper/"]
 RUN dotnet restore "Bootstrapper/ModularRestaurant.Bootstrapper/ModularRestaurant.Bootstrapper.csproj"
 COPY . .
 WORKDIR "/src/Bootstrapper/ModularRestaurant.Bootstrapper"
