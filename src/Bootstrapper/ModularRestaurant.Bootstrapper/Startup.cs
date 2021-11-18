@@ -52,6 +52,11 @@ namespace ModularRestaurant.Bootstrapper
         {
             var container = app.ApplicationServices.GetAutofacRoot();
             
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+            
             app.UseRouting();
             app.UseHttpMetrics();
             
@@ -62,11 +67,6 @@ namespace ModularRestaurant.Bootstrapper
             });
             
             InitializeModules();
-            
-            app.UseCors(builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
