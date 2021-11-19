@@ -57,6 +57,8 @@ namespace ModularRestaurant.Bootstrapper
                 .AllowAnyMethod()
                 .AllowAnyHeader());
             
+            app.UseExceptionHandling();
+            
             app.UseRouting();
             app.UseHttpMetrics();
             
@@ -76,8 +78,6 @@ namespace ModularRestaurant.Bootstrapper
             });
 
             //app.UseHttpsRedirection();
-
-            app.UseExceptionHandling();
         }
 
         private void InitializeModules()
