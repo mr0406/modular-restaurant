@@ -20,6 +20,9 @@ namespace ModularRestaurant.Ratings.Infrastructure.EF.Configuration
             builder.Property(userRating => userRating.UserId)
                 .HasConversion(userId => userId.Value, userId => new UserId(userId));
 
+            builder.Property(m => m.Version)
+                .IsConcurrencyToken();
+            
             builder.OwnsOne(userRating => userRating.Rating, r =>
             {
                 r.Property(rating => rating.Value).HasColumnName("Value");

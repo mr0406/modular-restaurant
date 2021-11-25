@@ -22,6 +22,7 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.MenuTests
             var menu = Menu.Create(restaurantId, internalName, checker);
 
             menu.Should().NotBeNull();
+            menu.Version.Should().Be(0);
             menu.InternalName.Should().Be(internalName);
             menu.RestaurantId.Should().BeEquivalentTo(restaurantId);
             menu.IsActive.Should().BeFalse();

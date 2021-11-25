@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Data;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Shared.Application;
@@ -7,9 +9,9 @@ namespace ModularRestaurant.Shared.Infrastructure.EF
 {
     public class EFUnitOfWork : IUnitOfWork
     {
-        private readonly DbContext _dbContext;
+        private readonly DbContextBase _dbContext;
         
-        public EFUnitOfWork(DbContext dbContext)
+        public EFUnitOfWork(DbContextBase dbContext)
         {
             _dbContext = dbContext;
         }

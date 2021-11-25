@@ -3,6 +3,7 @@ using Autofac;
 using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Ratings.Infrastructure.EF;
 using ModularRestaurant.Shared.Api;
+using ModularRestaurant.Shared.Infrastructure.EF;
 
 namespace ModularRestaurant.Ratings.Api.IoCModules
 {
@@ -23,7 +24,7 @@ namespace ModularRestaurant.Ratings.Api.IoCModules
                 dbContextOptionsBuilder.UseNpgsql(_connectionString);
 
                 return new RatingsDbContext(dbContextOptionsBuilder.Options);
-            }).AsSelf().As<DbContext>().InstancePerLifetimeScope();
+            }).AsSelf().As<DbContextBase>().InstancePerLifetimeScope();
 
             var infrastructureAssembly = Assembly.GetExecutingAssembly().GetInfrastructure();
 

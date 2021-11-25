@@ -18,6 +18,9 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Configuration
             builder.Property(m => m.RestaurantId)
                 .HasConversion(rId => rId.Value, rId => new RestaurantId(rId));
 
+            builder.Property(m => m.Version)
+                .IsConcurrencyToken();
+
             builder.OwnsMany(x => x.Groups, x =>
             {
                 x.ToTable("Groups").OwnsMany(a => a.Items, a =>

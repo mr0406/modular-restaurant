@@ -37,6 +37,10 @@ namespace ModularRestaurant.Ratings.Infrastructure.EF.Migrations
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("Version")
+                        .IsConcurrencyToken()
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("UserRatings");

@@ -34,6 +34,10 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.Migrations
                     b.Property<Guid?>("RestaurantId")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("Version")
+                        .IsConcurrencyToken()
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("Menus");
