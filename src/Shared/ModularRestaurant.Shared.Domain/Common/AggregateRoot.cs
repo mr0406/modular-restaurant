@@ -11,7 +11,7 @@ namespace ModularRestaurant.Shared.Domain.Common
         protected void IncrementVersion()
         {
             if (_versionIncremented)
-                return;;
+                return;
 
             Version++;
             _versionIncremented = true;

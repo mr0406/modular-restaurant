@@ -26,8 +26,6 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeMenuInternalName
             
             menu.ChangeInternalName(request.NewInternalName, _menuInternalNameUniquenessChecker);
             
-            Thread.Sleep(1000);
-            
             return Unit.Value;
         }
     }
