@@ -28,6 +28,7 @@ namespace ModularRestaurant.Ratings.Domain.Entities
             UserId = userId;
             RestaurantId = restaurantId;
             Rating = rating;
+            Version = 0;
 
             if (comment is not null) Comment = comment;
         }
@@ -53,6 +54,8 @@ namespace ModularRestaurant.Ratings.Domain.Entities
             CheckRule(new RestaurantReplyCannotExceedCharacterLimit(reply));
             
             RestaurantReply = reply;
+            
+            IncrementVersion();
         }
     }
 }

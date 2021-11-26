@@ -29,6 +29,7 @@ namespace ModularRestaurant.Menus.Domain.Entities
             InternalName = internalName;
             RestaurantId = restaurantId;
             IsActive = false;
+            Version = 0;
         }
         
         private Menu()
@@ -54,11 +55,15 @@ namespace ModularRestaurant.Menus.Domain.Entities
             _groups.ForEach(x => x.CheckConsistency());
             
             IsActive = true;
+            
+            IncrementVersion();
         }
 
         internal void Deactivate()
         {
             IsActive = false;
+            
+            IncrementVersion();
         }
 
         public static Menu Create(RestaurantId restaurantId, string internalName, IMenuInternalNameUniquenessChecker menuInternalNameUniquenessChecker)
@@ -71,6 +76,8 @@ namespace ModularRestaurant.Menus.Domain.Entities
         {
             CheckRule(new InternalNameMustBeUniqueInRestaurantMenusRule(RestaurantId, newInternalName, menuInternalNameUniquenessChecker));
             InternalName = newInternalName;
+            
+            IncrementVersion();
         }
         
         public void AddGroup(string groupName)
@@ -79,6 +86,8 @@ namespace ModularRestaurant.Menus.Domain.Entities
             CheckRule(new GroupNameMustBeUniqueRule(_groups, groupName));
 
             _groups.Add(Group.Create(groupName));
+            
+            IncrementVersion();
         }
 
         public void ChangeGroupName(GroupId groupId, string newGroupName)
@@ -88,6 +97,8 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
             var group = _groups.FindOrThrow(groupId);
             group.ChangeName(newGroupName);
+            
+            IncrementVersion();
         }
 
         public void AddItemToGroup(GroupId groupId, string itemName, string itemDescription, Money itemPrice)
@@ -96,6 +107,8 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
             var group = _groups.FindOrThrow(groupId);
             group.AddItem(itemName, itemDescription, itemPrice);
+            
+            IncrementVersion();
         }
 
         public void RemoveItemFromGroup(GroupId groupId, ItemId itemId)
@@ -104,6 +117,8 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
             var group = _groups.FindOrThrow(groupId);
             group.RemoveItem(itemId);
+
+            IncrementVersion();;
         }
 
         public void ChangeItemName(GroupId groupId, ItemId itemId, string newItemName)
@@ -112,6 +127,8 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
             var group = _groups.FindOrThrow(groupId);
             group.ChangeItemName(itemId, newItemName);
+            
+            IncrementVersion();
         }
 
         public void ChangeItemDescription(GroupId groupId, ItemId itemId, string newItemDescription)
@@ -120,6 +137,8 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
             var group = _groups.FindOrThrow(groupId);
             group.ChangeItemDescription(itemId, newItemDescription);
+            
+            IncrementVersion();
         }
 
         public void ChangeItemPrice(GroupId groupId, ItemId itemId, Money newItemPrice)
@@ -128,6 +147,8 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
             var group = _groups.FindOrThrow(groupId);
             group.ChangeItemPrice(itemId, newItemPrice);
+            
+            IncrementVersion();
         }
 
         public void RemoveGroup(GroupId groupId)
@@ -136,6 +157,8 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
             var group = _groups.FindOrThrow(groupId);
             _groups.Remove(group);
+            
+            IncrementVersion();
         }
     }
 }

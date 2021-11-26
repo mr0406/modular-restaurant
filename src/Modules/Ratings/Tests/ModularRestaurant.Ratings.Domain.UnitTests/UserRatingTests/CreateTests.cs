@@ -42,6 +42,7 @@ namespace ModularRestaurant.Ratings.Domain.UnitTests.UserRatingTests
             var userRating = UserRating.Create(userId, restaurantId, rating, comment, uniquenessChecker);
 
             userRating.Should().NotBeNull();
+            userRating.Version.Should().Be(0);
             userRating.UserId.Should().BeEquivalentTo(userId);
             userRating.RestaurantId.Should().BeEquivalentTo(restaurantId);
             userRating.Rating.Should().BeEquivalentTo(rating);

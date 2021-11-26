@@ -25,7 +25,9 @@ namespace ModularRestaurant.Menus.Domain.UnitTests.MenuTests
             menuCopy.Should().BeEquivalentTo(menu, x => x.Excluding(x => x.Id)
                                                          .Excluding(x => x.Groups)
                                                          .Excluding(x => x.InternalName)
-                                                         .Excluding(x => x.IsActive));
+                                                         .Excluding(x => x.IsActive)
+                                                         .Excluding(x => x.Version));
+            
             menuCopy.Groups.Select(x => x.Name).Should().Equal(menu.Groups.Select(x => x.Name));
             menuCopy.Groups.SelectMany(x => x.Items).Select(x => x.Name).Should()
                 .Equal(menu.Groups.SelectMany(x => x.Items).Select(x => x.Name));

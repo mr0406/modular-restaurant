@@ -3,6 +3,7 @@ using Autofac;
 using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Menus.Infrastructure.EF;
 using ModularRestaurant.Shared.Api;
+using ModularRestaurant.Shared.Infrastructure.EF;
 
 namespace ModularRestaurant.Menus.Api.IoCModules
 {
@@ -23,7 +24,7 @@ namespace ModularRestaurant.Menus.Api.IoCModules
                 dbContextOptionsBuilder.UseNpgsql(_connectionString);
 
                 return new MenusDbContext(dbContextOptionsBuilder.Options);
-            }).AsSelf().As<DbContext>().InstancePerLifetimeScope();
+            }).AsSelf().As<DbContextBase>().InstancePerLifetimeScope();
 
             var infrastructureAssembly = Assembly.GetExecutingAssembly().GetInfrastructure();
 
