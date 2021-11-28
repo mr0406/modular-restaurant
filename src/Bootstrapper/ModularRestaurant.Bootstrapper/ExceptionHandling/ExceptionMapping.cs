@@ -14,10 +14,18 @@ namespace ModularRestaurant.Bootstrapper.ExceptionHandling
             {
                 BusinessRuleException businessRuleException => new ErrorResponse(
                     new ErrorMessage(businessRuleException.Message), HttpStatusCode.Conflict),
+                
                 ObjectNotFoundException objectNotFoundException => new ErrorResponse(
                     new ErrorMessage(objectNotFoundException.Message), HttpStatusCode.NotFound),
+                
+                UnsupportedFileFormatException unsupportedFileFormatException => new ErrorResponse(
+                    new ErrorMessage($"File format: {unsupportedFileFormatException.FileFormat} is unsupported. " +
+                                     $"Supported file formats: {string.Join(", ", unsupportedFileFormatException.SupportedFormats)}"), 
+                    HttpStatusCode.UnsupportedMediaType),
+                
                 DbUpdateConcurrencyException _ => new ErrorResponse(
                     new ErrorMessage("Operation was not successful due to concurrency conflict."), HttpStatusCode.Conflict),
+                
                 _ => new ErrorResponse(new ErrorMessage("Internal server error."), HttpStatusCode.InternalServerError)
             };
         }

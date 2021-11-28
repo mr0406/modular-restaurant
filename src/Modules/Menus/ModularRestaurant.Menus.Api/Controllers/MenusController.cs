@@ -2,8 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using ModularRestaurant.Shared.Api;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
+using ModularRestaurant.Menus.Application.Commands.AddImageToItem;
 using ModularRestaurant.Menus.Application.Commands.ChangeActiveMenu;
 using ModularRestaurant.Menus.Application.Commands.ChangeGroups;
 using ModularRestaurant.Menus.Application.Commands.ChangeItems;
@@ -14,6 +18,7 @@ using ModularRestaurant.Menus.Application.Queries.GetGroups;
 using ModularRestaurant.Menus.Application.Queries.GetItems;
 using ModularRestaurant.Menus.Application.Queries.GetMenu;
 using ModularRestaurant.Menus.Application.Queries.GetRestaurantMenus;
+using ModularRestaurant.Shared.Domain.Exceptions;
 
 namespace ModularRestaurant.Menus.Api.Controllers
 {
@@ -82,5 +87,12 @@ namespace ModularRestaurant.Menus.Api.Controllers
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status409Conflict)]
         public async Task<ActionResult<Unit>> ChangeItems([FromBody] ChangeItemsCommand command)
             => Ok(await Executor.ExecuteCommand(command));
+
+        [HttpPost("{menuId:Guid}/groups/{groupId:Guid}/items/{itemId:Guid}/image")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status415UnsupportedMediaType)]
+        public async Task<ActionResult<Unit>> AddImageToItem([FromRoute] Guid menuId, [FromRoute] Guid groupId, 
+            [FromRoute] Guid itemId, [FromForm] IFormFile image)
+            => Ok(await Executor.ExecuteCommand(new AddImageToItemCommand(menuId, groupId, itemId, image)));
     }
 }

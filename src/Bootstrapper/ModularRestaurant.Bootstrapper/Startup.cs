@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using ModularRestaurant.Bootstrapper.ExceptionHandling;
+using ModularRestaurant.Bootstrapper.Swagger;
 using ModularRestaurant.Menus.Api;
 using ModularRestaurant.Ratings.Api;
 using Prometheus;
@@ -34,6 +35,7 @@ namespace ModularRestaurant.Bootstrapper
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "ModularRestaurant", Version = "v1"});
                 c.CustomSchemaIds(x => x.FullName);
+                c.OperationFilter<SwaggerFileOperationFilter>();
             });
             
             InitializeModules();

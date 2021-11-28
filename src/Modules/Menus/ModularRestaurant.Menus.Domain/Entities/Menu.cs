@@ -160,5 +160,15 @@ namespace ModularRestaurant.Menus.Domain.Entities
             
             IncrementVersion();
         }
+
+        public void AddImageToItem(GroupId groupId, ItemId itemId, string image)
+        {
+            CheckRule(new CannotChangeActiveMenuRule(IsActive));
+            
+            var group = _groups.FindOrThrow(groupId);
+            group.AddImageToItem(itemId, image);
+            
+            IncrementVersion();
+        }
     }
 }
