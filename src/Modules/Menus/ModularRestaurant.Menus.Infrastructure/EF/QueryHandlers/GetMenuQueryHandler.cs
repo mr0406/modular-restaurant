@@ -21,13 +21,14 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.QueryHandlers
         public async Task<GetMenuQueryResult> Handle(GetMenuQuery query, CancellationToken cancellationToken)
         {
             var menuId = new MenuId(query.Id);
-            
+
             return await _menus.Where(x => x.Id == menuId)
                 .Select(menu => new GetMenuQueryResult
                 {
                     Groups = menu.Groups.Select(
                         group => new GetMenuQueryResult.Group(group.Id.Value, group.Name, group.Items.Select(
-                            item => new GetMenuQueryResult.Item(item.Id.Value, item.Name))))
+                            item => new GetMenuQueryResult.Item(item.Id.Value, item.Name, item.Price.Value,
+                                item.Price.Currency))))
                 })
                 .SingleOrDefaultAsync(cancellationToken);
         }
