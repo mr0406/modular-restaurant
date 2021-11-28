@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ModularRestaurant.Shared.Infrastructure.EF
 {

@@ -92,10 +92,16 @@ namespace ModularRestaurant.Menus.Domain.Entities
             _items.Remove(item);
         }
 
-        internal void AddImageToItem(ItemId itemId, string image)
+        internal void ChangeItemImage(ItemId itemId, string newImage)
         {
             var item = _items.FindOrThrow(itemId);
-            item.AddImage(image);
+            item.ChangeImage(newImage);
+        }
+        
+        internal void RemoveItemImage(ItemId itemId)
+        {
+            var item = _items.FindOrThrow(itemId);
+            item.RemoveImage();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Serilog;
-
-namespace ModularRestaurant.Shared.Domain.Common
+﻿namespace ModularRestaurant.Shared.Domain.Common
 {
     public abstract class AggregateRoot<T> : Entity<T> where T : TypeId
     {

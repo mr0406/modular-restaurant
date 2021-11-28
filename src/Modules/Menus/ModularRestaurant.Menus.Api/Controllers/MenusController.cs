@@ -2,23 +2,21 @@
 using Microsoft.AspNetCore.Mvc;
 using ModularRestaurant.Shared.Api;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
-using ModularRestaurant.Menus.Application.Commands.AddImageToItem;
 using ModularRestaurant.Menus.Application.Commands.ChangeActiveMenu;
 using ModularRestaurant.Menus.Application.Commands.ChangeGroups;
+using ModularRestaurant.Menus.Application.Commands.ChangeItemImage;
 using ModularRestaurant.Menus.Application.Commands.ChangeItems;
 using ModularRestaurant.Menus.Application.Commands.ChangeMenuInternalName;
+using ModularRestaurant.Menus.Application.Commands.CleanUnusedItemImages;
 using ModularRestaurant.Menus.Application.Commands.CreateMenu;
 using ModularRestaurant.Menus.Application.Commands.DeactivateMenu;
+using ModularRestaurant.Menus.Application.Commands.RemoveItemImage;
 using ModularRestaurant.Menus.Application.Queries.GetGroups;
 using ModularRestaurant.Menus.Application.Queries.GetItems;
 using ModularRestaurant.Menus.Application.Queries.GetMenu;
 using ModularRestaurant.Menus.Application.Queries.GetRestaurantMenus;
-using ModularRestaurant.Shared.Domain.Exceptions;
 
 namespace ModularRestaurant.Menus.Api.Controllers
 {
@@ -88,11 +86,24 @@ namespace ModularRestaurant.Menus.Api.Controllers
         public async Task<ActionResult<Unit>> ChangeItems([FromBody] ChangeItemsCommand command)
             => Ok(await Executor.ExecuteCommand(command));
 
-        [HttpPost("{menuId:Guid}/groups/{groupId:Guid}/items/{itemId:Guid}/image")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpPost("{menuId:Guid}/groups/{groupId:Guid}/items/{itemId:Guid}/new-image")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status409Conflict)]
         [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status415UnsupportedMediaType)]
-        public async Task<ActionResult<Unit>> AddImageToItem([FromRoute] Guid menuId, [FromRoute] Guid groupId, 
-            [FromRoute] Guid itemId, [FromForm] IFormFile image)
-            => Ok(await Executor.ExecuteCommand(new AddImageToItemCommand(menuId, groupId, itemId, image)));
+        public async Task<ActionResult<Unit>> ChangeItemImage([FromRoute] Guid menuId, [FromRoute] Guid groupId, 
+            [FromRoute] Guid itemId, [FromForm] IFormFile newImage)
+            => Ok(await Executor.ExecuteCommand(new ChangeItemImageCommand(menuId, groupId, itemId, newImage)));
+
+        [HttpPost("{menuId:Guid}/groups/{groupId:Guid}/items/{itemId:Guid}/delete-image")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status409Conflict)]
+        public async Task<ActionResult<Unit>> RemoveItemImage([FromRoute] Guid menuId, [FromRoute] Guid groupId, 
+            [FromRoute] Guid itemId)
+            => Ok(await Executor.ExecuteCommand(new RemoveItemImageCommand(menuId, groupId, itemId)));
+
+        [HttpPost("clean-up-unused-item-images")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<Unit>> CleanUnlinkedImages()
+            => Ok(await Executor.ExecuteCommand(new CleanUpUnusedItemImagesCommand()));
     }
 }

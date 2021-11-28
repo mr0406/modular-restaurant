@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using MediatR;
 using ModularRestaurant.Shared.Application.CQRS;
-using ModularRestaurant.Shared.Domain.ValueObjects;
 
 namespace ModularRestaurant.Menus.Application.Commands.ChangeItems
 {

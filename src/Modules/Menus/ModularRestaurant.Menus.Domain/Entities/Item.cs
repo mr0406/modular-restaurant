@@ -49,9 +49,14 @@ namespace ModularRestaurant.Menus.Domain.Entities
             Price = price;
         }
 
-        internal void AddImage(string image)
+        internal void ChangeImage(string newImage)
         {
-            Image = image;
+            Image = newImage;
+        }
+
+        internal void RemoveImage()
+        {
+            Image = null;
         }
     }
 }

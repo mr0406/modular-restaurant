@@ -1,8 +1,5 @@
-﻿using System;
-using System.Data;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using ModularRestaurant.Shared.Application;
 
 namespace ModularRestaurant.Shared.Infrastructure.EF

@@ -1,8 +1,5 @@
-﻿using ModularRestaurant.Ratings.Domain.Entities;
-using ModularRestaurant.Shared.Domain.Common;
+﻿using ModularRestaurant.Shared.Domain.Common;
 using ModularRestaurant.Shared.Domain.Types;
-using System.Collections.Generic;
-using System.Linq;
 using ModularRestaurant.Ratings.Domain.Services;
 
 namespace ModularRestaurant.Ratings.Domain.Rules
