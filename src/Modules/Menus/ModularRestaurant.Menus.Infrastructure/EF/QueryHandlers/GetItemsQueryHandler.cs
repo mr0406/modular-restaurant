@@ -27,7 +27,7 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.QueryHandlers
 
             var menu = await _menus.SingleOrDefaultAsync(x => x.Id == menuId, cancellationToken);
             var items = menu.Groups.FindOrThrow(groupId).Items
-                .Select(item => new GetItemsQueryResult.Item(item.Id.Value, item.Name));
+                .Select(item => new GetItemsQueryResult.Item(item.Id.Value, item.Name, item.Price));
 
             return new GetItemsQueryResult
             {
