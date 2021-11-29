@@ -31,6 +31,7 @@ namespace ModularRestaurant.Menus.Infrastructure.Services
         {
             var blobServiceClient = new BlobServiceClient(_connectionString);
             var containerClient = blobServiceClient.GetBlobContainerClient(_containerName);
+            await containerClient.CreateIfNotExistsAsync(PublicAccessType.Blob);
             var blobClient = containerClient.GetBlobClient(imageName);
 
             using (var stream = new MemoryStream())
@@ -53,6 +54,8 @@ namespace ModularRestaurant.Menus.Infrastructure.Services
 
             var blobServiceClient = new BlobServiceClient(_connectionString);
             var containerClient = blobServiceClient.GetBlobContainerClient(_containerName);
+
+            if (!await containerClient.ExistsAsync()) return;
             
             var imagesInStorage = new List<string>();
             foreach (BlobItem blobItem in containerClient.GetBlobs())
