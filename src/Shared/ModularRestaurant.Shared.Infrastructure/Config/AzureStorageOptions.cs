@@ -5,5 +5,7 @@
         public string ConnectionString { get; set; }
         
         public string MenuItemContainerName { get; set; }
+
+        public string ImageUrlPrefix { get; set; }
     }
 }

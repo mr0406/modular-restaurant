@@ -13,6 +13,9 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeItemImage
 {
     public class ChangeItemImageCommandHandler : ICommandHandler<ChangeItemImageCommand, string>
     {
+        private readonly List<string> _validContentTypes = new() {"image/png", "image/jpeg"};
+        private const long MaxImageSizeInBytes = 10_000_000;
+
         private readonly IMenuRepository _menuRepository;
         private readonly IMenuItemImageService _menuItemImageService;
 
@@ -24,14 +27,15 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeItemImage
         
         public async Task<string> Handle(ChangeItemImageCommand command, CancellationToken cancellationToken)
         {
-            var validContentTypes = new List<string> {"image/png", "image/jpeg"};
-
             if (command.NewImage is null)
                 throw new ArgumentNullException(nameof(command.NewImage));
 
-            if (!validContentTypes.Contains(command.NewImage.ContentType))
-                throw new UnsupportedFileFormatException(command.NewImage.ContentType, validContentTypes);
+            if (!_validContentTypes.Contains(command.NewImage.ContentType))
+                throw new UnsupportedFileFormatException(command.NewImage.ContentType, _validContentTypes);
 
+            if (command.NewImage.Length > MaxImageSizeInBytes)
+                throw new FileToLargeException(command.NewImage.Length, MaxImageSizeInBytes);
+            
             var imageName = GetImageName(command.NewImage.FileName);
             
             var menuId = new MenuId(command.MenuId);

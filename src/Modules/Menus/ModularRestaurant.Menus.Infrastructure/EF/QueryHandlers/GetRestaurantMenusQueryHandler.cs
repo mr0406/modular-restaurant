@@ -12,7 +12,7 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.QueryHandlers
     public class GetRestaurantMenusQueryHandler : IQueryHandler<GetRestaurantMenusQuery, GetRestaurantMenusQueryResult>
     {
         private readonly DbSet<Menu> _menus;
-        
+
         public GetRestaurantMenusQueryHandler(MenusDbContext menusDbContext)
         {
             _menus = menusDbContext.Menus;

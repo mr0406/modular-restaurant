@@ -7,6 +7,6 @@ namespace ModularRestaurant.Menus.Application.Queries.GetItems
     {
         public IEnumerable<Item> Items { get; init; }
 
-        public record Item(Guid Id, string Name, decimal PriceValue, string PriceCurrency);
+        public record Item(Guid Id, string Name, decimal PriceValue, string PriceCurrency, string ImageUrl);
     }
 }

@@ -26,7 +26,11 @@ namespace ModularRestaurant.Menus.Domain.Entities
 
         internal Item GetCopy()
         {
-            return new(Name, Description, Price);
+            var itemCopy = new Item(Name, Description, Price)
+            {
+                Image = Image
+            };
+            return itemCopy;
         }
 
         public static Item Create(string name, string description, Money price)

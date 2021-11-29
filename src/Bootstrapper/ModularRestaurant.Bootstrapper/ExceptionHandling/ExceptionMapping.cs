@@ -19,9 +19,10 @@ namespace ModularRestaurant.Bootstrapper.ExceptionHandling
                     new ErrorMessage(objectNotFoundException.Message), HttpStatusCode.NotFound),
                 
                 UnsupportedFileFormatException unsupportedFileFormatException => new ErrorResponse(
-                    new ErrorMessage($"File format: {unsupportedFileFormatException.FileFormat} is unsupported. " +
-                                     $"Supported file formats: {string.Join(", ", unsupportedFileFormatException.SupportedFormats)}"), 
-                    HttpStatusCode.UnsupportedMediaType),
+                    new ErrorMessage(unsupportedFileFormatException.Message), HttpStatusCode.UnsupportedMediaType),
+                
+                FileToLargeException fileToLargeException => new ErrorResponse(
+                    new ErrorMessage(fileToLargeException.Message), HttpStatusCode.Conflict),
                 
                 DbUpdateConcurrencyException _ => new ErrorResponse(
                     new ErrorMessage("Operation was not successful due to concurrency conflict."), HttpStatusCode.Conflict),

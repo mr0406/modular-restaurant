@@ -6,16 +6,19 @@ using ModularRestaurant.Shared.Domain.Types;
 using System.Threading;
 using System.Threading.Tasks;
 using ModularRestaurant.Menus.Application.Queries.GetMenu;
+using ModularRestaurant.Shared.Infrastructure.Config;
 
 namespace ModularRestaurant.Menus.Infrastructure.EF.QueryHandlers
 {
     public class GetMenuQueryHandler : IQueryHandler<GetMenuQuery, GetMenuQueryResult>
     {
         private readonly DbSet<Menu> _menus;
+        private readonly string _imageUrlPrefix;
 
-        public GetMenuQueryHandler(MenusDbContext menusDbContext)
+        public GetMenuQueryHandler(MenusDbContext menusDbContext, AzureStorageOptions options)
         {
             _menus = menusDbContext.Menus;
+            _imageUrlPrefix = options.ImageUrlPrefix;
         }
 
         public async Task<GetMenuQueryResult> Handle(GetMenuQuery query, CancellationToken cancellationToken)
@@ -28,7 +31,7 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.QueryHandlers
                     Groups = menu.Groups.Select(
                         group => new GetMenuQueryResult.Group(group.Id.Value, group.Name, group.Items.Select(
                             item => new GetMenuQueryResult.Item(item.Id.Value, item.Name, item.Price.Value,
-                                item.Price.Currency))))
+                                item.Price.Currency, _imageUrlPrefix + item.Image))))
                 })
                 .SingleOrDefaultAsync(cancellationToken);
         }
