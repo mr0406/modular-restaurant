@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ModularRestaurant.Shared.Domain.ValueObjects;
 
 namespace ModularRestaurant.Menus.Application.Queries.GetItems
 {

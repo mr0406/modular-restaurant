@@ -9,6 +9,7 @@ using ModularRestaurant.Bootstrapper.ExceptionHandling;
 using ModularRestaurant.Bootstrapper.Swagger;
 using ModularRestaurant.Menus.Api;
 using ModularRestaurant.Ratings.Api;
+using ModularRestaurant.Shared.Infrastructure.Config;
 using Prometheus;
 using Serilog;
 
@@ -37,7 +38,9 @@ namespace ModularRestaurant.Bootstrapper
                 c.CustomSchemaIds(x => x.FullName);
                 c.OperationFilter<SwaggerFileOperationFilter>();
             });
-            
+
+            services.Configure<AzureStorageOptions>(options => _configuration.GetSection("AzureStorage").Bind(options));
+
             InitializeModules();
         }
 
@@ -84,7 +87,10 @@ namespace ModularRestaurant.Bootstrapper
 
         private void InitializeModules()
         {
-            MenusStartup.Initialize(_configuration[ConnectionString]);
+            AzureStorageOptions azureStorageOptions = new ();
+            _configuration.GetSection("AzureStorage").Bind(azureStorageOptions);
+            
+            MenusStartup.Initialize(_configuration[ConnectionString], azureStorageOptions);
             RatingsStartup.Initialize(_configuration[ConnectionString]);
         }
     }
