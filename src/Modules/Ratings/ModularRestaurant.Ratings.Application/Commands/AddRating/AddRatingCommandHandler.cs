@@ -1,5 +1,4 @@
 ﻿using System;
-using MediatR;
 using ModularRestaurant.Ratings.Domain.Repositories;
 using ModularRestaurant.Shared.Application.CQRS;
 using ModularRestaurant.Shared.Domain.Types;

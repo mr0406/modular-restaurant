@@ -1,11 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
-using FluentAssertions;
-using ModularRestaurant.Menus.Application.Commands.CreateMenu;
-using ModularRestaurant.Menus.Application.Queries.GetMenu;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace ModularRestaurant.Menus.IntegrationTests
 {

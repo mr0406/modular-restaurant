@@ -1,5 +1,4 @@
-﻿using System;
-using ModularRestaurant.Shared.Domain.Common;
+﻿using ModularRestaurant.Shared.Domain.Common;
 
 namespace ModularRestaurant.Shared.Domain.Rules
 {

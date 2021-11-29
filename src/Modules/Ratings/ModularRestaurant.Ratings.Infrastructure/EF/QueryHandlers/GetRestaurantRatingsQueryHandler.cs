@@ -3,8 +3,6 @@ using ModularRestaurant.Ratings.Application.Queries;
 using ModularRestaurant.Ratings.Domain.Entities;
 using ModularRestaurant.Shared.Application.CQRS;
 using ModularRestaurant.Shared.Domain.Types;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;

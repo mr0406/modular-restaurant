@@ -58,6 +58,7 @@ namespace ModularRestaurant.Menus.Domain.UnitTests
             var menu = GetEmptyMenu();
             menu.AddGroup(GetGroupName());
             menu.AddItemToGroup(menu.Groups[0].Id, GetItemName(), GetItemDescription(), GetItemPrice());
+            menu.ChangeItemImage(menu.Groups[0].Id, menu.Groups[0].Items[0].Id, "image");
 
             return menu;
         }
