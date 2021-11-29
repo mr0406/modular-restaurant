@@ -34,7 +34,7 @@ namespace ModularRestaurant.Menus.Application.Commands.ChangeItemImage
                 throw new UnsupportedFileFormatException(command.NewImage.ContentType, _validContentTypes);
 
             if (command.NewImage.Length > MaxImageSizeInBytes)
-                throw new FileToLargeException(command.NewImage.Length, MaxImageSizeInBytes);
+                throw new FileTooLargeException(command.NewImage.Length, MaxImageSizeInBytes);
             
             var imageName = GetImageName(command.NewImage.FileName);
             

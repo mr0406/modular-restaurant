@@ -21,7 +21,7 @@ namespace ModularRestaurant.Bootstrapper.ExceptionHandling
                 UnsupportedFileFormatException unsupportedFileFormatException => new ErrorResponse(
                     new ErrorMessage(unsupportedFileFormatException.Message), HttpStatusCode.UnsupportedMediaType),
                 
-                FileToLargeException fileToLargeException => new ErrorResponse(
+                FileTooLargeException fileToLargeException => new ErrorResponse(
                     new ErrorMessage(fileToLargeException.Message), HttpStatusCode.Conflict),
                 
                 DbUpdateConcurrencyException _ => new ErrorResponse(
