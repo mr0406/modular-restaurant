@@ -24,6 +24,5 @@ On disk folder files are stored as binary data. The structure of files is not re
 
 To see folder and files logical structure (with correct names) you need to install: Microsoft Azure Storage Explorer
 
-ERROR with running azurite: (running scripts is disabled on this system)
-Run: 
+ERROR with running azurite: (running scripts is disabled on this system) \
 powershell Set-ExecutionPolicy --Scope CurrentUser Unrestricted
