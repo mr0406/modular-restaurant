@@ -31,7 +31,7 @@ namespace ModularRestaurant.Menus.Infrastructure.EF.QueryHandlers
             var menu = await _menus.SingleOrDefaultAsync(x => x.Id == menuId, cancellationToken);
             var items = menu.Groups.FindOrThrow(groupId).Items.Select(item =>
                 new GetItemsQueryResult.Item(item.Id.Value, item.Name, item.Description, item.Price.Value,
-                    item.Price.Currency,  item.Image ?? _imageUrlPrefix + item.Image));
+                    item.Price.Currency,  item.Image != null ? _imageUrlPrefix + item.Image : null));
 
             return new GetItemsQueryResult
             {
